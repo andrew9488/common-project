@@ -1,0 +1,19 @@
+.default {
+    background-color: #48d948;
+    outline: darkgreen;
+    padding: 5px;
+    border-radius: 5px;
+    height: 40px;
+    width: 60px;
+    margin: 5px;
+}
+
+.red {
+    background-color: #cb5d5d;
+    outline: darkred;
+    padding: 5px;
+    border-radius: 5px;
+    height: 40px;
+    width: 60px;
+    margin: 5px;
+}

@@ -1,0 +1,26 @@
+.checkbox {
+    transform: scale(1.5);
+    width: 10px;
+    height: 10px;
+    margin-right: 8px;
+    cursor: pointer;
+    font-size: 7px;
+    visibility: hidden;
+}
+.checkbox:after {
+    content: " ";
+    background-color: #fff;
+    display: inline-block;
+    padding-bottom: 5px;
+    color: #00BFF0;
+    width: 7px;
+    height: 7px;
+    visibility: visible;
+    border: 1px solid #00BFF0;
+    padding-left: 2px;
+    border-radius: 4px;
+}
+.checkbox:checked:after {
+    content: "\2714";
+    font-weight: bold;
+}

@@ -1,0 +1,22 @@
+.superInput {
+    border: 2px solid darkgreen;
+    border-radius: 5px;
+    background: lightgreen;
+    outline: none;
+    padding: 5px;
+    margin: 2px;
+}
+
+.errorInput {
+    border: 2px solid darkred;
+    outline: none;
+    border-radius: 5px;
+    background: lightcoral;
+    padding: 5px;
+    margin: 2px;
+}
+
+.error {
+    color: darkred;
+    margin: 2px;
+}
