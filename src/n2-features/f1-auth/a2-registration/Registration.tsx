@@ -2,7 +2,7 @@ import React, {ChangeEvent, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {registerTC} from "./register-reducer";
 import {AppRootStateType} from "../../../n1-main/m2-bll/store";
-import {Redirect} from "react-router-dom";
+import {NavLink, Redirect} from "react-router-dom";
 import {PATH} from "../../../n1-main/m1-ui/routes/Routes";
 import style from "./Registration.module.css"
 
@@ -41,15 +41,20 @@ const Registration: React.FC = () => {
             <h1>Registration: </h1>
             <form className={style.formBlock}>
                 <div>
-                    <span>Email: </span><input type="text" value={email} onChange={onChangeEmailHandler}/>
+                    <span>Email: </span><input placeholder="Enter email..." type="email" value={email}
+                                               onChange={onChangeEmailHandler}/>
                 </div>
                 <div>
-                    <span>Password: </span><input type="password" value={password} onChange={onChangePasswordHandler}/>
+                    <span>Password: </span><input placeholder="Enter password..." type="password" value={password}
+                                                  onChange={onChangePasswordHandler}/>
                 </div>
                 <div>
                     <button type="submit" onClick={onRegistrationHandler}>Register</button>
                 </div>
             </form>
+            <div>
+                <NavLink to={PATH.LOGIN}>login</NavLink>
+            </div>
         </div>
     )
 }
