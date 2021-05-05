@@ -1,12 +1,16 @@
 import React, {ChangeEvent, useState} from "react";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {registerTC} from "./register-reducer";
+import {AppRootStateType} from "../../../n1-main/m2-bll/store";
+import {Redirect} from "react-router-dom";
+import {PATH} from "../../../n1-main/m1-ui/routes/Routes";
 
 const Registration: React.FC = () => {
 
     const [email, setEmail] = useState<string>("")
     const [password, setPassword] = useState<string>("")
 
+    const isRegistration = useSelector<AppRootStateType, boolean>(state => state.register.isRegistration)
     const dispatch = useDispatch()
 
     const onChangeEmailHandler = (e: ChangeEvent<HTMLInputElement>) => {
@@ -25,6 +29,10 @@ const Registration: React.FC = () => {
             setEmail("")
             setPassword("")
         }
+    }
+
+    if (isRegistration) {
+        return <Redirect to={PATH.LOGIN}/>
     }
 
     return (
