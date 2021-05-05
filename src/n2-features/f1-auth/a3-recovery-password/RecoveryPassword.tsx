@@ -1,13 +1,15 @@
 import React, {ChangeEvent, useState} from "react";
-import {NavLink} from "react-router-dom";
+import {NavLink, Redirect} from "react-router-dom";
 import {PATH} from "../../../n1-main/m1-ui/routes/Routes";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {forgotPasswordTC} from "./recovery-reducer";
+import {AppRootStateType} from "../../../n1-main/m2-bll/store";
 
 const RecoveryPassword: React.FC = () => {
 
     const [restoredPassword, setRestoredPassword] = useState<string>("")
     const dispatch = useDispatch()
+    const isForgotPassword = useSelector<AppRootStateType, boolean>(state => state.forgot.isForgotPassword)
 
     const onChangeRestoredPasswordHandler = (e: ChangeEvent<HTMLInputElement>) => {
         setRestoredPassword(e.currentTarget.value)
@@ -15,6 +17,10 @@ const RecoveryPassword: React.FC = () => {
 
     const onRestoredPasswordHandler = () => {
         dispatch(forgotPasswordTC(restoredPassword))
+    }
+
+    if (isForgotPassword) {
+        return <Redirect to={PATH.ENTER_NEW_PASSWORD}/>
     }
 
     return (
