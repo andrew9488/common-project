@@ -1,11 +1,10 @@
 import {Dispatch} from "redux";
 import {API} from "../../../n1-main/m3-dal/api";
 
-type ActionsType = ReturnType<typeof setRegistrationDataAC>
+type ActionsType = ReturnType<typeof setIsRegistrationDataAC>
 
 type RegisterType = {
-    email: string
-    password: string
+    isRegistration: boolean
 }
 
 const initialState = {} as RegisterType
@@ -14,26 +13,25 @@ type InitialStateType = typeof initialState
 
 export const registerReducer = (state: InitialStateType = initialState, action: ActionsType): InitialStateType => {
     switch (action.type) {
-        case "REGISTER/SET-REGISTRATION-DATA":
+        case "REGISTER/SET-IS-REGISTRATION-DATA":
             return {
                 ...state,
-                email: action.email,
-                password: action.password
+
             }
         default:
             return state
     }
 }
 
-const setRegistrationDataAC = (email: string, password: string) =>
-    ({type: "REGISTER/SET-REGISTRATION-DATA", email, password} as const)
+const setIsRegistrationDataAC = (isRegistration: boolean) =>
+    ({type: "REGISTER/SET-IS-REGISTRATION-DATA", isRegistration} as const)
 
 export const registerTC = (email: string, password: string) => (dispatch: Dispatch) => {
     API.register(email, password)
         .then(() => {
-            dispatch(setRegistrationDataAC(email, password))
+            dispatch(setIsRegistrationDataAC(true))
         })
-        .catch(error => {
-            console.log(error)
+        .catch(response => {
+            console.log(response.error)
         })
 }
