@@ -28,7 +28,7 @@ export const registerReducer = (state: InitialStateType = initialState, action: 
 const setRegistrationDataAC = (email: string, password: string) =>
     ({type: "REGISTER/SET-REGISTRATION-DATA", email, password} as const)
 
-const registerTC = (email: string, password: string) => (dispatch: Dispatch) => {
+export const registerTC = (email: string, password: string) => (dispatch: Dispatch) => {
     API.register(email, password)
         .then(() => {
             dispatch(setRegistrationDataAC(email, password))
