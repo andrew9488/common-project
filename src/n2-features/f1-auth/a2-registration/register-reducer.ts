@@ -16,7 +16,7 @@ export const registerReducer = (state: InitialStateType = initialState, action: 
         case "REGISTER/SET-IS-REGISTRATION-DATA":
             return {
                 ...state,
-
+                isRegistration: action.isRegistration
             }
         default:
             return state
