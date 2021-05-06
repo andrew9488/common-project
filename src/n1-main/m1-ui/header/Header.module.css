@@ -1,0 +1,27 @@
+.headerContainer {
+    font-size: 25px;
+    color: #FFFFFF;
+    background-color: #3162ea;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.navBlock {
+    height: 70px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.navBlock a{
+    color: #FFFFFF;
+    text-decoration: none;
+}
+
+.navBlock a:hover{
+    text-decoration: underline;
+}
+
+.navBlock a.active{
+    font-weight: bold ;
+}
