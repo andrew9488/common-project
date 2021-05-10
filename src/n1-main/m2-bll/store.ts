@@ -8,12 +8,17 @@ import {
     RecoveryReducerActionType
 } from "../../n2-features/f1-auth/a3-recovery-password/recovery-reducer";
 import {appReducer, AppReducerActionType} from "../m1-ui/app-reducer";
+import {
+    enterNewPasswordReducer,
+    EnterNewPasswordReducerActionType
+} from "../../n2-features/f1-auth/a4-enter-new-password/enterNewPassword-reducer";
 
 const reducer = combineReducers({
     profile: profileReducer,
     auth: authReducer,
     register: registerReducer,
     forgot: recoveryReducer,
+    newPassword: enterNewPasswordReducer,
     app: appReducer
 
 })
@@ -22,5 +27,6 @@ export const store = createStore(reducer, applyMiddleware(thunk))
 
 export type AppRootStateType = ReturnType<typeof reducer>
 
-type ActionsType = AppReducerActionType | AuthReducerActionType | RegisterReducerActionType | RecoveryReducerActionType
+type ActionsType = AppReducerActionType | AuthReducerActionType
+    | RegisterReducerActionType | RecoveryReducerActionType | EnterNewPasswordReducerActionType
 export type AppThunkType = ThunkAction<void, AppRootStateType, unknown, ActionsType>
