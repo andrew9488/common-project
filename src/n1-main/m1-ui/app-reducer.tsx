@@ -1,9 +1,9 @@
-import {Dispatch} from "redux";
 import {API} from "../m3-dal/api";
+import {AppThunkType} from "../m2-bll/store";
 
 export type RequestStatusType = "loading" | "succeeded" | "failed"
 
-type ActionsType = ReturnType<typeof setAppStatusAC> | ReturnType<typeof setIsInitializedAC>
+export type AppReducerActionType = ReturnType<typeof setAppStatusAC> | ReturnType<typeof setIsInitializedAC>
 
 const initialState = {
     status: "loading" as RequestStatusType,
@@ -12,7 +12,7 @@ const initialState = {
 
 type InitialStateType = typeof initialState
 
-export const appReducer = (state: InitialStateType = initialState, action: ActionsType): InitialStateType => {
+export const appReducer = (state: InitialStateType = initialState, action: AppReducerActionType): InitialStateType => {
     switch (action.type) {
         case "APP/SET-APP-STATUS":
             return {
@@ -34,7 +34,7 @@ export const setAppStatusAC = (status: RequestStatusType) =>
 export const setIsInitializedAC = (isInitialized: boolean) =>
     ({type: "APP/SET-IS-INITIALIZED", isInitialized} as const)
 
-export const initializedAppTC = () => (dispatch: Dispatch) => {
+export const initializedAppTC = (): AppThunkType => dispatch => {
     API.authMe()
         .then(() => {
             dispatch(setAppStatusAC("succeeded"))
