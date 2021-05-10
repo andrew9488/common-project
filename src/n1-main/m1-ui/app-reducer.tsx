@@ -42,6 +42,7 @@ export const initializedAppTC = (): AppThunkType => dispatch => {
         })
         .catch(error => {
             console.log(error)
+            dispatch(setIsInitializedAC(true))
         })
 
 }
