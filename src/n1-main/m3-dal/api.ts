@@ -88,3 +88,89 @@ export const API = {
             .then(response => response.data)
     }
 }
+
+type PackType = {
+    _id: string, user_id: string, user_name: string, private: boolean, name: string, path: string,
+    grade: number, shots: number, deckCover: string, cardsCount: number,
+    type: string, rating: number, created: string, updated: string, more_id: string,
+    __v: number
+}
+
+type ResponsePackType = {
+    cardPacks: Array<PackType>
+    page: number
+    pageCount: number
+    cardPacksTotalCount: number,
+    minCardsCount: number
+    maxCardsCount: number
+    token: string
+    tokenDeathTime: number
+}
+
+
+export const packsAPI = {
+    fetchPack(packName?: string, min?: number, max?: number, sortPack?: string, page?: number, pageCount?: number, user_id?: string) {
+        return instance.get<ResponsePackType>(`?packName=${packName}&min=${min}&max=${max}&sortPack=${sortPack}&page=${page}&pageCount=${pageCount}&user_id=${user_id}`)
+            .then(response => response.data)
+    },
+    createPack(name: string, path?: string, grade?: number, shots?: number, rating?: number, deckCover?: string, privatePack?: boolean, type?: string) {
+        return instance.post(`cards/pack`, {name, path, grade, shots, rating, deckCover, private: privatePack, type})
+            .then(response => response.data)
+    },
+    deletePack(id: string) {
+        return instance.delete(`cards/pack?id=${id}`)
+            .then(response => response.data)
+    },
+    updatePack(_id: string, name?: string) {
+        return instance.put(`cards/pack`, {_id, name})
+            .then(response => response.data)
+    }
+}
+
+type CardType = {
+    answer: string
+    question: string
+    cardsPack_id: string
+    grade: number
+    rating: number
+    shots: number
+    type: string
+    user_id: string
+    created: string
+    updated: string
+    __v: 0
+    _id: string
+}
+
+type ResponseCardType = {
+    cards: Array<CardType>
+    cardsTotalCount: number
+    maxGrade: number
+    minGrade: number
+    page: number
+    pageCount: number
+    packUserId: string
+}
+
+export const cardsAPI = {
+    fetchCards(cardsPack_id: string, cardAnswer?: string, cardQuestion?: string, min?: number, max?: number, sortPack?:
+        string, page?: number, pageCount?: number) {
+        return instance.get<ResponseCardType>(`cards/card??cardAnswer=${cardAnswer}&cardQuestion=${cardQuestion}&cardsPack_id=${cardsPack_id}&min=${min}&max=${max}&sortCards=${sortPack}&page=${page}&pageCount=${pageCount}`)
+            .then(response => response.data)
+    },
+    createCard(cardsPack_id: string, question?: string, answer?: string, grade?: number, shots?: number, rating?: number,
+               answerImg?: string, questionImg?: string, questionVideo?: string, answerVideo?: string, type?: string) {
+        return instance.post(`cards/card`, {
+            cardsPack_id, question, answer, grade, shots, rating, answerImg,
+            questionImg, questionVideo, answerVideo, type
+        })
+    },
+    deleteCard(id: string) {
+        return instance.delete(`cards/card?id=${id}`)
+            .then(response => response.data)
+    },
+    updateCard(_id: string, question?: string, comments?: string) {
+        return instance.put(`cards/card?id`, {_id, question, comments})
+            .then(response => response.data)
+    }
+}
