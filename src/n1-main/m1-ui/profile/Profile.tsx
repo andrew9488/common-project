@@ -4,12 +4,13 @@ import {AppRootStateType} from '../../m2-bll/store';
 import {logOutTC} from './profile-reducer';
 import {Redirect} from 'react-router-dom';
 import {PATH} from '../routes/Routes';
-import {initializedAppTC} from "../app-reducer";
+import {initializedAppTC, RequestStatusType} from "../app-reducer";
 
 const Profile: React.FC = () => {
 
     const dispatch = useDispatch();
     const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn);
+    const appStatus = useSelector<AppRootStateType, RequestStatusType>(state => state.app.status)
 
     useEffect(() => {
         dispatch(initializedAppTC())
@@ -28,7 +29,7 @@ const Profile: React.FC = () => {
         <div>
             Profile
             <br/>
-            <button onClick={onLogOutHandler}>Log out</button>
+            <button onClick={onLogOutHandler} disabled={appStatus === "loading"}>Log out</button>
         </div>
     )
 }

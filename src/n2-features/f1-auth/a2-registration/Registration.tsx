@@ -5,12 +5,14 @@ import {AppRootStateType} from "../../../n1-main/m2-bll/store";
 import {NavLink, Redirect} from "react-router-dom";
 import {PATH} from "../../../n1-main/m1-ui/routes/Routes";
 import style from "./Registration.module.css"
+import {RequestStatusType} from "../../../n1-main/m1-ui/app-reducer";
 
 const Registration: React.FC = () => {
 
     const [email, setEmail] = useState<string>("")
     const [password, setPassword] = useState<string>("")
 
+    const appStatus = useSelector<AppRootStateType, RequestStatusType>(state => state.app.status)
     const isRegistration = useSelector<AppRootStateType, boolean>(state => state.register.isRegistration)
     const dispatch = useDispatch()
 
@@ -49,7 +51,8 @@ const Registration: React.FC = () => {
                                                   onChange={onChangePasswordHandler}/>
                 </div>
                 <div>
-                    <button type="submit" onClick={onRegistrationHandler}>Register</button>
+                    <button type="submit" onClick={onRegistrationHandler} disabled={appStatus === "loading"}>Register
+                    </button>
                 </div>
             </form>
             <div>
