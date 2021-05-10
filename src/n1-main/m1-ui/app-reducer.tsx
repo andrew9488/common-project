@@ -1,12 +1,12 @@
 import {API} from "../m3-dal/api";
 import {AppThunkType} from "../m2-bll/store";
 
-export type RequestStatusType = "loading" | "succeeded" | "failed"
+export type RequestStatusType = "idle" | "loading" | "succeeded" | "failed"
 
 export type AppReducerActionType = ReturnType<typeof setAppStatusAC> | ReturnType<typeof setIsInitializedAC>
 
 const initialState = {
-    status: "loading" as RequestStatusType,
+    status: "idle" as RequestStatusType,
     isInitialized: false
 }
 
