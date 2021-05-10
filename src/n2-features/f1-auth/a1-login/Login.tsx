@@ -5,6 +5,7 @@ import {AppRootStateType} from '../../../n1-main/m2-bll/store';
 import {Redirect} from 'react-router-dom';
 import {PATH} from '../../../n1-main/m1-ui/routes/Routes';
 import styles from './Login.module.css';
+import {RequestStatusType} from "../../../n1-main/m1-ui/app-reducer";
 
 const Login: React.FC = () => {
 
@@ -12,6 +13,7 @@ const Login: React.FC = () => {
 
     const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn);
     const loginError = useSelector<AppRootStateType, string | null>(state => state.auth.loginError);
+    const appStatus = useSelector<AppRootStateType, RequestStatusType>(state => state.app.status)
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -49,7 +51,7 @@ const Login: React.FC = () => {
                     <input type="checkbox" onChange={onRememberMeChangeHandler}/>
                     Remember me
                 </div>
-                <button type={'submit'} onClick={onLoginFormSubmitHandler}>log in</button>
+                <button type={'submit'} onClick={onLoginFormSubmitHandler} disabled={appStatus === "loading"}>log in</button>
             </form>
             {loginError ? <div className={styles.loginError}>{loginError}</div> : ''}
         </div>
