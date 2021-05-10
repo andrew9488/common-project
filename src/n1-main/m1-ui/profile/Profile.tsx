@@ -1,10 +1,10 @@
 import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {AppRootStateType} from '../../m2-bll/store';
-import {logOutTC} from './profile-reducer';
 import {Redirect} from 'react-router-dom';
 import {PATH} from '../routes/Routes';
 import {initializedAppTC, RequestStatusType} from "../app-reducer";
+import {logOutTC} from '../../../n2-features/f1-auth/a1-login/auth-reducer';
 
 const Profile: React.FC = () => {
 

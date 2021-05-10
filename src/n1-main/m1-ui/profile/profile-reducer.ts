@@ -17,11 +17,4 @@ export const profileReducer = (state: InitialStateType = initialState, action: A
 }
 
 //thunks
-export const logOutTC = () => (dispatch: Dispatch<ActionsType>) => {
-    dispatch(setAppStatusAC("loading"))
-    API.logout()
-        .then(response => {
-            dispatch(setIsLoggedIn(false));
-            dispatch(setAppStatusAC("succeeded"))
-        })
-}
+

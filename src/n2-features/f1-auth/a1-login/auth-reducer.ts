@@ -67,3 +67,12 @@ export const loginTC = (email: string, password: string, rememberMe: boolean): A
             dispatch(setLoginError(error));
         })
 }
+
+export const logOutTC = (): AppThunkType => dispatch => {
+    dispatch(setAppStatusAC("loading"))
+    API.logout()
+        .then(response => {
+            dispatch(setIsLoggedIn(false));
+            dispatch(setAppStatusAC("succeeded"))
+        })
+}
