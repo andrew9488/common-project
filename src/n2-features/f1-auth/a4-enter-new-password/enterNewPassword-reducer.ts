@@ -36,5 +36,6 @@ export const setNewPasswordTC = (newPassword: string, passwordToken: string): Ap
         })
         .catch(response => {
             console.log(response.error)
+            dispatch(setAppStatusAC("failed"))
         })
 }

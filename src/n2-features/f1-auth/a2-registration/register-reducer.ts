@@ -36,5 +36,6 @@ export const registerTC = (email: string, password: string): AppThunkType => dis
         })
         .catch(response => {
             console.log(response.error)
+            dispatch(setAppStatusAC('failed'))
         })
 }

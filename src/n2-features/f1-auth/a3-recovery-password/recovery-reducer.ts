@@ -36,5 +36,6 @@ export const forgotPasswordTC = (email: string): AppThunkType => dispatch => {
         })
         .catch(response => {
             console.log(response.error)
+            dispatch(setAppStatusAC('failed'))
         })
 }
