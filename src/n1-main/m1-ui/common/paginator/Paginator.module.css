@@ -1,0 +1,25 @@
+.pageDigit {
+    display: inline-block;
+    padding: 5px;
+    font-size: 1.1em;
+    margin: 0 2px;
+}
+
+.pageDigit:hover {
+    cursor: pointer;
+    opacity: 0.7;
+}
+
+.currentPage {
+    font-weight: bold;
+    font-size: 1.2em;
+    color: #3162ea;
+}
+
+.nextButton {
+    margin-left: 10px;
+}
+
+.backButton {
+    margin-right: 10px;
+}
