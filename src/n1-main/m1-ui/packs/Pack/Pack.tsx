@@ -10,11 +10,11 @@ type PackPropsType = {
 export const Pack: React.FC<PackPropsType> = (props) => {
     return (
         <>
-            <tr key={props.pack._id}>
+            <tr>
                 <td>{props.pack.name}</td>
                 <td>{props.pack.cardsCount}</td>
                 <td>{props.pack.updated}</td>
-                <td>{props.pack.path}</td>
+                <td>{props.pack.type}</td>
                 <td>
                     <button>add</button>
                     <button>update</button>

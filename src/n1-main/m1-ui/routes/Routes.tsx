@@ -8,6 +8,7 @@ import Error from "../../../n3-utils/u1-error/Error";
 import TestPage from "../test-page/Tests";
 import Profile from "../profile/Profile";
 import {Packs} from "../packs/Packs";
+import {Cards} from "../cards/Cards";
 
 export const PATH = {
     PROFILE: "/profile",
@@ -30,6 +31,7 @@ const Routes: React.FC = () => {
                 <Route path={PATH.RECOVERY_PASSWORD} render={() => <RecoveryPassword/>}/>
                 <Route path={PATH.ENTER_NEW_PASSWORD} render={() => <EnterNewPassword/>}/>
                 <Route path={PATH.PACKS} render={() => <Packs/>}/>
+                <Route path={PATH.CARDS} render={() => <Cards/>}/>
                 <Route path={PATH.TEST_PAGE} render={() => <TestPage/>}/>
                 <Route render={() => <Error/>}/>
             </Switch>
