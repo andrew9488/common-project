@@ -2,6 +2,7 @@ import axios from 'axios';
 
 const instance = axios.create({
     baseURL: 'http://localhost:7542/2.0/',
+    // baseURL: 'https://neko-back.herokuapp.com/2.0',
     withCredentials: true,
 })
 
@@ -89,14 +90,14 @@ export const API = {
     }
 }
 
-type PackType = {
+export type PackType = {
     _id: string, user_id: string, user_name: string, private: boolean, name: string, path: string,
     grade: number, shots: number, deckCover: string, cardsCount: number,
     type: string, rating: number, created: string, updated: string, more_id: string,
     __v: number
 }
 
-type ResponsePackType = {
+export type ResponsePackType = {
     cardPacks: Array<PackType>
     page: number
     pageCount: number
@@ -109,7 +110,7 @@ type ResponsePackType = {
 
 
 export const packsAPI = {
-    fetchPack(packName?: string, min?: number, max?: number, sortPack?: string, page?: number, pageCount?: number, user_id?: string) {
+    fetchPacks(packName?: string, min?: number, max?: number, sortPack?: string, page?: number, pageCount?: number, user_id?: string) {
         return instance.get<ResponsePackType>(`?packName=${packName}&min=${min}&max=${max}&sortPack=${sortPack}&page=${page}&pageCount=${pageCount}&user_id=${user_id}`)
             .then(response => response.data)
     },
