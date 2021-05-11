@@ -7,7 +7,7 @@ import SuperRadio from "../common/super-radio/SuperRadio";
 const TestPage: React.FC = () => {
     return (
         <div>
-            <SuperButton/>
+            <SuperButton text={'a'}/>
             <SuperInput/>
             <SuperCheckbox/>
             <SuperRadio/>

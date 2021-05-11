@@ -6,6 +6,8 @@ const initialState = {
     search: '',
     min: 3,
     max: 9,
+    page: 1,
+    pageCount: 4
 }
 
 type InitialStateType = typeof initialState
@@ -36,4 +38,8 @@ export const getPacksWithFilters = (): AppThunkType => (dispatch, getState) => {
     let max = getState().filter.max;
     //@ts-ignore
     fetchPacksTC()
+}
+
+export const onPacksPageClickTC = (): AppThunkType => (dispatch) => {
+
 }
