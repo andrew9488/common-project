@@ -24,7 +24,7 @@ export const setPacksAC = (packs: Array<PackType>) =>
 
 export const fetchPacksTC = (): AppThunkType => dispatch => {
     dispatch(setAppStatusAC("loading"))
-    packsAPI.fetchPacks()
+    packsAPI.fetchPacks({})
         .then(response => {
             dispatch(setPacksAC(response.cardPacks))
             dispatch(setAppStatusAC("succeeded"))

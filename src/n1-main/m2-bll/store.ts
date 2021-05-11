@@ -13,6 +13,7 @@ import {
     EnterNewPasswordReducerActionType
 } from "../../n2-features/f1-auth/a4-enter-new-password/enterNewPassword-reducer";
 import {packsReducer, PacksReducerActionType} from "../m1-ui/packs/packs-reducer";
+import {cardsReducer, CardsReducerActionType} from "../m1-ui/cards/cards-reducer";
 
 const reducer = combineReducers({
     profile: profileReducer,
@@ -21,7 +22,8 @@ const reducer = combineReducers({
     forgot: recoveryReducer,
     newPassword: enterNewPasswordReducer,
     app: appReducer,
-    packs: packsReducer
+    packs: packsReducer,
+    cards: cardsReducer
 })
 
 export const store = createStore(reducer, applyMiddleware(thunk))
@@ -30,5 +32,5 @@ export type AppRootStateType = ReturnType<typeof reducer>
 
 type ActionsType = AppReducerActionType | AuthReducerActionType
     | RegisterReducerActionType | RecoveryReducerActionType | EnterNewPasswordReducerActionType
-    | PacksReducerActionType
+    | PacksReducerActionType | CardsReducerActionType
 export type AppThunkType = ThunkAction<void, AppRootStateType, unknown, ActionsType>
