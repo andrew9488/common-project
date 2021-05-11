@@ -2,7 +2,7 @@ import {packsAPI, PackType, ResponsePackType} from "../../m3-dal/api"
 import {AppThunkType} from "../../m2-bll/store";
 import {setAppStatusAC, setIsInitializedAC} from "../app-reducer";
 
-export type PacksReducerActionType = ReturnType<typeof setPacksAC>
+export type PacksReducerActionType = ReturnType<typeof setPacksDataAC>
 
 const initialState = {} as ResponsePackType
 type InitialStateType = typeof initialState
@@ -11,22 +11,21 @@ export const packsReducer = (state: InitialStateType = initialState, action: Pac
     switch (action.type) {
         case "PACKS/SET-PACKS":
             return {
-                ...state,
-                cardPacks: action.packs
+                ...state, ...action.packsData
             }
         default:
             return state
     }
 }
 
-export const setPacksAC = (packs: Array<PackType>) =>
-    ({type: "PACKS/SET-PACKS", packs} as const)
+export const setPacksDataAC = (packsData: ResponsePackType) =>
+    ({type: "PACKS/SET-PACKS", packsData} as const)
 
 export const fetchPacksTC = (): AppThunkType => dispatch => {
     dispatch(setAppStatusAC("loading"))
     packsAPI.fetchPacks({})
         .then(response => {
-            dispatch(setPacksAC(response.cardPacks))
+            dispatch(setPacksDataAC(response))
             dispatch(setAppStatusAC("succeeded"))
         })
         .catch(error => {

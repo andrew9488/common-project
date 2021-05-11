@@ -18,7 +18,7 @@ export const Pack: React.FC<PackPropsType> = (props) => {
                 <td>
                     <button>add</button>
                     <button>update</button>
-                    <NavLink to={PATH.CARDS}>cards</NavLink>
+                    <NavLink to={`${PATH.CARDS}/${props.pack._id}`}>cards</NavLink>
                 </td>
             </tr>
         </>

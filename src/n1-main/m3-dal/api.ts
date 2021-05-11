@@ -119,7 +119,7 @@ type QueryPacksType = {
     user_id: string
 }
 const defaultsQueryPacks: QueryPacksType = {
-    packName: "", min: 3, max: 9, sortPack: "0updated", page: 1, pageCount: 4, user_id: ""
+    packName: "", min: 3, max: 9, sortPack: "0updated", page: 1, pageCount: 14, user_id: ""
 }
 
 //type for post
@@ -152,7 +152,7 @@ type DefaultsCardsPackType = typeof defaultsCardsPack
 export const packsAPI = {
     fetchPacks(queryObj: Partial<QueryPacksType>) {
         let query: string[] = [];
-        (Object.keys(queryObj) as (keyof QueryPacksType)[]).forEach((key: keyof QueryPacksType) => {
+        (Object.keys(defaultsQueryPacks) as (keyof QueryPacksType)[]).forEach((key: keyof QueryPacksType) => {
             if (queryObj[key]) {
                 query.push(`${key}=${queryObj[key]}`);
                 return;
@@ -163,7 +163,7 @@ export const packsAPI = {
             .then(response => response.data)
     },
     createPack(defaultsCardsPack: DefaultsCardsPackType) {
-        return instance.post(`cards/pack`, {...defaultsCardsPack.cardsPack})
+        return instance.post(`cards/pack`, defaultsCardsPack)
             .then(response => response.data)
     },
     deletePack(id: string) {
@@ -259,7 +259,7 @@ type DefaultsCardType = typeof defaultsCard
 export const cardsAPI = {
     fetchCards(queryObj: Partial<QueryCardsType>) {
         let query: string[] = [];
-        (Object.keys(queryObj) as (keyof QueryCardsType)[]).forEach((key: keyof QueryCardsType) => {
+        (Object.keys(defaultsQueryCards) as (keyof QueryCardsType)[]).forEach((key: keyof QueryCardsType) => {
             if (queryObj[key]) {
                 query.push(`${key}=${queryObj[key]}`);
                 return;
@@ -270,7 +270,7 @@ export const cardsAPI = {
             .then(response => response.data)
     },
     createCard(defaultsCard: DefaultsCardType) {
-        return instance.post(`cards/card`, {...defaultsCard.card})
+        return instance.post(`cards/card`, defaultsCard.card)
     },
     deleteCard(id: string) {
         return instance.delete(`cards/card?id=${id}`)
