@@ -35,6 +35,7 @@ export const setIsInitializedAC = (isInitialized: boolean) =>
     ({type: "APP/SET-IS-INITIALIZED", isInitialized} as const)
 
 export const initializedAppTC = (): AppThunkType => dispatch => {
+    dispatch(setAppStatusAC("loading"))
     API.authMe()
         .then(() => {
             dispatch(setAppStatusAC("succeeded"))
@@ -43,6 +44,7 @@ export const initializedAppTC = (): AppThunkType => dispatch => {
         .catch(error => {
             console.log(error)
             dispatch(setIsInitializedAC(true))
+            dispatch(setAppStatusAC("failed"))
         })
 
 }
