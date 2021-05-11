@@ -2,18 +2,25 @@ import React, {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "../../m2-bll/store";
 import {CardType} from "../../m3-dal/api";
-import {Pack} from "../packs/Pack/Pack";
 import {fetchCardsTC} from "./cards-reducer";
 import {Card} from "./Card/Card";
+import {RouteComponentProps, withRouter} from "react-router-dom";
 
-export const Cards: React.FC = () => {
+type PathParamsType = {
+    cardsPack_id: string
+}
+type PropsType = RouteComponentProps<PathParamsType>
+
+const Cards: React.FC<PropsType> = (props) => {
 
     const cards = useSelector<AppRootStateType, Array<CardType>>(state => state.cards.cards)
     const dispatch = useDispatch()
 
     useEffect(() => {
-        dispatch(fetchCardsTC())
+        dispatch(fetchCardsTC(props.match.params.cardsPack_id))
     }, [])
+
+    console.log(props.match.params)
 
     return (
         <>
@@ -39,3 +46,5 @@ export const Cards: React.FC = () => {
             </table>
         </>);
 }
+
+export default withRouter(Cards)

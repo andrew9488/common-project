@@ -13,7 +13,7 @@ export const Card: React.FC<CardPropsType> = (props) => {
                 <td>{props.card.answer}</td>
                 <td>{props.card.grade}</td>
                 <td>{props.card.updated}</td>
-                <td>{props.card.type}</td>
+                <td>{props.card.rating}</td>
             </tr>
         </>
     );
