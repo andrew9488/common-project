@@ -109,17 +109,17 @@ export type ResponsePackType = {
 }
 
 //type for get
-type QueryPacksType = {
+export type QueryPacksType = {
     packName: string
     min: number
     max: number
-    sortPack: string
+    sortPacks: string
     page: number
     pageCount: number
     user_id: string
 }
 const defaultsQueryPacks: QueryPacksType = {
-    packName: "", min: 3, max: 9, sortPack: "0updated", page: 1, pageCount: 14, user_id: ""
+    packName: "", min: 5, max: 9, sortPacks: "0updated", page: 1, pageCount: 5, user_id: ""
 }
 
 //type for post
@@ -147,7 +147,7 @@ const defaultsCardsPack = {
     } as CardsPackCreateType
 }
 
-type DefaultsCardsPackType = typeof defaultsCardsPack
+export type DefaultsCardsPackType = typeof defaultsCardsPack
 
 export const packsAPI = {
     fetchPacks(queryObj: Partial<QueryPacksType>) {

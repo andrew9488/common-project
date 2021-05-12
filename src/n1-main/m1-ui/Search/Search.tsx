@@ -33,7 +33,7 @@ const Search: React.FC<SearchPropsType> = (props) => {
     }
 
     return (
-        <div>
+        <div className={styles.searchDiv}>
             <input type="text"
                    placeholder={'Search...'}
                    onChange={onSearchChange}
