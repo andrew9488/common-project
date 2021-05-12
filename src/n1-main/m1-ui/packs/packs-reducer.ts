@@ -6,6 +6,7 @@ export type PacksReducerActionType = ReturnType<typeof setPacksDataAC>
     | ReturnType<typeof setPageValueAC>
     | ReturnType<typeof setPagesCountAC>
     | ReturnType<typeof createCardsPackAC>
+    | ReturnType<typeof updateCardsPackAC>
 
 const initialState = {} as ResponsePackType
 type InitialStateType = typeof initialState
@@ -27,6 +28,11 @@ export const packsReducer = (state: InitialStateType = initialState, action: Pac
                 ...state,
                 cardPacks: [action.cardsPack, ...state.cardPacks]
             }
+        case "PACKS/UPDATE-CARDS-PACK":
+            return {
+                ...state,
+                cardPacks: state.cardPacks.map(p => p._id === action.id ? {...p, name: action.name} : p)
+            }
         default:
             return state
     }
@@ -40,6 +46,9 @@ export const setPagesCountAC = (value: number) => ({type: 'SET-CURRENT-PAGES-COU
 
 export const createCardsPackAC = (cardsPack: CardsPackType) =>
     ({type: 'PACKS/CREATE-CARDS-PACK', cardsPack} as const)
+
+export const updateCardsPackAC = (id: string, name: string) =>
+    ({type: 'PACKS/UPDATE-CARDS-PACK', id, name} as const)
 
 export const fetchPacksTC = (queryObj?: Partial<QueryPacksType>): AppThunkType => dispatch => {
     dispatch(setAppStatusAC('loading'))
@@ -64,6 +73,20 @@ export const createCardsPackTC = (): AppThunkType => dispatch => {
     packsAPI.createPack(cardsPack)
         .then(response => {
             dispatch(createCardsPackAC(response.newCardsPack))
+            dispatch(setAppStatusAC('succeeded'))
+        })
+        .catch(error => {
+            console.log(error)
+            dispatch(setIsInitializedAC(true))
+            dispatch(setAppStatusAC('failed'))
+        })
+}
+
+export const updateCardsPackTC = (id: string, newName: string): AppThunkType => dispatch => {
+    dispatch(setAppStatusAC('loading'))
+    packsAPI.updatePack(id, newName)
+        .then(() => {
+            dispatch(updateCardsPackAC(id, newName))
             dispatch(setAppStatusAC('succeeded'))
         })
         .catch(error => {

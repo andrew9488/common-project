@@ -180,7 +180,7 @@ export const packsAPI = {
         return instance.delete(`cards/pack?id=${id}`)
             .then(response => response.data)
     },
-    updatePack(_id: string, name: string = "new name") {
+    updatePack(_id: string, name: string) {
         return instance.put(`cards/pack`, {_id, name})
             .then(response => response.data)
     }

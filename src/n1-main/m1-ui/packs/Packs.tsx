@@ -2,7 +2,7 @@ import React, {ChangeEvent, useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {AppRootStateType} from '../../m2-bll/store';
 import {PackType} from '../../m3-dal/api';
-import {createCardsPackTC, fetchPacksTC} from './packs-reducer';
+import {createCardsPackTC, fetchPacksTC, updateCardsPackAC, updateCardsPackTC} from './packs-reducer';
 import {Pack} from './Pack/Pack';
 import {
     getPacksWithFilters,
@@ -62,6 +62,13 @@ export const Packs: React.FC = () => {
         dispatch(createCardsPackTC())
     }
 
+
+    const onUpdateCardsPackNameHandler = (id: string) => {
+        const name = "new name Cards Packs"
+        // dispatch(updateCardsPackTC(id,name))
+        dispatch(updateCardsPackAC(id, name))
+    }
+
     if (!packs) {
         return <Preloader/>
     }
@@ -101,7 +108,8 @@ export const Packs: React.FC = () => {
                     <th>Name</th>
                     <th>Cards Count
                         <button onClick={() => dispatch(sortPackTC('0cardsCount'))}>&#8593;</button>
-                        <button onClick={() => dispatch(sortPackTC('1cardsCount'))}>&#8595;</button></th>
+                        <button onClick={() => dispatch(sortPackTC('1cardsCount'))}>&#8595;</button>
+                    </th>
                     <th>Update</th>
                     <th>Url</th>
                     <th>
@@ -111,7 +119,7 @@ export const Packs: React.FC = () => {
                 </thead>
                 <tbody>
                 {packs && packs.map(p => {
-                    return <Pack key={p._id} pack={p}/>
+                    return <Pack key={p._id} pack={p} updateCardsPackName={onUpdateCardsPackNameHandler}/>
                 })}
                 </tbody>
             </table>
