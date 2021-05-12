@@ -134,20 +134,30 @@ type CardsPackCreateType = {
     type: string
 }
 
-const defaultsCardsPack = {
-    cardsPack: {
-        name: "no name",
-        path: "",
-        type: "",
-        deckCover: "",
-        grade: 0,
-        privatePack: false,
-        rating: 0,
-        shots: 0
-    } as CardsPackCreateType
+export type CardsPackType = {
+    cardsCount: number
+    created: string
+    grade: number
+    more_id: string
+    name: string
+    path: string
+    private: boolean
+    rating: number
+    shots: number
+    deckCover: string
+    type: string
+    updated: string
+    user_id: string
+    user_name: string
+    __v: number
+    _id: string
 }
 
-export type DefaultsCardsPackType = typeof defaultsCardsPack
+type CardsPackResponseType = {
+    newCardsPack: CardsPackType
+    token: string
+    tokenDeathTime: string
+}
 
 export const packsAPI = {
     fetchPacks(queryObj: Partial<QueryPacksType>) {
@@ -162,8 +172,8 @@ export const packsAPI = {
         return instance.get<ResponsePackType>(`cards/pack?${query.join("&")}`)
             .then(response => response.data)
     },
-    createPack(defaultsCardsPack: DefaultsCardsPackType) {
-        return instance.post(`cards/pack`, defaultsCardsPack)
+    createPack(cardsPack: CardsPackCreateType) {
+        return instance.post<CardsPackResponseType>(`cards/pack`, {cardsPack})
             .then(response => response.data)
     },
     deletePack(id: string) {

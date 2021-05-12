@@ -2,7 +2,7 @@ import React, {ChangeEvent, useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {AppRootStateType} from '../../m2-bll/store';
 import {PackType} from '../../m3-dal/api';
-import {fetchPacksTC} from './packs-reducer';
+import {createCardsPackTC, fetchPacksTC} from './packs-reducer';
 import {Pack} from './Pack/Pack';
 import {
     getPacksWithFilters,
@@ -58,6 +58,10 @@ export const Packs: React.FC = () => {
     const pagesOptions = [5, 10, 15, 20, 25]
     const pagesOptionsTags = pagesOptions.map(item => <option value={item} key={item}>{item}</option>)
 
+    const onAddCardsPackHandler = () => {
+        dispatch(createCardsPackTC())
+    }
+
     if (!packs) {
         return <Preloader/>
     }
@@ -101,7 +105,7 @@ export const Packs: React.FC = () => {
                     <th>Update</th>
                     <th>Url</th>
                     <th>
-                        <button>Add</button>
+                        <button onClick={onAddCardsPackHandler}>Add</button>
                     </th>
                 </tr>
                 </thead>

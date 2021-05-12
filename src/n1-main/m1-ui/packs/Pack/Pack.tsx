@@ -8,6 +8,8 @@ type PackPropsType = {
 }
 
 export const Pack: React.FC<PackPropsType> = (props) => {
+
+
     return (
         <>
             <tr>
