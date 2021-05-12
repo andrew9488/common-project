@@ -1,5 +1,5 @@
 .searchInput {
-    width: 50%;
+    width: 100%;
     padding: 12px 24px;
     background-color: transparent;
     font-size: 14px;
@@ -30,4 +30,8 @@
     border-bottom: 1px solid #575756;
     border-radius: 0;
     background-position: 100% center;
+}
+
+.searchDiv {
+
 }
