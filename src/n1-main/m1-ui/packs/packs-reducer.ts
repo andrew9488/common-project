@@ -7,6 +7,7 @@ export type PacksReducerActionType = ReturnType<typeof setPacksDataAC>
     | ReturnType<typeof setPagesCountAC>
     | ReturnType<typeof createCardsPackAC>
     | ReturnType<typeof updateCardsPackAC>
+    | ReturnType<typeof deleteCardsPackAC>
 
 const initialState = {} as ResponsePackType
 type InitialStateType = typeof initialState
@@ -33,6 +34,11 @@ export const packsReducer = (state: InitialStateType = initialState, action: Pac
                 ...state,
                 cardPacks: state.cardPacks.map(p => p._id === action.id ? {...p, name: action.name} : p)
             }
+        case "PACKS/DELETE-CARDS-PACK":
+            return {
+                ...state,
+                cardPacks: state.cardPacks.filter(p=> p._id !== action.id)
+            }
         default:
             return state
     }
@@ -49,6 +55,9 @@ export const createCardsPackAC = (cardsPack: CardsPackType) =>
 
 export const updateCardsPackAC = (id: string, name: string) =>
     ({type: 'PACKS/UPDATE-CARDS-PACK', id, name} as const)
+
+export const deleteCardsPackAC = (id: string) =>
+    ({type: 'PACKS/DELETE-CARDS-PACK', id} as const)
 
 export const fetchPacksTC = (queryObj?: Partial<QueryPacksType>): AppThunkType => dispatch => {
     dispatch(setAppStatusAC('loading'))
@@ -87,6 +96,20 @@ export const updateCardsPackTC = (id: string, newName: string): AppThunkType => 
     packsAPI.updatePack(id, newName)
         .then(() => {
             dispatch(updateCardsPackAC(id, newName))
+            dispatch(setAppStatusAC('succeeded'))
+        })
+        .catch(error => {
+            console.log(error)
+            dispatch(setIsInitializedAC(true))
+            dispatch(setAppStatusAC('failed'))
+        })
+}
+
+export const deleteCardsPackTC = (id: string): AppThunkType => dispatch => {
+    dispatch(setAppStatusAC('loading'))
+    packsAPI.deletePack(id)
+        .then(() => {
+            dispatch(deleteCardsPackAC(id))
             dispatch(setAppStatusAC('succeeded'))
         })
         .catch(error => {

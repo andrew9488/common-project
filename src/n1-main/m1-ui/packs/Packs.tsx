@@ -2,7 +2,13 @@ import React, {ChangeEvent, useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {AppRootStateType} from '../../m2-bll/store';
 import {PackType} from '../../m3-dal/api';
-import {createCardsPackTC, fetchPacksTC, updateCardsPackAC, updateCardsPackTC} from './packs-reducer';
+import {
+    createCardsPackTC, deleteCardsPackAC,
+    deleteCardsPackTC,
+    fetchPacksTC,
+    updateCardsPackAC,
+    updateCardsPackTC
+} from './packs-reducer';
 import {Pack} from './Pack/Pack';
 import {
     getPacksWithFilters,
@@ -69,6 +75,11 @@ export const Packs: React.FC = () => {
         dispatch(updateCardsPackAC(id, name))
     }
 
+    const onDeleteCardsPackHandler = (id: string)=>{
+        // dispatch(deleteCardsPackTC(id))
+        dispatch(deleteCardsPackAC(id))
+    }
+
     if (!packs) {
         return <Preloader/>
     }
@@ -119,7 +130,10 @@ export const Packs: React.FC = () => {
                 </thead>
                 <tbody>
                 {packs && packs.map(p => {
-                    return <Pack key={p._id} pack={p} updateCardsPackName={onUpdateCardsPackNameHandler}/>
+                    return <Pack key={p._id}
+                                 pack={p}
+                                 deleteCardsPack={onDeleteCardsPackHandler}
+                                 updateCardsPackName={onUpdateCardsPackNameHandler}/>
                 })}
                 </tbody>
             </table>
