@@ -1,11 +1,10 @@
-import {CardsPackType, packsAPI, QueryPacksType, ResponsePackType} from '../../m3-dal/api'
+import {CardsPackCreateType, CardsPackType, packsAPI, QueryPacksType, ResponsePackType} from '../../m3-dal/api'
 import {AppThunkType} from '../../m2-bll/store';
 import {setAppStatusAC, setIsInitializedAC} from '../app-reducer';
 
 export type PacksReducerActionType = ReturnType<typeof setPacksDataAC>
     | ReturnType<typeof setPageValueAC>
     | ReturnType<typeof setPagesCountAC>
-    | ReturnType<typeof createCardsPackAC>
     | ReturnType<typeof updateCardsPackAC>
     | ReturnType<typeof deleteCardsPackAC>
 
@@ -24,11 +23,6 @@ export const packsReducer = (state: InitialStateType = initialState, action: Pac
         case 'SET-CURRENT-PAGES-COUNT': {
             return {...state, pageCount: action.value}
         }
-        case "PACKS/CREATE-CARDS-PACK":
-            return {
-                ...state,
-                cardPacks: [action.cardsPack, ...state.cardPacks]
-            }
         case "PACKS/UPDATE-CARDS-PACK":
             return {
                 ...state,
@@ -37,7 +31,7 @@ export const packsReducer = (state: InitialStateType = initialState, action: Pac
         case "PACKS/DELETE-CARDS-PACK":
             return {
                 ...state,
-                cardPacks: state.cardPacks.filter(p=> p._id !== action.id)
+                cardPacks: state.cardPacks.filter(p => p._id !== action.id)
             }
         default:
             return state
@@ -49,9 +43,6 @@ export const setPacksDataAC = (packsData: ResponsePackType) =>
 
 export const setPageValueAC = (value: number) => ({type: 'SET-CURRENT-PAGE-VALUE', value} as const)
 export const setPagesCountAC = (value: number) => ({type: 'SET-CURRENT-PAGES-COUNT', value} as const)
-
-export const createCardsPackAC = (cardsPack: CardsPackType) =>
-    ({type: 'PACKS/CREATE-CARDS-PACK', cardsPack} as const)
 
 export const updateCardsPackAC = (id: string, name: string) =>
     ({type: 'PACKS/UPDATE-CARDS-PACK', id, name} as const)
@@ -73,15 +64,11 @@ export const fetchPacksTC = (queryObj?: Partial<QueryPacksType>): AppThunkType =
         })
 }
 
-export const createCardsPackTC = (): AppThunkType => dispatch => {
+export const createCardsPackTC = (cardsPack: CardsPackCreateType): AppThunkType => dispatch => {
     dispatch(setAppStatusAC('loading'))
-    let cardsPack = {
-        name: "no name", path: "", type: "", deckCover: "",
-        grade: 0, privatePack: false, rating: 0, shots: 0
-    }
     packsAPI.createPack(cardsPack)
         .then(response => {
-            dispatch(createCardsPackAC(response.newCardsPack))
+            dispatch(fetchPacksTC())
             dispatch(setAppStatusAC('succeeded'))
         })
         .catch(error => {

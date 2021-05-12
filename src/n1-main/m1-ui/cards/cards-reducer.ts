@@ -1,4 +1,4 @@
-import {cardsAPI, ResponseCardType} from "../../m3-dal/api"
+import {CardCreateType, cardsAPI, ResponseCardType} from "../../m3-dal/api"
 import {AppThunkType} from "../../m2-bll/store";
 import {setAppStatusAC, setIsInitializedAC} from "../app-reducer";
 
@@ -27,6 +27,20 @@ export const fetchCardsTC = (id: string): AppThunkType => dispatch => {
     cardsAPI.fetchCards({cardsPack_id: id})
         .then(response => {
             dispatch(setCardsDataAC(response))
+            dispatch(setAppStatusAC("succeeded"))
+        })
+        .catch(error => {
+            console.log(error)
+            dispatch(setIsInitializedAC(true))
+            dispatch(setAppStatusAC("failed"))
+        })
+}
+
+export const createCardTC = (card: CardCreateType): AppThunkType => dispatch => {
+    dispatch(setAppStatusAC("loading"))
+    cardsAPI.createCard(card)
+        .then(response => {
+            dispatch(fetchCardsTC(response.data.card._id))
             dispatch(setAppStatusAC("succeeded"))
         })
         .catch(error => {

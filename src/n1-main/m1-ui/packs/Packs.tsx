@@ -65,7 +65,11 @@ export const Packs: React.FC = () => {
     const pagesOptionsTags = pagesOptions.map(item => <option value={item} key={item}>{item}</option>)
 
     const onAddCardsPackHandler = () => {
-        dispatch(createCardsPackTC())
+        let cardsPack = {
+            name: "My CardsPackVA", path: "", type: "", deckCover: "",
+            grade: 0, privatePack: false, rating: 0, shots: 0
+        }
+        dispatch(createCardsPackTC(cardsPack))
     }
 
 
@@ -75,7 +79,7 @@ export const Packs: React.FC = () => {
         dispatch(updateCardsPackAC(id, name))
     }
 
-    const onDeleteCardsPackHandler = (id: string)=>{
+    const onDeleteCardsPackHandler = (id: string) => {
         // dispatch(deleteCardsPackTC(id))
         dispatch(deleteCardsPackAC(id))
     }
