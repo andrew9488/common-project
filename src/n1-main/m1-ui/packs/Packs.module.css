@@ -1,0 +1,13 @@
+.filtersWrapper {
+    display: flex;
+    width: 60%;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 0 auto;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.range {
+    width: 400px;
+}
