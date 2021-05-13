@@ -66,12 +66,11 @@ export const Packs: React.FC = () => {
 
     const onAddCardsPackHandler = () => {
         let cardsPack = {
-            name: "My CardsPackVA", path: "", type: "", deckCover: "",
-            grade: 0, privatePack: false, rating: 0, shots: 0
+            name: "NEWCardsPackVA", path: "", type: "", deckCover: "",
+            grade: 0, private: false, rating: 0, shots: 0
         }
         dispatch(createCardsPackTC(cardsPack))
     }
-
 
     const onUpdateCardsPackNameHandler = (id: string) => {
         const name = "new name Cards Packs"

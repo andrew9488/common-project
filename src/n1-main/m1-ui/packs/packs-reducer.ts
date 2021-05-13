@@ -1,4 +1,4 @@
-import {CardsPackCreateType, CardsPackType, packsAPI, QueryPacksType, ResponsePackType} from '../../m3-dal/api'
+import {CardsPackCreateType, packsAPI, QueryPacksType, ResponsePackType} from '../../m3-dal/api'
 import {AppThunkType} from '../../m2-bll/store';
 import {setAppStatusAC, setIsInitializedAC} from '../app-reducer';
 
@@ -7,6 +7,7 @@ export type PacksReducerActionType = ReturnType<typeof setPacksDataAC>
     | ReturnType<typeof setPagesCountAC>
     | ReturnType<typeof updateCardsPackAC>
     | ReturnType<typeof deleteCardsPackAC>
+    // | ReturnType<typeof createCardsPackAC>
 
 const initialState = {} as ResponsePackType
 type InitialStateType = typeof initialState
@@ -33,6 +34,12 @@ export const packsReducer = (state: InitialStateType = initialState, action: Pac
                 ...state,
                 cardPacks: state.cardPacks.filter(p => p._id !== action.id)
             }
+        // case "PACKS/CREATE-CARDS-PACK":
+        //     debugger
+        //     return {
+        //         ...state,
+        //         cardPacks: [{...action.cardsPack, ...state.cardPacks}]
+        //     }
         default:
             return state
     }
@@ -50,10 +57,14 @@ export const updateCardsPackAC = (id: string, name: string) =>
 export const deleteCardsPackAC = (id: string) =>
     ({type: 'PACKS/DELETE-CARDS-PACK', id} as const)
 
+// export const createCardsPackAC = (cardsPack: CardsPackType) =>
+//     ({type: 'PACKS/CREATE-CARDS-PACK', cardsPack} as const)
+
 export const fetchPacksTC = (queryObj?: Partial<QueryPacksType>): AppThunkType => dispatch => {
     dispatch(setAppStatusAC('loading'))
     packsAPI.fetchPacks(queryObj || {})
         .then(response => {
+            console.log(response)
             dispatch(setPacksDataAC(response))
             dispatch(setAppStatusAC('succeeded'))
         })
@@ -69,6 +80,7 @@ export const createCardsPackTC = (cardsPack: CardsPackCreateType): AppThunkType 
     packsAPI.createPack(cardsPack)
         .then(response => {
             dispatch(fetchPacksTC())
+            // dispatch(createCardsPackAC(response.newCardsPack))
             dispatch(setAppStatusAC('succeeded'))
         })
         .catch(error => {

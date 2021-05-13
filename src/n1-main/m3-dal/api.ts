@@ -130,7 +130,7 @@ export type CardsPackCreateType = {
     shots: number
     rating: number
     deckCover: string
-    privatePack: boolean
+    private: boolean
     type: string
 }
 
@@ -153,7 +153,7 @@ export type CardsPackType = {
     _id: string
 }
 
-type CardsPackResponseType = {
+export type CardsPackResponseType = {
     newCardsPack: CardsPackType
     token: string
     tokenDeathTime: string
