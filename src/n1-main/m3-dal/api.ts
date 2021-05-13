@@ -123,31 +123,41 @@ const defaultsQueryPacks: QueryPacksType = {
 }
 
 //type for post
-type CardsPackCreateType = {
+export type CardsPackCreateType = {
     name: string
     path: string
     grade: number
     shots: number
     rating: number
     deckCover: string
-    privatePack: boolean
+    private: boolean
     type: string
 }
 
-const defaultsCardsPack = {
-    cardsPack: {
-        name: "no name",
-        path: "",
-        type: "",
-        deckCover: "",
-        grade: 0,
-        privatePack: false,
-        rating: 0,
-        shots: 0
-    } as CardsPackCreateType
+export type CardsPackType = {
+    cardsCount: number
+    created: string
+    grade: number
+    more_id: string
+    name: string
+    path: string
+    private: boolean
+    rating: number
+    shots: number
+    deckCover: string
+    type: string
+    updated: string
+    user_id: string
+    user_name: string
+    __v: number
+    _id: string
 }
 
-export type DefaultsCardsPackType = typeof defaultsCardsPack
+export type CardsPackResponseType = {
+    newCardsPack: CardsPackType
+    token: string
+    tokenDeathTime: string
+}
 
 export const packsAPI = {
     fetchPacks(queryObj: Partial<QueryPacksType>) {
@@ -162,15 +172,15 @@ export const packsAPI = {
         return instance.get<ResponsePackType>(`cards/pack?${query.join("&")}`)
             .then(response => response.data)
     },
-    createPack(defaultsCardsPack: DefaultsCardsPackType) {
-        return instance.post(`cards/pack`, defaultsCardsPack)
+    createPack(cardsPack: CardsPackCreateType) {
+        return instance.post<CardsPackResponseType>(`cards/pack`, {cardsPack})
             .then(response => response.data)
     },
     deletePack(id: string) {
         return instance.delete(`cards/pack?id=${id}`)
             .then(response => response.data)
     },
-    updatePack(_id: string, name: string = "new name") {
+    updatePack(_id: string, name: string) {
         return instance.put(`cards/pack`, {_id, name})
             .then(response => response.data)
     }
@@ -224,7 +234,7 @@ const defaultsQueryCards: QueryCardsType = {
 }
 
 //type for post
-type CardCreateType = {
+export type CardCreateType = {
     cardsPack_id: string
     question: string
     answer: string
@@ -237,24 +247,6 @@ type CardCreateType = {
     answerVideo: string
     type: string
 }
-
-const defaultsCard = {
-    card: {
-        cardsPack_id: "",
-        question: "no question",
-        answer: "no answer",
-        grade: 0,
-        shots: 0,
-        rating: 0,
-        answerImg: "",
-        questionImg: "",
-        questionVideo: "",
-        answerVideo: "",
-        type: "card"
-    } as CardCreateType
-}
-
-type DefaultsCardType = typeof defaultsCard
 
 export const cardsAPI = {
     fetchCards(queryObj: Partial<QueryCardsType>) {
@@ -269,15 +261,15 @@ export const cardsAPI = {
         return instance.get<ResponseCardType>(`cards/card?${query.join("&")}`)
             .then(response => response.data)
     },
-    createCard(defaultsCard: DefaultsCardType) {
-        return instance.post(`cards/card`, defaultsCard.card)
+    createCard(card: CardCreateType) {
+        return instance.post(`cards/card`, {card})
     },
     deleteCard(id: string) {
         return instance.delete(`cards/card?id=${id}`)
             .then(response => response.data)
     },
     updateCard(_id: string, question: string = "new question", comments: string = "new comments") {
-        return instance.put(`cards/card?id`, {_id, question, comments})
+        return instance.put(`cards/card`, {_id, question, comments})
             .then(response => response.data)
     }
 }

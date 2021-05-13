@@ -5,9 +5,13 @@ import {PackType} from "../../../m3-dal/api";
 
 type PackPropsType = {
     pack: PackType
+    updateCardsPackName: (id: string) => void
+    deleteCardsPack: (id: string) => void
 }
 
 export const Pack: React.FC<PackPropsType> = (props) => {
+
+
     return (
         <>
             <tr>
@@ -16,8 +20,8 @@ export const Pack: React.FC<PackPropsType> = (props) => {
                 <td>{props.pack.updated}</td>
                 <td>{props.pack.type}</td>
                 <td>
-                    <button>add</button>
-                    <button>update</button>
+                    <button onClick={() => props.deleteCardsPack(props.pack._id)}>del</button>
+                    <button onClick={() => props.updateCardsPackName(props.pack._id)}>update</button>
                     <NavLink to={`${PATH.CARDS}/${props.pack._id}`}>cards</NavLink>
                 </td>
             </tr>

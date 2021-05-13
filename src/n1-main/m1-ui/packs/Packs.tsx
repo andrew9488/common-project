@@ -2,7 +2,13 @@ import React, {ChangeEvent, useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {AppRootStateType} from '../../m2-bll/store';
 import {PackType} from '../../m3-dal/api';
-import {fetchPacksTC} from './packs-reducer';
+import {
+    createCardsPackTC, deleteCardsPackAC,
+    deleteCardsPackTC,
+    fetchPacksTC,
+    updateCardsPackAC,
+    updateCardsPackTC
+} from './packs-reducer';
 import {Pack} from './Pack/Pack';
 import {
     getPacksWithFilters,
@@ -58,6 +64,25 @@ export const Packs: React.FC = () => {
     const pagesOptions = [5, 10, 15, 20, 25]
     const pagesOptionsTags = pagesOptions.map(item => <option value={item} key={item}>{item}</option>)
 
+    const onAddCardsPackHandler = () => {
+        let cardsPack = {
+            name: "NEWCardsPackVA", path: "", type: "", deckCover: "",
+            grade: 0, private: false, rating: 0, shots: 0
+        }
+        dispatch(createCardsPackTC(cardsPack))
+    }
+
+    const onUpdateCardsPackNameHandler = (id: string) => {
+        const name = "new name Cards Packs"
+        // dispatch(updateCardsPackTC(id,name))
+        dispatch(updateCardsPackAC(id, name))
+    }
+
+    const onDeleteCardsPackHandler = (id: string) => {
+        // dispatch(deleteCardsPackTC(id))
+        dispatch(deleteCardsPackAC(id))
+    }
+
     if (!packs) {
         return <Preloader/>
     }
@@ -97,17 +122,21 @@ export const Packs: React.FC = () => {
                     <th>Name</th>
                     <th>Cards Count
                         <button onClick={() => dispatch(sortPackTC('0cardsCount'))}>&#8593;</button>
-                        <button onClick={() => dispatch(sortPackTC('1cardsCount'))}>&#8595;</button></th>
+                        <button onClick={() => dispatch(sortPackTC('1cardsCount'))}>&#8595;</button>
+                    </th>
                     <th>Update</th>
                     <th>Url</th>
                     <th>
-                        <button>Add</button>
+                        <button onClick={onAddCardsPackHandler}>Add</button>
                     </th>
                 </tr>
                 </thead>
                 <tbody>
                 {packs && packs.map(p => {
-                    return <Pack key={p._id} pack={p}/>
+                    return <Pack key={p._id}
+                                 pack={p}
+                                 deleteCardsPack={onDeleteCardsPackHandler}
+                                 updateCardsPackName={onUpdateCardsPackNameHandler}/>
                 })}
                 </tbody>
             </table>
