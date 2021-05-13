@@ -7,7 +7,7 @@ export type PacksReducerActionType = ReturnType<typeof setPacksDataAC>
     | ReturnType<typeof setPagesCountAC>
     | ReturnType<typeof updateCardsPackAC>
     | ReturnType<typeof deleteCardsPackAC>
-    // | ReturnType<typeof createCardsPackAC>
+// | ReturnType<typeof createCardsPackAC>
 
 const initialState = {} as ResponsePackType
 type InitialStateType = typeof initialState
@@ -24,12 +24,12 @@ export const packsReducer = (state: InitialStateType = initialState, action: Pac
         case 'SET-CURRENT-PAGES-COUNT': {
             return {...state, pageCount: action.value}
         }
-        case "PACKS/UPDATE-CARDS-PACK":
+        case 'PACKS/UPDATE-CARDS-PACK':
             return {
                 ...state,
                 cardPacks: state.cardPacks.map(p => p._id === action.id ? {...p, name: action.name} : p)
             }
-        case "PACKS/DELETE-CARDS-PACK":
+        case 'PACKS/DELETE-CARDS-PACK':
             return {
                 ...state,
                 cardPacks: state.cardPacks.filter(p => p._id !== action.id)
@@ -75,7 +75,7 @@ export const fetchPacksTC = (queryObj?: Partial<QueryPacksType>): AppThunkType =
         })
 }
 
-export const createCardsPackTC = (cardsPack: CardsPackCreateType): AppThunkType => dispatch => {
+export const createCardsPackTC = (cardsPack: Partial<CardsPackCreateType>): AppThunkType => dispatch => {
     dispatch(setAppStatusAC('loading'))
     packsAPI.createPack(cardsPack)
         .then(response => {

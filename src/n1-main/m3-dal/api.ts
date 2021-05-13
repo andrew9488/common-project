@@ -119,7 +119,7 @@ export type QueryPacksType = {
     user_id: string
 }
 const defaultsQueryPacks: QueryPacksType = {
-    packName: "", min: 5, max: 9, sortPacks: "0updated", page: 1, pageCount: 5, user_id: ""
+    packName: '', min: 0, max: 9, sortPacks: '0updated', page: 1, pageCount: 5, user_id: ''
 }
 
 //type for post
@@ -169,10 +169,10 @@ export const packsAPI = {
             }
             query.push(`${key}=${defaultsQueryPacks[key]}`);
         })
-        return instance.get<ResponsePackType>(`cards/pack?${query.join("&")}`)
+        return instance.get<ResponsePackType>(`cards/pack?${query.join('&')}`)
             .then(response => response.data)
     },
-    createPack(cardsPack: CardsPackCreateType) {
+    createPack(cardsPack: Partial<CardsPackCreateType>) {
         return instance.post<CardsPackResponseType>(`cards/pack`, {cardsPack})
             .then(response => response.data)
     },
@@ -223,10 +223,10 @@ type QueryCardsType = {
     pageCount: number
 }
 const defaultsQueryCards: QueryCardsType = {
-    cardsPack_id: "",
-    cardAnswer: "",
-    cardQuestion: "",
-    sortPack: "0grade",
+    cardsPack_id: '',
+    cardAnswer: '',
+    cardQuestion: '',
+    sortPack: '0grade',
     min: 1,
     max: 4,
     page: 1,
@@ -258,7 +258,7 @@ export const cardsAPI = {
             }
             query.push(`${key}=${defaultsQueryCards[key]}`);
         })
-        return instance.get<ResponseCardType>(`cards/card?${query.join("&")}`)
+        return instance.get<ResponseCardType>(`cards/card?${query.join('&')}`)
             .then(response => response.data)
     },
     createCard(card: CardCreateType) {
@@ -268,7 +268,7 @@ export const cardsAPI = {
         return instance.delete(`cards/card?id=${id}`)
             .then(response => response.data)
     },
-    updateCard(_id: string, question: string = "new question", comments: string = "new comments") {
+    updateCard(_id: string, question: string = 'new question', comments: string = 'new comments') {
         return instance.put(`cards/card`, {_id, question, comments})
             .then(response => response.data)
     }

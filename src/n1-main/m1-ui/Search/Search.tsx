@@ -22,14 +22,15 @@ const Search: React.FC<SearchPropsType> = (props) => {
     const onSearchChange = (event: ChangeEvent<HTMLInputElement>) => {
         let value = event.currentTarget.value;
         setSearchValue(value);
-
-        clearTimeout(timeoutId);
-
-        let id = window.setTimeout(() => {
-            props.setSearch(value)
-        }, 1000)
-
-        setTimeoutId(id);
+        props.setSearch(value)
+        //
+        // clearTimeout(timeoutId);
+        //
+        // let id = window.setTimeout(() => {
+        //     props.setSearch(value)
+        // }, 1000)
+        //
+        // setTimeoutId(id);
     }
 
     return (

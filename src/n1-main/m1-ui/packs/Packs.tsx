@@ -1,7 +1,7 @@
 import React, {ChangeEvent, useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {AppRootStateType} from '../../m2-bll/store';
-import {PackType} from '../../m3-dal/api';
+import {CardsPackCreateType, PackType} from '../../m3-dal/api';
 import {
     createCardsPackTC, deleteCardsPackAC,
     deleteCardsPackTC,
@@ -66,9 +66,8 @@ export const Packs: React.FC = () => {
 
     const onAddCardsPackHandler = () => {
         let cardsPack = {
-            name: "NEWCardsPackVA", path: "", type: "", deckCover: "",
-            grade: 0, private: false, rating: 0, shots: 0
-        }
+            name: "NEWCardsPackVA"
+        } as Partial<CardsPackCreateType>
         dispatch(createCardsPackTC(cardsPack))
     }
 
