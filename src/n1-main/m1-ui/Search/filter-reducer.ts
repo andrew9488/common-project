@@ -6,8 +6,8 @@ type ActionsType = ReturnType<typeof setSearchValueAC> | ReturnType<typeof setMi
 
 const initialState = {
     search: '',
-    min: 3,
-    max: 9
+    min: 0,
+    max: 5
 }
 
 type InitialStateType = typeof initialState
@@ -37,7 +37,7 @@ export const getPacksWithFilters = (): AppThunkType => (dispatch, getState) => {
     let search = getState().filter.search;
     let min = getState().filter.min;
     let max = getState().filter.max;
-    const searchParams = {packName: search, min, max} as Partial<QueryPacksType>
+    const searchParams = {packName: search, min: min, max: max} as Partial<QueryPacksType>
     dispatch(fetchPacksTC(searchParams))
 }
 
