@@ -1,6 +1,6 @@
-import {API} from '../m3-dal/api';
 import {AppThunkType} from '../m2-bll/store';
 import {setIsLoggedIn, setLoginError} from '../../n2-features/f1-auth/a1-login/auth-reducer';
+import {authAPI} from '../m3-dal/authAPI';
 
 export type RequestStatusType = 'idle' | 'loading' | 'succeeded' | 'failed'
 
@@ -37,7 +37,7 @@ export const setIsInitializedAC = (isInitialized: boolean) =>
 
 export const initializedAppTC = (): AppThunkType => dispatch => {
     dispatch(setAppStatusAC('loading'))
-    API.authMe()
+    authAPI.authMe()
         .then(() => {
             dispatch(setAppStatusAC('succeeded'))
             dispatch(setIsInitializedAC(true))
@@ -46,8 +46,8 @@ export const initializedAppTC = (): AppThunkType => dispatch => {
         .catch(e => {
             const error = e.response ? e.response.data.error : (e.message + ', more details in the console')
             dispatch(setLoginError(error));
-            dispatch(setIsInitializedAC(true))
             dispatch(setAppStatusAC('failed'))
+            dispatch(setIsInitializedAC(true))
         })
 
 }

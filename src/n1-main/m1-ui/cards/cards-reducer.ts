@@ -1,6 +1,7 @@
-import {CardCreateType, cardsAPI, ResponseCardType} from '../../m3-dal/api'
+
 import {AppThunkType} from '../../m2-bll/store';
 import {setAppStatusAC, setIsInitializedAC} from '../app-reducer';
+import {CardCreateType, cardsAPI, ResponseCardType} from '../../m3-dal/cardsAPI';
 
 export type CardsReducerActionType = ReturnType<typeof setCardsDataAC>
 

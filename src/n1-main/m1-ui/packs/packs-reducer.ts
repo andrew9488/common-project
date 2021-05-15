@@ -1,6 +1,6 @@
-import {CardsPackCreateType, FetchPacksPayloadType, packsAPI, ResponsePackType} from '../../m3-dal/api'
 import {AppThunkType} from '../../m2-bll/store';
 import {setAppStatusAC, setIsInitializedAC} from '../app-reducer';
+import {CardsPackCreateType, FetchPacksPayloadType, packsAPI, ResponsePackType} from '../../m3-dal/packAPI';
 
 export type PacksReducerActionType = ReturnType<typeof setPacksDataAC>
     | ReturnType<typeof setPageValueAC>

@@ -1,11 +1,14 @@
-import {API} from '../../../n1-main/m3-dal/api';
 import {setAppStatusAC} from '../../../n1-main/m1-ui/app-reducer';
 import {AppThunkType} from '../../../n1-main/m2-bll/store';
+import {authAPI} from '../../../n1-main/m3-dal/authAPI';
 
 //types
 export type AuthReducerActionType = ReturnType<typeof setLoginData>
-    | ReturnType<typeof setIsLoggedIn>
-    | ReturnType<typeof setLoginError>
+    | SetIsLoggedInActionType
+    | SetLoginErrorActionType
+
+export type SetIsLoggedInActionType = ReturnType<typeof setIsLoggedIn>
+export type SetLoginErrorActionType = ReturnType<typeof setLoginError>
 
 type UserDataType = {
     email: string | null,
@@ -55,7 +58,7 @@ export const setLoginError = (loginError: string) => ({type: 'auth/SET-LOGIN-ERR
 //thunks
 export const loginTC = (email: string, password: string, rememberMe: boolean): AppThunkType => dispatch => {
     dispatch(setAppStatusAC('loading'))
-    API.login(email, password, rememberMe)
+    authAPI.login(email, password, rememberMe)
         .then(response => {
             const {email, _id, avatar, name, publicCardPacksCount} = response;
             dispatch(setLoginData({email, _id, avatar, name, publicCardPacksCount}));
@@ -71,7 +74,7 @@ export const loginTC = (email: string, password: string, rememberMe: boolean): A
 
 export const logOutTC = (): AppThunkType => dispatch => {
     dispatch(setAppStatusAC('loading'))
-    API.logout()
+    authAPI.logout()
         .then(response => {
             dispatch(setIsLoggedIn(false));
             dispatch(setAppStatusAC('succeeded'))

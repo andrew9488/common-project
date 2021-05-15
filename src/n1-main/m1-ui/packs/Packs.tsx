@@ -1,7 +1,6 @@
 import React, {ChangeEvent, useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {AppRootStateType} from '../../m2-bll/store';
-import {CardsPackCreateType, PackType} from '../../m3-dal/api';
 import {createCardsPackTC, deleteCardsPackTC, fetchPacksTC, updateCardsPackTC} from './packs-reducer';
 import {Pack} from './Pack/Pack';
 import {
@@ -18,6 +17,7 @@ import SuperDoubleRange from '../common/super-double-range/SuperDoubleRange';
 import Paginator from '../common/paginator/Paginator';
 import styles from './Packs.module.css';
 import {Preloader} from '../common/preloader/Preloader';
+import {CardsPackCreateType, PackType} from '../../m3-dal/packAPI';
 
 export const Packs: React.FC = () => {
 

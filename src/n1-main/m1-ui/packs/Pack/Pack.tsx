@@ -1,7 +1,7 @@
 import React from "react";
 import {NavLink} from "react-router-dom";
 import {PATH} from "../../routes/Routes";
-import {PackType} from "../../../m3-dal/api";
+import {PackType} from '../../../m3-dal/packAPI';
 
 type PackPropsType = {
     pack: PackType

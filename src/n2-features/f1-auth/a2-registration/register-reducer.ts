@@ -1,6 +1,6 @@
-import {API} from "../../../n1-main/m3-dal/api";
 import {AppThunkType} from "../../../n1-main/m2-bll/store";
 import {setAppStatusAC} from "../../../n1-main/m1-ui/app-reducer";
+import {authAPI} from '../../../n1-main/m3-dal/authAPI';
 
 export type RegisterReducerActionType = ReturnType<typeof setIsRegistrationDataAC>
 
@@ -29,7 +29,7 @@ const setIsRegistrationDataAC = (isRegistration: boolean) =>
 
 export const registerTC = (email: string, password: string): AppThunkType => dispatch => {
     dispatch(setAppStatusAC("loading"))
-    API.register(email, password)
+    authAPI.register(email, password)
         .then(() => {
             dispatch(setIsRegistrationDataAC(true))
             dispatch(setAppStatusAC("succeeded"))
