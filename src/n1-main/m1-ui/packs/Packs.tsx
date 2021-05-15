@@ -53,7 +53,7 @@ export const Packs: React.FC = () => {
     }
 
     useEffect(() => {
-        dispatch(fetchPacksTC())
+        dispatch(fetchPacksTC({}))
     }, [])
 
     const pagesOptions = [5, 10, 15, 20, 25]
