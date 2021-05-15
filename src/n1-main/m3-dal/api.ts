@@ -267,5 +267,20 @@ export const cardsAPI = {
     updateCard(_id: string, question?: string) {
         return instance.put(`cards/card`, {card: {_id, question}})
             .then(response => response.data)
+    },
+    setCardGrade(grade: number, card_id: string) {
+        return instance.put<SetGradeResponseType>(`cards/grade`, {grade, card_id})
     }
 }
+
+type SetGradeResponseType = {
+    updatedGrade: {
+        _id: string
+        cardsPack_id: string
+        card_id: string
+        user_id: string
+        grade: number
+        shots: number
+    }
+}
+
