@@ -5,7 +5,7 @@ import {AppRootStateType} from '../../../n1-main/m2-bll/store';
 import {Redirect} from 'react-router-dom';
 import {PATH} from '../../../n1-main/m1-ui/routes/Routes';
 import styles from './Login.module.css';
-import {RequestStatusType} from "../../../n1-main/m1-ui/app-reducer";
+import {RequestStatusType} from '../../../n1-main/m1-ui/app-reducer';
 
 const Login: React.FC = () => {
 
@@ -42,16 +42,24 @@ const Login: React.FC = () => {
             Login
             <form>
                 <div>
-                    <input type="text" onChange={onEmailChangeHandler}/>
+                    <input type="text"
+                           onChange={onEmailChangeHandler}
+                           defaultValue={'nya-admin@nya.nya'}/>
                 </div>
                 <div>
-                    <input type="password" onChange={onPasswordChangeHandler}/>
+                    <input type="password"
+                           onChange={onPasswordChangeHandler}
+                           defaultValue={'1qazxcvBG'}/>
                 </div>
                 <div>
-                    <input type="checkbox" onChange={onRememberMeChangeHandler}/>
+                    <input type="checkbox"
+                           onChange={onRememberMeChangeHandler}/>
                     Remember me
                 </div>
-                <button type={'submit'} onClick={onLoginFormSubmitHandler} disabled={appStatus === "loading"}>log in</button>
+                <button type={'submit'}
+                        onClick={onLoginFormSubmitHandler}
+                        disabled={appStatus === 'loading'}>log in
+                </button>
             </form>
             {loginError ? <div className={styles.loginError}>{loginError}</div> : ''}
         </div>
