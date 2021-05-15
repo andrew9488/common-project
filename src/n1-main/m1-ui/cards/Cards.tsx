@@ -1,8 +1,8 @@
 import React, {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "../../m2-bll/store";
-import {CardType} from "../../m3-dal/api";
-import {createCardTC, fetchCardsTC} from "./cards-reducer";
+import {CardCreateType, CardType} from "../../m3-dal/api";
+import {createCardTC, deleteCardTC, fetchCardsTC, updateCardTC} from "./cards-reducer";
 import {Card} from "./Card/Card";
 import {RouteComponentProps, withRouter} from "react-router-dom";
 
@@ -22,10 +22,19 @@ const Cards: React.FC<PropsType> = (props) => {
 
     const onAddCardHandler = () => {
         const card = {
-            cardsPack_id: props.match.params.cardsPack_id, question: "", answer: "", grade: 0,
-            shots: 0, rating: 0, answerImg: "", questionImg: "", questionVideo: "", answerVideo: "", type: ""
-        }
+            cardsPack_id: props.match.params.cardsPack_id,
+            question: "What is CSS?",
+            answer: "CascadingStyleSheet",
+        } as Partial<CardCreateType>
         dispatch(createCardTC(card))
+    }
+
+    const onDeleteCardHandler = (id: string) => {
+        dispatch(deleteCardTC(id))
+    }
+    const onUpdateCardHandler = (id: string) => {
+        const newQuestion = "new question for card"
+        dispatch(updateCardTC(id, newQuestion))
     }
 
     return (
@@ -38,7 +47,7 @@ const Cards: React.FC<PropsType> = (props) => {
                     <th>Answer</th>
                     <th>Grade</th>
                     <th>Update</th>
-                    <th>Url</th>
+                    <th>Rating</th>
                     <th>
                         <button onClick={onAddCardHandler}>Add</button>
                     </th>
@@ -46,7 +55,10 @@ const Cards: React.FC<PropsType> = (props) => {
                 </thead>
                 <tbody>
                 {cards && cards.map(c => {
-                    return <Card key={c._id} card={c}/>
+                    return <Card key={c._id} card={c}
+                                 deleteCard={onDeleteCardHandler}
+                                 updateCard={onUpdateCardHandler}
+                    />
                 })}
                 </tbody>
             </table>

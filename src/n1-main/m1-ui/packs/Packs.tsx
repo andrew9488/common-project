@@ -2,20 +2,15 @@ import React, {ChangeEvent, useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {AppRootStateType} from '../../m2-bll/store';
 import {CardsPackCreateType, PackType} from '../../m3-dal/api';
-import {
-    createCardsPackTC, deleteCardsPackAC,
-    deleteCardsPackTC,
-    fetchPacksTC,
-    updateCardsPackAC,
-    updateCardsPackTC
-} from './packs-reducer';
+import {createCardsPackTC, deleteCardsPackTC, fetchPacksTC, updateCardsPackTC} from './packs-reducer';
 import {Pack} from './Pack/Pack';
 import {
     getPacksWithFilters,
     onPacksPageClickTC,
     onPortionPacksChangeTC,
     setMinMaxValuesAC,
-    setSearchValueAC, sortPackTC
+    setSearchValueAC,
+    sortPackTC
 } from '../Search/filter-reducer';
 import Search from '../Search/Search';
 import SuperButton from '../common/super-button/SuperButton';
@@ -71,15 +66,13 @@ export const Packs: React.FC = () => {
         dispatch(createCardsPackTC(cardsPack))
     }
 
-    const onUpdateCardsPackNameHandler = (id: string) => {
-        const name = "new name Cards Packs"
-        // dispatch(updateCardsPackTC(id,name))
-        dispatch(updateCardsPackAC(id, name))
+    const onUpdateCardsPackNameHandler = (_id: string) => {
+        const name = "newNameCardsPacksVA"
+        dispatch(updateCardsPackTC(_id, name))
     }
 
     const onDeleteCardsPackHandler = (id: string) => {
-        // dispatch(deleteCardsPackTC(id))
-        dispatch(deleteCardsPackAC(id))
+        dispatch(deleteCardsPackTC(id))
     }
 
     if (!packs) {
@@ -124,7 +117,7 @@ export const Packs: React.FC = () => {
                         <button onClick={() => dispatch(sortPackTC('1cardsCount'))}>&#8595;</button>
                     </th>
                     <th>Update</th>
-                    <th>Url</th>
+                    <th>UserName</th>
                     <th>
                         <button onClick={onAddCardsPackHandler}>Add</button>
                     </th>

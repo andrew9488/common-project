@@ -110,53 +110,28 @@ export type ResponsePackType = {
 
 //type for get
 export type QueryPacksType = {
-    packName: string
-    min: number
-    max: number
-    sortPacks: string
-    page: number
-    pageCount: number
-    user_id: string
+    packName?: string
+    min?: number
+    max?: number
+    sortPacks?: string
+    page?: number
+    pageCount?: number
+    user_id?: string
 }
 const defaultsQueryPacks: QueryPacksType = {
-    packName: '', min: 0, max: 9, sortPacks: '0updated', page: 1, pageCount: 5, user_id: ''
+    packName: '', min: 0, max: 9, sortPacks: '0updated', page: 1, pageCount: 10, user_id: ''
 }
 
 //type for post
 export type CardsPackCreateType = {
-    name: string
-    path: string
-    grade: number
-    shots: number
-    rating: number
-    deckCover: string
-    private: boolean
-    type: string
-}
-
-export type CardsPackType = {
-    cardsCount: number
-    created: string
-    grade: number
-    more_id: string
-    name: string
-    path: string
-    private: boolean
-    rating: number
-    shots: number
-    deckCover: string
-    type: string
-    updated: string
-    user_id: string
-    user_name: string
-    __v: number
-    _id: string
-}
-
-export type CardsPackResponseType = {
-    newCardsPack: CardsPackType
-    token: string
-    tokenDeathTime: string
+    name?: string
+    path?: string
+    grade?: number
+    shots?: number
+    rating?: number
+    deckCover?: string
+    private?: boolean
+    type?: string
 }
 
 export const packsAPI = {
@@ -172,16 +147,26 @@ export const packsAPI = {
         return instance.get<ResponsePackType>(`cards/pack?${query.join('&')}`)
             .then(response => response.data)
     },
+    // fetchPacks(packName?: string, min?: number, max?: number, sortPacks?: string, page?: number,
+    //            pageCount?: number, user_id?: string) {
+    //     return instance.get<ResponsePackType>(`cards/pack?`,
+    //         {
+    //             params: {
+    //                 packName, min, max, sortPacks, page, pageCount, user_id
+    //             }
+    //         })
+    //         .then(response => response.data)
+    // },
     createPack(cardsPack: Partial<CardsPackCreateType>) {
-        return instance.post<CardsPackResponseType>(`cards/pack`, {cardsPack})
+        return instance.post(`cards/pack`, {cardsPack})
             .then(response => response.data)
     },
     deletePack(id: string) {
         return instance.delete(`cards/pack?id=${id}`)
             .then(response => response.data)
     },
-    updatePack(_id: string, name: string) {
-        return instance.put(`cards/pack`, {_id, name})
+    updatePack(_id: string, name ?: string) {
+        return instance.put(`cards/pack`, {cardsPack: {_id, name}})
             .then(response => response.data)
     }
 }
@@ -213,21 +198,21 @@ export type ResponseCardType = {
 
 //type for get
 type QueryCardsType = {
-    cardsPack_id: string
-    cardAnswer: string
-    cardQuestion: string
-    min: number
-    max: number
-    sortPack: string
-    page: number
-    pageCount: number
+    cardsPack_id?: string
+    cardAnswer?: string
+    cardQuestion?: string
+    min?: number
+    max?: number
+    sortPack?: string
+    page?: number
+    pageCount?: number
 }
 const defaultsQueryCards: QueryCardsType = {
     cardsPack_id: '',
     cardAnswer: '',
     cardQuestion: '',
     sortPack: '0grade',
-    min: 1,
+    min: 0,
     max: 4,
     page: 1,
     pageCount: 7
@@ -235,17 +220,17 @@ const defaultsQueryCards: QueryCardsType = {
 
 //type for post
 export type CardCreateType = {
-    cardsPack_id: string
-    question: string
-    answer: string
-    grade: number
-    shots: number
-    rating: number
-    answerImg: string
-    questionImg: string
-    questionVideo: string
-    answerVideo: string
-    type: string
+    cardsPack_id?: string
+    question?: string
+    answer?: string
+    grade?: number
+    shots?: number
+    rating?: number
+    answerImg?: string
+    questionImg?: string
+    questionVideo?: string
+    answerVideo?: string
+    type?: string
 }
 
 export const cardsAPI = {
@@ -261,15 +246,26 @@ export const cardsAPI = {
         return instance.get<ResponseCardType>(`cards/card?${query.join('&')}`)
             .then(response => response.data)
     },
-    createCard(card: CardCreateType) {
+    // fetchCards(cardsPack_id?: string, cardAnswer?: string, cardQuestion?: string, min?: number,
+    //            max?: number, sortPack?: string, page?: number, pageCount?: number) {
+    //     return instance.get<ResponseCardType>(`cards/card?`, {
+    //         params: {
+    //             cardsPack_id, cardAnswer, cardQuestion,
+    //             min, max, sortPack, page, pageCount
+    //         }
+    //     })
+    //         .then(response => response.data)
+    // },
+    createCard(card: Partial<CardCreateType>) {
         return instance.post(`cards/card`, {card})
+            .then(response => response.data)
     },
     deleteCard(id: string) {
         return instance.delete(`cards/card?id=${id}`)
             .then(response => response.data)
     },
-    updateCard(_id: string, question: string = 'new question', comments: string = 'new comments') {
-        return instance.put(`cards/card`, {_id, question, comments})
+    updateCard(_id: string, question?: string) {
+        return instance.put(`cards/card`, {card: {_id, question}})
             .then(response => response.data)
     }
 }

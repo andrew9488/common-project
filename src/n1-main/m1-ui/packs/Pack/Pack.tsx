@@ -18,7 +18,7 @@ export const Pack: React.FC<PackPropsType> = (props) => {
                 <td>{props.pack.name}</td>
                 <td>{props.pack.cardsCount}</td>
                 <td>{props.pack.updated}</td>
-                <td>{props.pack.type}</td>
+                <td>{props.pack.user_name}</td>
                 <td>
                     <button onClick={() => props.deleteCardsPack(props.pack._id)}>del</button>
                     <button onClick={() => props.updateCardsPackName(props.pack._id)}>update</button>

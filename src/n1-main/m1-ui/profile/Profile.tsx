@@ -21,7 +21,6 @@ const Profile: React.FC = () => {
         return <Redirect to={PATH.LOGIN}/>
     }
 
-
     return (
         <div>
             Profile
