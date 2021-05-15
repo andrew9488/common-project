@@ -42,7 +42,6 @@ type ChangeProfileResponseType = {
     tokenDeathTime: number
 }
 
-//не поняла, почему его не надо типизировать, если он приходит...
 type AddedUserType = {
     _id: string
     email: string
@@ -108,8 +107,8 @@ export type ResponsePackType = {
     tokenDeathTime: number
 }
 
-//type for get
-export type QueryPacksType = {
+//type for get packs
+export type FetchPacksPayloadType = {
     packName?: string
     min?: number
     max?: number
@@ -117,9 +116,6 @@ export type QueryPacksType = {
     page?: number
     pageCount?: number
     user_id?: string
-}
-const defaultsQueryPacks: QueryPacksType = {
-    packName: '', min: 0, max: 9, sortPacks: '0updated', page: 1, pageCount: 10, user_id: ''
 }
 
 //type for post
@@ -135,28 +131,11 @@ export type CardsPackCreateType = {
 }
 
 export const packsAPI = {
-    fetchPacks(queryObj: Partial<QueryPacksType>) {
-        let query: string[] = [];
-        (Object.keys(defaultsQueryPacks) as (keyof QueryPacksType)[]).forEach((key: keyof QueryPacksType) => {
-            if (queryObj[key]) {
-                query.push(`${key}=${queryObj[key]}`);
-                return;
-            }
-            query.push(`${key}=${defaultsQueryPacks[key]}`);
-        })
-        return instance.get<ResponsePackType>(`cards/pack?${query.join('&')}`)
+    fetchPacks(data: FetchPacksPayloadType) {
+        return instance.get<ResponsePackType>(`cards/pack?`,
+            {params: {...data}})
             .then(response => response.data)
     },
-    // fetchPacks(packName?: string, min?: number, max?: number, sortPacks?: string, page?: number,
-    //            pageCount?: number, user_id?: string) {
-    //     return instance.get<ResponsePackType>(`cards/pack?`,
-    //         {
-    //             params: {
-    //                 packName, min, max, sortPacks, page, pageCount, user_id
-    //             }
-    //         })
-    //         .then(response => response.data)
-    // },
     createPack(cardsPack: Partial<CardsPackCreateType>) {
         return instance.post(`cards/pack`, {cardsPack})
             .then(response => response.data)
