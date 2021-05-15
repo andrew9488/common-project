@@ -176,7 +176,7 @@ export type ResponseCardType = {
 }
 
 //type for get
-type QueryCardsType = {
+export type FetchCardsPayloadType = {
     cardsPack_id?: string
     cardAnswer?: string
     cardQuestion?: string
@@ -185,16 +185,6 @@ type QueryCardsType = {
     sortPack?: string
     page?: number
     pageCount?: number
-}
-const defaultsQueryCards: QueryCardsType = {
-    cardsPack_id: '',
-    cardAnswer: '',
-    cardQuestion: '',
-    sortPack: '0grade',
-    min: 0,
-    max: 4,
-    page: 1,
-    pageCount: 7
 }
 
 //type for post
@@ -213,28 +203,10 @@ export type CardCreateType = {
 }
 
 export const cardsAPI = {
-    fetchCards(queryObj: Partial<QueryCardsType>) {
-        let query: string[] = [];
-        (Object.keys(defaultsQueryCards) as (keyof QueryCardsType)[]).forEach((key: keyof QueryCardsType) => {
-            if (queryObj[key]) {
-                query.push(`${key}=${queryObj[key]}`);
-                return;
-            }
-            query.push(`${key}=${defaultsQueryCards[key]}`);
-        })
-        return instance.get<ResponseCardType>(`cards/card?${query.join('&')}`)
+    fetchCards(data: FetchCardsPayloadType) {
+        return instance.get<ResponseCardType>(`cards/card?`, {params: {...data}})
             .then(response => response.data)
     },
-    // fetchCards(cardsPack_id?: string, cardAnswer?: string, cardQuestion?: string, min?: number,
-    //            max?: number, sortPack?: string, page?: number, pageCount?: number) {
-    //     return instance.get<ResponseCardType>(`cards/card?`, {
-    //         params: {
-    //             cardsPack_id, cardAnswer, cardQuestion,
-    //             min, max, sortPack, page, pageCount
-    //         }
-    //     })
-    //         .then(response => response.data)
-    // },
     createCard(card: Partial<CardCreateType>) {
         return instance.post(`cards/card`, {card})
             .then(response => response.data)
