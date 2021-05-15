@@ -15,8 +15,8 @@ const Login: React.FC = () => {
     const loginError = useSelector<AppRootStateType, string | null>(state => state.auth.loginError);
     const appStatus = useSelector<AppRootStateType, RequestStatusType>(state => state.app.status)
 
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+    const [email, setEmail] = useState('nya-admin@nya.nya');
+    const [password, setPassword] = useState('1qazxcvBG');
     const [rememberMe, setRememberMe] = useState(false);
 
 
@@ -53,7 +53,8 @@ const Login: React.FC = () => {
                 </div>
                 <div>
                     <input type="checkbox"
-                           onChange={onRememberMeChangeHandler}/>
+                           onChange={onRememberMeChangeHandler}
+                           checked={rememberMe}/>
                     Remember me
                 </div>
                 <button type={'submit'}
