@@ -36,11 +36,39 @@ export const fetchCardsTC = (id: string): AppThunkType => dispatch => {
         })
 }
 
-export const createCardTC = (card: CardCreateType): AppThunkType => dispatch => {
+export const createCardTC = (card:  Partial<CardCreateType>): AppThunkType => dispatch => {
     dispatch(setAppStatusAC("loading"))
     cardsAPI.createCard(card)
         .then(response => {
-            dispatch(fetchCardsTC(response.data.card._id))
+            dispatch(fetchCardsTC(response.newCard.cardsPack_id))
+            dispatch(setAppStatusAC("succeeded"))
+        })
+        .catch(error => {
+            console.log(error)
+            dispatch(setIsInitializedAC(true))
+            dispatch(setAppStatusAC("failed"))
+        })
+}
+
+export const updateCardTC = (_id: string, question?: string): AppThunkType => dispatch => {
+    dispatch(setAppStatusAC("loading"))
+    cardsAPI.updateCard(_id,question)
+        .then(response => {
+            dispatch(fetchCardsTC(response.updatedCard.cardsPack_id))
+            dispatch(setAppStatusAC("succeeded"))
+        })
+        .catch(error => {
+            console.log(error)
+            dispatch(setIsInitializedAC(true))
+            dispatch(setAppStatusAC("failed"))
+        })
+}
+
+export const deleteCardTC = (id: string): AppThunkType => dispatch => {
+    dispatch(setAppStatusAC("loading"))
+    cardsAPI.deleteCard(id)
+        .then(response => {
+            dispatch(fetchCardsTC(response.deletedCard.cardsPack_id))
             dispatch(setAppStatusAC("succeeded"))
         })
         .catch(error => {

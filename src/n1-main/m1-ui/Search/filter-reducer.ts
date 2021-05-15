@@ -1,6 +1,6 @@
 import {AppThunkType} from '../../m2-bll/store';
 import {fetchPacksTC, setPagesCountAC, setPageValueAC} from '../packs/packs-reducer';
-import {QueryPacksType} from '../../m3-dal/api';
+
 
 type ActionsType = ReturnType<typeof setSearchValueAC> | ReturnType<typeof setMinMaxValuesAC>
 
@@ -37,7 +37,7 @@ export const getPacksWithFilters = (): AppThunkType => (dispatch, getState) => {
     let search = getState().filter.search;
     let min = getState().filter.min;
     let max = getState().filter.max;
-    const searchParams = {packName: search, min: min, max: max} as Partial<QueryPacksType>
+    const searchParams = {packName: search, min: min, max: max}
     dispatch(fetchPacksTC(searchParams))
 }
 
