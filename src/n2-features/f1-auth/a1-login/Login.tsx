@@ -44,12 +44,12 @@ const Login: React.FC = () => {
                 <div>
                     <input type="text"
                            onChange={onEmailChangeHandler}
-                           defaultValue={'nya-admin@nya.nya'}/>
+                           value={email}/>
                 </div>
                 <div>
                     <input type="password"
                            onChange={onPasswordChangeHandler}
-                           defaultValue={'1qazxcvBG'}/>
+                           value={password}/>
                 </div>
                 <div>
                     <input type="checkbox"
