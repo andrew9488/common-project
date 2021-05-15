@@ -1,5 +1,6 @@
 import {API} from "../m3-dal/api";
 import {AppThunkType} from "../m2-bll/store";
+import {setIsLoggedIn} from '../../n2-features/f1-auth/a1-login/auth-reducer';
 
 export type RequestStatusType = "idle" | "loading" | "succeeded" | "failed"
 
@@ -40,6 +41,7 @@ export const initializedAppTC = (): AppThunkType => dispatch => {
         .then(() => {
             dispatch(setAppStatusAC("succeeded"))
             dispatch(setIsInitializedAC(true))
+            dispatch(setIsLoggedIn(true));
         })
         .catch(error => {
             console.log(error)
