@@ -1,5 +1,5 @@
 import React from "react";
-import {CardType} from "../../../m3-dal/api";
+import {CardType} from '../../../m3-dal/cardsAPI';
 
 type CardPropsType = {
     card: CardType

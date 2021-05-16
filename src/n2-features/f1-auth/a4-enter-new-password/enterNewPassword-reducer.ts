@@ -1,6 +1,6 @@
 import {AppThunkType} from "../../../n1-main/m2-bll/store";
 import {setAppStatusAC} from "../../../n1-main/m1-ui/app-reducer";
-import {API} from "../../../n1-main/m3-dal/api";
+import {authAPI} from '../../../n1-main/m3-dal/authAPI';
 
 export type EnterNewPasswordReducerActionType = ReturnType<typeof setIsNewPasswordAC>
 
@@ -29,7 +29,7 @@ export const setIsNewPasswordAC = (isNewPassword: boolean) =>
 
 export const setNewPasswordTC = (newPassword: string, passwordToken: string): AppThunkType => dispatch => {
     dispatch(setAppStatusAC("loading"))
-    API.setNewPassword(newPassword, passwordToken)
+    authAPI.setNewPassword(newPassword, passwordToken)
         .then(() => {
             dispatch(setAppStatusAC("succeeded"))
             dispatch(setIsNewPasswordAC(true))

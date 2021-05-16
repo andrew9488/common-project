@@ -1,7 +1,7 @@
 import {Dispatch} from 'redux';
-import {API} from '../../m3-dal/api';
 import {setIsLoggedIn} from '../../../n2-features/f1-auth/a1-login/auth-reducer';
 import {setAppStatusAC} from "../app-reducer";
+import {authAPI} from '../../m3-dal/authAPI';
 
 type ActionsType = any
 

@@ -1,6 +1,6 @@
-import {CardsPackCreateType, packsAPI, QueryPacksType, ResponsePackType} from '../../m3-dal/api'
 import {AppThunkType} from '../../m2-bll/store';
 import {setAppStatusAC, setIsInitializedAC} from '../app-reducer';
+import {CardsPackCreateType, FetchPacksPayloadType, packsAPI, ResponsePackType} from '../../m3-dal/packAPI';
 
 export type PacksReducerActionType = ReturnType<typeof setPacksDataAC>
     | ReturnType<typeof setPageValueAC>
@@ -32,9 +32,9 @@ export const setPacksDataAC = (packsData: ResponsePackType) =>
 export const setPageValueAC = (value: number) => ({type: 'SET-CURRENT-PAGE-VALUE', value} as const)
 export const setPagesCountAC = (value: number) => ({type: 'SET-CURRENT-PAGES-COUNT', value} as const)
 
-export const fetchPacksTC = (queryObj?: Partial<QueryPacksType>): AppThunkType => dispatch => {
+export const fetchPacksTC = (data: FetchPacksPayloadType): AppThunkType => dispatch => {
     dispatch(setAppStatusAC('loading'))
-    packsAPI.fetchPacks(queryObj || {})
+    packsAPI.fetchPacks({...data})
         .then(response => {
             console.log(response)
             dispatch(setPacksDataAC(response))
@@ -51,7 +51,7 @@ export const createCardsPackTC = (cardsPack: Partial<CardsPackCreateType>): AppT
     dispatch(setAppStatusAC('loading'))
     packsAPI.createPack(cardsPack)
         .then(() => {
-            dispatch(fetchPacksTC())
+            dispatch(fetchPacksTC({}))
             dispatch(setAppStatusAC('succeeded'))
         })
         .catch(error => {
@@ -65,7 +65,7 @@ export const updateCardsPackTC = (_id: string, name?: string): AppThunkType => d
     dispatch(setAppStatusAC('loading'))
     packsAPI.updatePack(_id, name)
         .then(() => {
-            dispatch(fetchPacksTC())
+            dispatch(fetchPacksTC({}))
             dispatch(setAppStatusAC('succeeded'))
         })
         .catch(error => {
@@ -79,7 +79,7 @@ export const deleteCardsPackTC = (id: string): AppThunkType => dispatch => {
     dispatch(setAppStatusAC('loading'))
     packsAPI.deletePack(id)
         .then(() => {
-            dispatch(fetchPacksTC())
+            dispatch(fetchPacksTC({}))
             dispatch(setAppStatusAC('succeeded'))
         })
         .catch(error => {

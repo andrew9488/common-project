@@ -34,22 +34,20 @@ export const setMinMaxValuesAC = (values: number[]) => ({type: 'SET-MIN-MAX-VALU
 //thunks
 
 export const getPacksWithFilters = (): AppThunkType => (dispatch, getState) => {
-    let search = getState().filter.search;
+    let packName = getState().filter.search;
     let min = getState().filter.min;
     let max = getState().filter.max;
-    const searchParams = {packName: search, min: min, max: max}
-    dispatch(fetchPacksTC(searchParams))
+    dispatch(fetchPacksTC({packName, min, max}))
 }
 
-export const onPacksPageClickTC = (newPage: number): AppThunkType => (dispatch) => {
-    dispatch(setPageValueAC(newPage));
-    const params = {page: newPage}
-    dispatch(fetchPacksTC(params))
+export const onPacksPageClickTC = (page: number): AppThunkType => (dispatch) => {
+    dispatch(setPageValueAC(page));
+    dispatch(fetchPacksTC({page}))
 }
 
-export const onPortionPacksChangeTC = (pagesCount: number): AppThunkType => (dispatch) => {
-    dispatch(setPagesCountAC(pagesCount))
-    dispatch(fetchPacksTC({pageCount: pagesCount}))
+export const onPortionPacksChangeTC = (pageCount: number): AppThunkType => (dispatch) => {
+    dispatch(setPagesCountAC(pageCount))
+    dispatch(fetchPacksTC({pageCount}))
 }
 
 export const sortPackTC = (sortPacks: string): AppThunkType => (dispatch) => {

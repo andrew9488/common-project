@@ -1,10 +1,10 @@
 import React, {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "../../m2-bll/store";
-import {CardCreateType, CardType} from "../../m3-dal/api";
 import {createCardTC, deleteCardTC, fetchCardsTC, updateCardTC} from "./cards-reducer";
 import {Card} from "./Card/Card";
 import {RouteComponentProps, withRouter} from "react-router-dom";
+import {CardCreateType, CardType} from '../../m3-dal/cardsAPI';
 
 type PathParamsType = {
     cardsPack_id: string
