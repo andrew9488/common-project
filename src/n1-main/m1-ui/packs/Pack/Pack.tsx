@@ -1,4 +1,4 @@
-import React from "react";
+import React, {Dispatch, SetStateAction} from "react";
 import {NavLink} from "react-router-dom";
 import {PATH} from "../../routes/Routes";
 import {PackType} from '../../../m3-dal/packAPI';
@@ -7,6 +7,9 @@ type PackPropsType = {
     pack: PackType
     updateCardsPackName: (id: string) => void
     deleteCardsPack: (id: string) => void
+    learnCardsPack: () => void
+    setId: (Dispatch<SetStateAction<string>>)
+
 }
 
 export const Pack: React.FC<PackPropsType> = (props) => {
@@ -22,7 +25,11 @@ export const Pack: React.FC<PackPropsType> = (props) => {
                 <td>
                     <button onClick={() => props.deleteCardsPack(props.pack._id)}>del</button>
                     <button onClick={() => props.updateCardsPackName(props.pack._id)}>update</button>
+                    <button onClick={() => {
+                        props.setId(props.pack._id); props.learnCardsPack()
+                    }}>learn</button>
                     <NavLink to={`${PATH.CARDS}/${props.pack._id}`}>cards</NavLink>
+                    <NavLink to={`${PATH.LEARN}/${props.pack._id}`}>learn</NavLink>
                 </td>
             </tr>
         </>

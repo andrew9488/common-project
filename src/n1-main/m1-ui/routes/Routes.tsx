@@ -9,17 +9,19 @@ import TestPage from "../test-page/Tests";
 import Profile from "../profile/Profile";
 import {Packs} from "../packs/Packs";
 import Cards from "../cards/Cards";
+import LearnPage from "../learnPage/LearnPage";
 
 export const PATH = {
     PROFILE: "/profile",
-    LOGIN: "/",
+    LOGIN: "/login",
     REGISTRATION: "/registration",
     RECOVERY_PASSWORD: "/recovery_password",
     ENTER_NEW_PASSWORD: "/enter_new_password",
     TEST_PAGE: "/test_page",
     PACKS: "/packs",
     CARDS: "/cards",
-    ERROR: "/404"
+    LEARN: "/learn",
+    ERROR: "/404",
 }
 
 const Routes: React.FC = () => {
@@ -33,6 +35,7 @@ const Routes: React.FC = () => {
                 <Route path={PATH.ENTER_NEW_PASSWORD} render={() => <EnterNewPassword/>}/>
                 <Route path={PATH.PACKS} render={() => <Packs/>}/>
                 <Route path={`${PATH.CARDS}/:cardsPack_id?`} render={() => <Cards/>}/>
+                <Route path={`${PATH.LEARN}/:cardsPack_id?`} render={() => <LearnPage/>}/>
                 <Route path={PATH.TEST_PAGE} render={() => <TestPage/>}/>
                 <Route path={PATH.ERROR} render={() => <Error/>}/>
                 <Redirect from={"*"} to={PATH.ERROR}/>
