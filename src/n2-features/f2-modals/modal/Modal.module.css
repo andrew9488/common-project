@@ -113,3 +113,7 @@ h3 {
     font-size: 13px;
     line-height: 20px;
 }
+
+.modalMessage button:hover, h3 img:hover {
+    cursor: pointer;
+}
