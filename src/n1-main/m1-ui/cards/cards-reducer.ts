@@ -88,7 +88,9 @@ export const deleteCardTC = (id: string): AppThunkType => dispatch => {
 export const setCardGradeTC = (grade: number, id: string): AppThunkType => dispatch => {
     dispatch(setAppStatusAC('loading'))
     cardsAPI.setCardGrade(grade, id)
-        .then(() => {
+        .then(response => {
+            const id = response.data.updatedGrade.card_id
+            const grade = response.data.updatedGrade.grade
             dispatch(setCardGradeAC(grade, id))
             dispatch(setAppStatusAC('succeeded'))
         })
