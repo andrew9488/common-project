@@ -23,6 +23,7 @@ export const Pack: React.FC<PackPropsType> = (props) => {
                     <button onClick={() => props.deleteCardsPack(props.pack._id)}>del</button>
                     <button onClick={() => props.updateCardsPackName(props.pack._id)}>update</button>
                     <NavLink to={`${PATH.CARDS}/${props.pack._id}`}>cards</NavLink>
+                    <NavLink to={`${PATH.LEARN}/${props.pack._id}`}>learn</NavLink>
                 </td>
             </tr>
         </>

@@ -18,6 +18,7 @@ import Paginator from '../common/paginator/Paginator';
 import styles from './Packs.module.css';
 import {Preloader} from '../common/preloader/Preloader';
 import {CardsPackCreateType, PackType} from '../../m3-dal/packAPI';
+import LearnPage from '../learnPage/LearnPage';
 
 export const Packs: React.FC = () => {
 
@@ -128,9 +129,12 @@ export const Packs: React.FC = () => {
                     return <Pack key={p._id}
                                  pack={p}
                                  deleteCardsPack={onDeleteCardsPackHandler}
-                                 updateCardsPackName={onUpdateCardsPackNameHandler}/>
+                                 updateCardsPackName={onUpdateCardsPackNameHandler}
+
+                    />
                 })}
                 </tbody>
             </table>
         </>);
 }
+
