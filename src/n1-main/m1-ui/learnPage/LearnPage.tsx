@@ -21,7 +21,7 @@ const LearnPage: React.FC<PropsType> = (props) => {
     const cards = useSelector<AppRootStateType, Array<CardType>>(state => state.cards.cards);
     const [isChecked, setIsChecked] = useState<boolean>(false);
     const [first, setFirst] = useState<boolean>(true);
-    const [grade, setGrade] = useState(grades[0])
+    const [grade, setGrade] = useState(grades.indexOf(grades[0])+1)
     const [card, setCard] = useState<CardType>({
         _id: 'fake',
         cardsPack_id: '',
@@ -63,6 +63,8 @@ const LearnPage: React.FC<PropsType> = (props) => {
         setIsChecked(true)
     }
 
+    console.log(grade)
+
     return (
         <div>
             LearnPage
@@ -84,7 +86,7 @@ const LearnPage: React.FC<PropsType> = (props) => {
                                 onChangeOption={setGrade}/>
                     <div>
                         <NavLink to={PATH.PACKS}>cancel</NavLink>
-                        <button onClick={() => onNext(+grade + 1, card.cardsPack_id)}>next</button>
+                        <button onClick={() => onNext(grade, card._id)}>next</button>
                     </div>
                 </>
             )}
