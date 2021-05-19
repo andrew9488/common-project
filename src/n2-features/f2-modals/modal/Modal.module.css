@@ -1,0 +1,119 @@
+.modalBackground {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: black;
+    opacity: 0.35;
+    z-index: 20;
+}
+
+.modalMessage {
+    position: fixed;
+    z-index: 21;
+    padding: 0 24px;
+    box-sizing: border-box;
+    background: #fbfef9;
+    border-radius: 2px;
+}
+
+.line {
+    height: 1px;
+    width: 100%;
+    background: #f0f6ed;
+}
+
+.modalMessage h3 {
+    margin: 15px 0;
+    padding: 0;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 27px;
+    color: #2D2E46;
+}
+
+.info {
+    margin: 25px 0;
+}
+
+.input {
+    margin: 31px 0 36px;
+}
+
+.buttonBlock {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.buttonBlock button {
+    width: 124px;
+    height: 36px;
+    border-radius: 30px;
+    border: none;
+    letter-spacing: 0.01em;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 19px;
+    text-shadow: 0px 1px 1px rgba(0, 0, 0, 0.25);
+}
+
+.cancelBtn {
+    background-color: #EFF6D5;
+    color: #9EBB2A;
+}
+
+.saveBtn {
+    background-color: #9EBB2A;
+    color: #EFF6D5;
+}
+
+.delBtn {
+    background: #F1453D;
+    color: white;
+    box-shadow: 0px 4px 18px rgba(241, 69, 61, 0.35), inset 0px 1px 0px rgba(255, 255, 255, 0.3);
+}
+
+.info p {
+    margin: 0;
+}
+
+.info p span:first-child {
+    font-weight: bold;
+}
+
+h3 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.input input {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 24px;
+    color: #9EBB2A;
+    border: none;
+    border-bottom: 2px solid #EFF6D5;
+    background: #fbfef9;
+    width: 100%;
+}
+
+.input input:focus {
+    outline: none;
+}
+
+.input h4 {
+    margin: 0;
+    color: #cfe281;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 13px;
+    line-height: 20px;
+}
+
+.modalMessage button:hover, h3 img:hover {
+    cursor: pointer;
+}
