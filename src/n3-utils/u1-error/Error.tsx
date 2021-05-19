@@ -11,7 +11,7 @@ const Error: React.FC = () => {
             <div className={style.errorCat}>—ฅ/ᐠ.̫ .ᐟ\ฅ—</div>
             <nav>
                 <div className={style.item}>
-                    <NavLink to={PATH.PROFILE}>go home</NavLink>
+                    <NavLink to={PATH.LOGIN}>go home</NavLink>
                 </div>
             </nav>
         </div>

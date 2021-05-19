@@ -76,12 +76,6 @@ export const Packs: React.FC = () => {
         dispatch(deleteCardsPackTC(id))
     }
 
-    const [isLearn, setIsLearn] = useState<boolean>(false)
-    const [id, setId] = useState<string>("")
-    const onLearnCardsPackHandler = ()=>{
-            setIsLearn(!isLearn)
-    }
-
     if (!packs) {
         return <Preloader/>
     }
@@ -136,14 +130,11 @@ export const Packs: React.FC = () => {
                                  pack={p}
                                  deleteCardsPack={onDeleteCardsPackHandler}
                                  updateCardsPackName={onUpdateCardsPackNameHandler}
-                                 learnCardsPack={onLearnCardsPackHandler}
-                                 setId={setId}
 
                     />
                 })}
                 </tbody>
             </table>
-            {isLearn && <LearnPage/>}
         </>);
 }
 
