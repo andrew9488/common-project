@@ -1,9 +1,8 @@
-
 import {AppThunkType} from '../../m2-bll/store';
 import {setAppStatusAC, setIsInitializedAC} from '../app-reducer';
 import {CardCreateType, cardsAPI, ResponseCardType} from '../../m3-dal/cardsAPI';
 
-export type CardsReducerActionType = ReturnType<typeof setCardsDataAC>
+export type CardsReducerActionType = ReturnType<typeof setCardsDataAC> | ReturnType<typeof setCardGradeAC>
 
 const initialState = {} as ResponseCardType
 
@@ -15,13 +14,20 @@ export const cardsReducer = (state: InitialStateType = initialState, action: Car
             return {
                 ...state, ...action.cardsData
             }
+        case "CARDS/SET_CARD_GRADE":
+            return {
+                ...state,
+                cards: state.cards.map(c => c.cardsPack_id === action.id ? {...c, grade: action.grade} : c)
+            }
         default:
             return state
     }
 }
 
-export const setCardsDataAC = (cardsData: ResponseCardType) =>
+const setCardsDataAC = (cardsData: ResponseCardType) =>
     ({type: 'CARDS/SET_CARDS', cardsData} as const)
+const setCardGradeAC = (grade: number, id: string) =>
+    ({type: 'CARDS/SET_CARD_GRADE', grade, id} as const)
 
 export const fetchCardsTC = (cardsPack_id: string): AppThunkType => dispatch => {
     dispatch(setAppStatusAC('loading'))
@@ -70,6 +76,22 @@ export const deleteCardTC = (id: string): AppThunkType => dispatch => {
     cardsAPI.deleteCard(id)
         .then(response => {
             dispatch(fetchCardsTC(response.deletedCard.cardsPack_id))
+            dispatch(setAppStatusAC('succeeded'))
+        })
+        .catch(error => {
+            console.log(error)
+            dispatch(setIsInitializedAC(true))
+            dispatch(setAppStatusAC('failed'))
+        })
+}
+
+export const setCardGradeTC = (grade: number, id: string): AppThunkType => dispatch => {
+    dispatch(setAppStatusAC('loading'))
+    cardsAPI.setCardGrade(grade, id)
+        .then(response => {
+            const id = response.data.updatedGrade.card_id
+            const grade = response.data.updatedGrade.grade
+            dispatch(setCardGradeAC(grade, id))
             dispatch(setAppStatusAC('succeeded'))
         })
         .catch(error => {
