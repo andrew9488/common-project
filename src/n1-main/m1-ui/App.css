@@ -3,6 +3,11 @@ body {
     background: linear-gradient(to bottom, #E7F2C0, #9EBB2A);
 }
 
+#root {
+    height: 100%;
+}
+
 .App {
     font-family: 'Poppins', sans-serif;
+    height: 100%;
 }
