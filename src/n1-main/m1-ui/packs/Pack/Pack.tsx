@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {NavLink} from 'react-router-dom';
+import {NavLink, Redirect} from 'react-router-dom';
 import {PATH} from '../../routes/Routes';
 import {PackType} from '../../../m3-dal/packAPI';
 import Modal from '../../../../n2-features/f2-modals/modal/Modal';
