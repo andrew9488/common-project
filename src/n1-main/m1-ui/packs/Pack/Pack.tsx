@@ -1,7 +1,10 @@
-import React from "react";
-import {NavLink} from "react-router-dom";
-import {PATH} from "../../routes/Routes";
+import React, {useState} from 'react';
+import {NavLink, Redirect} from 'react-router-dom';
+import {PATH} from '../../routes/Routes';
 import {PackType} from '../../../m3-dal/packAPI';
+import Modal from '../../../../n2-features/f2-modals/modal/Modal';
+import LearnPage from '../../learnPage/LearnPage';
+import GreenModal from '../../../../n2-features/f2-modals/modal/GreenModal';
 
 type PackPropsType = {
     pack: PackType
@@ -11,6 +14,8 @@ type PackPropsType = {
 
 export const Pack: React.FC<PackPropsType> = (props) => {
 
+    const [showDelModal, setShowDelModal] = useState<boolean>(false);
+    const [showLearnModal, setShowLearnModal] = useState<boolean>(false);
 
     return (
         <>
@@ -20,10 +25,26 @@ export const Pack: React.FC<PackPropsType> = (props) => {
                 <td>{props.pack.updated}</td>
                 <td>{props.pack.user_name}</td>
                 <td>
-                    <button onClick={() => props.deleteCardsPack(props.pack._id)}>del</button>
-                    <button onClick={() => props.updateCardsPackName(props.pack._id)}>update</button>
+                    <button onClick={() => setShowDelModal(true)}>Delete</button>
+                    {showDelModal && <Modal childrenHeight={220}
+                                            childrenWidth={400}
+                                            onDeleteClick={() => {
+                                                props.deleteCardsPack(props.pack._id);
+                                                setShowDelModal(false);
+                                            }}
+                                            onModalClose={() => setShowDelModal(false)}
+                                            type={'info'}
+                                            header={'Delete pack'}
+                                            buttonTitle={'Delete'}
+                                            packName={'Pack name'}/>}
+                    <button onClick={() => props.updateCardsPackName(props.pack._id)}>Edit</button>
                     <NavLink to={`${PATH.CARDS}/${props.pack._id}`}>cards</NavLink>
-                    <NavLink to={`${PATH.LEARN}/${props.pack._id}`}>learn</NavLink>
+                    <button onClick={() => setShowLearnModal(true)}>Learn</button>
+                    {showLearnModal &&
+                    <GreenModal onModalClose={() => setShowLearnModal(false)} childrenWidth={500} childrenHeight={500}>
+                        <LearnPage cardsPack_id={props.pack._id}/>
+                    </GreenModal>}
+
                 </td>
             </tr>
         </>

@@ -18,7 +18,7 @@ import Paginator from '../common/paginator/Paginator';
 import styles from './Packs.module.css';
 import {Preloader} from '../common/preloader/Preloader';
 import {CardsPackCreateType, PackType} from '../../m3-dal/packAPI';
-import LearnPage from '../learnPage/LearnPage';
+import Modal from '../../../n2-features/f2-modals/modal/Modal';
 
 export const Packs: React.FC = () => {
 
@@ -36,6 +36,8 @@ export const Packs: React.FC = () => {
     const [min, setMin] = useState<number>(minRedux);
     const [max, setMax] = useState<number>(maxRedux);
     const [pagesCount, setPagesCount] = useState<number>(pageCount);
+
+    const [showEditModal, setShowEditModal] = useState<boolean>(false);
 
     const onChangeRangeHandler = (values: number[]) => {
         setMin(values[0]);
@@ -60,15 +62,15 @@ export const Packs: React.FC = () => {
     const pagesOptions = [5, 10, 15, 20, 25]
     const pagesOptionsTags = pagesOptions.map(item => <option value={item} key={item}>{item}</option>)
 
-    const onAddCardsPackHandler = () => {
+    const onAddCardsPackHandler = (name: string) => {
         let cardsPack = {
-            name: "NEWCardsPackVA"
+            name
         } as Partial<CardsPackCreateType>
         dispatch(createCardsPackTC(cardsPack))
     }
 
     const onUpdateCardsPackNameHandler = (_id: string) => {
-        const name = "newNameCardsPacksVA"
+        const name = 'newNameCardsPacksVA'
         dispatch(updateCardsPackTC(_id, name))
     }
 
@@ -109,6 +111,18 @@ export const Packs: React.FC = () => {
                     {pagesOptionsTags}
                 </select>
             </div>
+            <button onClick={() => setShowEditModal(true)}>Add</button>
+            {showEditModal && <Modal childrenHeight={233}
+                                     childrenWidth={400}
+                                     onSaveClick={(value) => {
+                                         onAddCardsPackHandler(value);
+                                         setShowEditModal(false);
+                                     }}
+                                     onModalClose={() => setShowEditModal(false)}
+                                     type={'input'}
+                                     header={'Add new pack'}
+                                     buttonTitle={'Save'}
+                                     inputTitle={'Name pack'}/>}
             <table>
                 <thead>
                 <tr>
@@ -120,7 +134,6 @@ export const Packs: React.FC = () => {
                     <th>Update</th>
                     <th>UserName</th>
                     <th>
-                        <button onClick={onAddCardsPackHandler}>Add</button>
                     </th>
                 </tr>
                 </thead>

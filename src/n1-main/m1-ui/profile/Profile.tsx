@@ -18,11 +18,6 @@ const Profile: React.FC = () => {
         dispatch(logOutTC());
     }
 
-
-    //logic for delete pack with modals
-    const [showModal, setShowModal] = useState<boolean>(true);
-
-
     if (!isLoggedIn) {
         return <Redirect to={PATH.LOGIN}/>
     }
@@ -30,27 +25,6 @@ const Profile: React.FC = () => {
     return (
         <div>
             Profile
-            {/*Перенести*/}
-            <button>Delete card</button>
-            {/*{showModal && <Modal childrenHeight={220}*/}
-            {/*                     childrenWidth={400}*/}
-            {/*                     onDeleteClick={() => {*/}
-            {/*                     }}*/}
-            {/*                     onModalClose={() => setShowModal(false)}*/}
-            {/*                     type={'info'}*/}
-            {/*                     header={'Delete pack'}*/}
-            {/*                     buttonTitle={'Delete'}*/}
-            {/*                     packName={'Pack name'}/>}*/}
-
-            {showModal && <Modal childrenHeight={233}
-                                 childrenWidth={400}
-                                 onSaveClick={() => {
-                                 }}
-                                 onModalClose={() => setShowModal(false)}
-                                 type={'input'}
-                                 header={'Add new pack'}
-                                 buttonTitle={'Save'}
-                                 inputTitle={'Name pack'}/>}
             <br/>
             <button onClick={onLogOutHandler} disabled={appStatus === 'loading'}>Log out</button>
         </div>

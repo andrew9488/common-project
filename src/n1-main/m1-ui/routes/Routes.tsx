@@ -35,7 +35,6 @@ const Routes: React.FC = () => {
                 <Route path={PATH.ENTER_NEW_PASSWORD} render={() => <EnterNewPassword/>}/>
                 <Route path={PATH.PACKS} render={() => <Packs/>}/>
                 <Route path={`${PATH.CARDS}/:cardsPack_id?`} render={() => <Cards/>}/>
-                <Route path={`${PATH.LEARN}/:cardsPack_id?`} render={() => <LearnPage/>}/>
                 <Route path={PATH.TEST_PAGE} render={() => <TestPage/>}/>
                 <Route path={PATH.ERROR} render={() => <Error/>}/>
                 <Redirect from={"*"} to={PATH.ERROR}/>

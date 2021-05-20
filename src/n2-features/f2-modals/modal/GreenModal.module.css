@@ -1,0 +1,14 @@
+.modalBackground {
+    position: fixed;
+    top: 60px;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: linear-gradient(to bottom, #E7F2C0, #9EBB2A);
+    z-index: 20;
+}
+
+.modalMessage {
+    position: fixed;
+    z-index: 21;
+}
