@@ -1,27 +1,28 @@
-import React, {useEffect, useState} from "react";
-import {CardType} from "../../m3-dal/cardsAPI";
-import {AppRootStateType} from "../../m2-bll/store";
-import {useDispatch, useSelector} from "react-redux";
-import {fetchCardsTC, setCardGradeTC} from "../cards/cards-reducer";
-import {NavLink, RouteComponentProps, withRouter} from "react-router-dom";
-import {PATH} from "../routes/Routes";
-import {getRandomCard} from "../../../n3-utils/u1-error/u2-getRandomCard/getRandomCard";
-import SuperRadio from "../common/super-radio/SuperRadio";
+import React, {useEffect, useState} from 'react';
+import {CardType} from '../../m3-dal/cardsAPI';
+import {AppRootStateType} from '../../m2-bll/store';
+import {useDispatch, useSelector} from 'react-redux';
+import {fetchCardsTC, setCardGradeTC} from '../cards/cards-reducer';
+import {NavLink} from 'react-router-dom';
+import {PATH} from '../routes/Routes';
+import {getRandomCard} from '../../../n3-utils/u1-error/u2-getRandomCard/getRandomCard';
+import SuperRadio from '../common/super-radio/SuperRadio';
+import {PackType} from '../../m3-dal/packAPI';
+import styles from './LearnPage.module.css';
 
-type PathParamsType = {
+type LearnPagePropsType = {
     cardsPack_id: string
 }
-type PropsType = RouteComponentProps<PathParamsType>
 
 const grades = ['Did not know', 'Forgot', 'Confused', 'A lot of thought', 'Knew'];
 
-const LearnPage: React.FC<PropsType> = (props) => {
-
-    const cardsPack_id = props.match.params.cardsPack_id
+const LearnPage: React.FC<LearnPagePropsType> = (props) => {
+    const {cardsPack_id} = props
+    const packName = useSelector<AppRootStateType, PackType | undefined>(state => state.packs.cardPacks && state.packs.cardPacks.find(pack => pack._id === cardsPack_id));
     const cards = useSelector<AppRootStateType, Array<CardType>>(state => state.cards.cards);
     const [isChecked, setIsChecked] = useState<boolean>(false);
     const [first, setFirst] = useState<boolean>(true);
-    const [grade, setGrade] = useState(grades.indexOf(grades[0])+1)
+    const [grade, setGrade] = useState(grades.indexOf(grades[0]) + 1)
     const [card, setCard] = useState<CardType>({
         _id: 'fake',
         cardsPack_id: '',
@@ -66,21 +67,22 @@ const LearnPage: React.FC<PropsType> = (props) => {
     console.log(grade)
 
     return (
-        <div>
+        <div className={styles.learnPage}>
             LearnPage
             {!isChecked &&
-            <>
+            <div>
+                <h3>Learn "{packName?.name}"</h3>
                 <div>{card.question}</div>
                 <div>
                     <NavLink to={PATH.PACKS}>cancel</NavLink>
                     <button onClick={checkAnswer}>show answer</button>
                 </div>
-            </>}
+            </div>}
             {isChecked && (
                 <>
                     <div>{card.question}</div>
                     <div>{card.answer}</div>
-                    <SuperRadio name={"radio"}
+                    <SuperRadio name={'radio'}
                                 value={grade}
                                 options={grades}
                                 onChangeOption={setGrade}/>
@@ -94,4 +96,4 @@ const LearnPage: React.FC<PropsType> = (props) => {
     );
 };
 
-export default withRouter(LearnPage)
+export default LearnPage;
