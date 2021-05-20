@@ -29,7 +29,6 @@ const Modal: React.FC<ModalPropsType> = (props) => {
     return (
         <>
             <div className={styles.modalBackground} onClick={onModalClose}>
-                Modal window
             </div>
             <div className={styles.modalMessage} style={modalMessageStyle}>
                 {children}
