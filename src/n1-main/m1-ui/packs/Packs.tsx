@@ -18,7 +18,6 @@ import Paginator from '../common/paginator/Paginator';
 import styles from './Packs.module.css';
 import {Preloader} from '../common/preloader/Preloader';
 import {CardsPackCreateType, PackType} from '../../m3-dal/packAPI';
-import LearnPage from '../learnPage/LearnPage';
 import Modal from '../../../n2-features/f2-modals/modal/Modal';
 
 export const Packs: React.FC = () => {
@@ -63,9 +62,9 @@ export const Packs: React.FC = () => {
     const pagesOptions = [5, 10, 15, 20, 25]
     const pagesOptionsTags = pagesOptions.map(item => <option value={item} key={item}>{item}</option>)
 
-    const onAddCardsPackHandler = () => {
+    const onAddCardsPackHandler = (name: string) => {
         let cardsPack = {
-            name: 'NEWCardsPackVA'
+            name
         } as Partial<CardsPackCreateType>
         dispatch(createCardsPackTC(cardsPack))
     }
@@ -115,8 +114,8 @@ export const Packs: React.FC = () => {
             <button onClick={() => setShowEditModal(true)}>Add</button>
             {showEditModal && <Modal childrenHeight={233}
                                      childrenWidth={400}
-                                     onSaveClick={() => {
-                                         onAddCardsPackHandler();
+                                     onSaveClick={(value) => {
+                                         onAddCardsPackHandler(value);
                                          setShowEditModal(false);
                                      }}
                                      onModalClose={() => setShowEditModal(false)}
