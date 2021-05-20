@@ -13,7 +13,6 @@ type PackPropsType = {
 export const Pack: React.FC<PackPropsType> = (props) => {
 
     const [showDelModal, setShowDelModal] = useState<boolean>(false);
-    const [showEditModal, setShowEditModal] = useState<boolean>(false);
 
     return (
         <>
@@ -35,18 +34,7 @@ export const Pack: React.FC<PackPropsType> = (props) => {
                                             header={'Delete pack'}
                                             buttonTitle={'Delete'}
                                             packName={'Pack name'}/>}
-                    <button onClick={() => setShowEditModal(true)}>update</button>
-                    {showEditModal && <Modal childrenHeight={233}
-                                             childrenWidth={400}
-                                             onSaveClick={() => {
-                                                 props.updateCardsPackName(props.pack._id);
-                                                 setShowEditModal(false);
-                                             }}
-                                             onModalClose={() => setShowEditModal(false)}
-                                             type={'input'}
-                                             header={'Add new pack'}
-                                             buttonTitle={'Save'}
-                                             inputTitle={'Name pack'}/>}
+                    <button onClick={() => props.updateCardsPackName(props.pack._id)}>Edit</button>
                     <NavLink to={`${PATH.CARDS}/${props.pack._id}`}>cards</NavLink>
                     <NavLink to={`${PATH.LEARN}/${props.pack._id}`}>learn</NavLink>
                 </td>
