@@ -5,6 +5,9 @@ import {PATH} from "../routes/Routes";
 import {useSelector} from "react-redux";
 import {AppRootStateType} from "../../m2-bll/store";
 
+import profileLogo from '../../../assets/icons-and-images/profile.png';
+import packsLogo from '../../../assets/icons-and-images/packs.png';
+
 const Header: React.FC = () => {
 
     const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn)
@@ -34,10 +37,14 @@ const Header: React.FC = () => {
                     </>
                     : <>
                         <div>
-                            <NavLink to={PATH.PROFILE} activeClassName={style.active}>Profile</NavLink>
+                            <NavLink to={PATH.PROFILE} activeClassName={style.active}>
+                                <img src={profileLogo} alt="profileLogo"/>
+                                Profile</NavLink>
                         </div>
                         <div>
-                            <NavLink to={PATH.PACKS} activeClassName={style.active}>Packs</NavLink>
+                            <NavLink to={PATH.PACKS} activeClassName={style.active}>
+                                <img src={packsLogo} alt="packsLogo"/>
+                                Packs</NavLink>
                         </div>
                         <div>
                             <NavLink to={PATH.CARDS} activeClassName={style.active}>Cards</NavLink>

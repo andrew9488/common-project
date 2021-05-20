@@ -1,3 +1,8 @@
+body {
+    height: 100vh;
+    background: linear-gradient(to bottom, #E7F2C0, #9EBB2A);
+}
+
 .App {
     font-family: 'Poppins', sans-serif;
 }

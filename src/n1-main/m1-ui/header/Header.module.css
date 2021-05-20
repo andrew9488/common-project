@@ -1,27 +1,44 @@
 .headerContainer {
     font-size: 25px;
-    color: #FFFFFF;
-    background-color: #3162ea;
+    background-color: #EFF6D5;
     width: 100%;
     margin: 0 auto;
+    height: 60px;
 }
 
 .navBlock {
-    height: 70px;
     display: flex;
     justify-content: space-evenly;
     align-items: center;
+    height: 100%;
 }
 
-.navBlock a{
-    color: #FFFFFF;
+.navBlock div {
+    flex-basis: 173px;
+    height: 100%;
+}
+
+.navBlock a {
+    color: rgba(53, 62, 14, 0.4);
     text-decoration: none;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 16px;
+    letter-spacing: 0.4px;
+    display: flex;
+    align-items: center;
+    height: 100%;
+    justify-content: center;
+
+}
+.navBlock a img {
+    margin-right: 10px;
 }
 
-.navBlock a:hover{
-    text-decoration: underline;
-}
-
-.navBlock a.active{
-    font-weight: bold ;
+.navBlock a.active {
+    background-color: #E7F2C0;
+    border-bottom: 3px solid #9EBB2A;
+    box-sizing: border-box;
+    color: rgb(53, 62, 14);
 }
