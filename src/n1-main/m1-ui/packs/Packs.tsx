@@ -63,9 +63,9 @@ export const Packs: React.FC = () => {
     const pagesOptionsTags = pagesOptions.map(item => <option value={item} key={item}>{item}</option>)
 
     const onAddCardsPackHandler = (name: string) => {
-        let cardsPack = {
+        let cardsPack: Partial<CardsPackCreateType> = {
             name
-        } as Partial<CardsPackCreateType>
+        }
         dispatch(createCardsPackTC(cardsPack))
     }
 
