@@ -22,28 +22,32 @@ import Modal from '../../../n2-features/f2-modals/modal/Modal';
 
 export const Packs: React.FC = () => {
 
-    const packs = useSelector<AppRootStateType, Array<PackType>>(state => state.packs.cardPacks)
-    const cardPacksTotalCount = useSelector<AppRootStateType, number>(state => state.packs.cardPacksTotalCount)
-    const page = useSelector<AppRootStateType, number>(state => state.packs.page)
-    const pageCount = useSelector<AppRootStateType, number>(state => state.packs.pageCount)
-
-    const dispatch = useDispatch()
-
+    //double range
     const minRedux = useSelector<AppRootStateType, number>(state => state.filter.min);
     const maxRedux = useSelector<AppRootStateType, number>(state => state.filter.max);
-
-
     const [min, setMin] = useState<number>(minRedux);
     const [max, setMax] = useState<number>(maxRedux);
-    const [pagesCount, setPagesCount] = useState<number>(pageCount);
-
-    const [showEditModal, setShowEditModal] = useState<boolean>(false);
-
     const onChangeRangeHandler = (values: number[]) => {
         setMin(values[0]);
         setMax(values[1]);
         dispatch(setMinMaxValuesAC(values));
     }
+
+
+    const packs = useSelector<AppRootStateType, Array<PackType>>(state => state.packs.cardPacks)
+    const cardPacksTotalCount = useSelector<AppRootStateType, number>(state => state.packs.cardPacksTotalCount)
+    const page = useSelector<AppRootStateType, number>(state => state.packs.page)
+    const pageCount = useSelector<AppRootStateType, number>(state => state.packs.pageCount)
+
+
+    const dispatch = useDispatch()
+
+
+    const [pagesCount, setPagesCount] = useState<number>(pageCount);
+
+
+    const [showEditModal, setShowEditModal] = useState<boolean>(false);
+
 
     const onPageClickHandler = (newPage: number) => {
         dispatch(onPacksPageClickTC(newPage))
@@ -86,9 +90,7 @@ export const Packs: React.FC = () => {
         <>
             <h3 style={{paddingBottom: '20px'}}>Packs Page</h3>
             <div className={styles.filtersWrapper}>
-                <Search setSearch={(value) => {
-                    dispatch(setSearchValueAC(value))
-                }}/>
+                <Search setSearch={value => dispatch(setSearchValueAC(value))}/>
                 <div>
                     <SuperDoubleRange onChangeRange={onChangeRangeHandler}
                                       value={[min, max]}
@@ -143,7 +145,6 @@ export const Packs: React.FC = () => {
                                  pack={p}
                                  deleteCardsPack={onDeleteCardsPackHandler}
                                  updateCardsPackName={onUpdateCardsPackNameHandler}
-
                     />
                 })}
                 </tbody>

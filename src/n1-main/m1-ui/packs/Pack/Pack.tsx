@@ -1,10 +1,12 @@
 import React, {useState} from 'react';
-import {NavLink, Redirect} from 'react-router-dom';
+import {NavLink} from 'react-router-dom';
 import {PATH} from '../../routes/Routes';
 import {PackType} from '../../../m3-dal/packAPI';
 import Modal from '../../../../n2-features/f2-modals/modal/Modal';
 import LearnPage from '../../learnPage/LearnPage';
 import GreenModal from '../../../../n2-features/f2-modals/modal/GreenModal';
+import {useSelector} from "react-redux";
+import {AppRootStateType} from "../../../m2-bll/store";
 
 type PackPropsType = {
     pack: PackType
@@ -20,7 +22,7 @@ export const Pack: React.FC<PackPropsType> = (props) => {
     return (
         <>
             <tr>
-                <td>{props.pack.name}</td>
+                <td><NavLink to={`${PATH.CARDS}/${props.pack._id}`}>{props.pack.name}</NavLink></td>
                 <td>{props.pack.cardsCount}</td>
                 <td>{props.pack.updated}</td>
                 <td>{props.pack.user_name}</td>
@@ -38,7 +40,6 @@ export const Pack: React.FC<PackPropsType> = (props) => {
                                             buttonTitle={'Delete'}
                                             packName={'Pack name'}/>}
                     <button onClick={() => props.updateCardsPackName(props.pack._id)}>Edit</button>
-                    <NavLink to={`${PATH.CARDS}/${props.pack._id}`}>cards</NavLink>
                     <button onClick={() => setShowLearnModal(true)}>Learn</button>
                     {showLearnModal &&
                     <GreenModal onModalClose={() => setShowLearnModal(false)} childrenWidth={500} childrenHeight={500}>
