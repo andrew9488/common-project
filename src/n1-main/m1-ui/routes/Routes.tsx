@@ -9,10 +9,9 @@ import TestPage from "../test-page/Tests";
 import Profile from "../profile/Profile";
 import {Packs} from "../packs/Packs";
 import Cards from "../cards/Cards";
-import LearnPage from "../learnPage/LearnPage";
 
 export const PATH = {
-    PROFILE: "/profile",
+    PROFILE: "/",
     LOGIN: "/login",
     REGISTRATION: "/registration",
     RECOVERY_PASSWORD: "/recovery_password",
@@ -28,8 +27,8 @@ const Routes: React.FC = () => {
     return (
         <div>
             <Switch>
-                <Route exact path={PATH.LOGIN} render={() => <Login/>}/>
-                <Route path={PATH.PROFILE} render={() => <Profile/>}/>
+                <Route path={PATH.LOGIN} render={() => <Login/>}/>
+                <Route exact path={PATH.PROFILE} render={() => <Profile/>}/>
                 <Route path={PATH.REGISTRATION} render={() => <Registration/>}/>
                 <Route path={PATH.RECOVERY_PASSWORD} render={() => <RecoveryPassword/>}/>
                 <Route path={PATH.ENTER_NEW_PASSWORD} render={() => <EnterNewPassword/>}/>
