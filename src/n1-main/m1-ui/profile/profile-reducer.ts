@@ -5,6 +5,14 @@ import {AppThunkType} from "../../m2-bll/store";
 
 export type ProfileReducerActionType = ReturnType<typeof updateProfileAC>
 
+type UserDataType = {
+    email: string
+    _id: string
+    avatar: string
+    name: string
+    publicCardPacksCount: number
+}
+
 const initialState = {
     userData: {
         email: null as string | null,
@@ -24,15 +32,15 @@ export const profileReducer = (state: InitialStateType = initialState, action: P
         case "PROFILE/UPDATE-PROFILE":
             return {
                 ...state,
-                userData: {...state.userData, avatar: action.avatar, name: action.name}
+                userData: action.data
             }
         default:
             return state
     }
 }
 
-export const updateProfileAC = (name: string, avatar: string) =>
-    ({type: "PROFILE/UPDATE-PROFILE", name, avatar} as const)
+export const updateProfileAC = (data: UserDataType) =>
+    ({type: "PROFILE/UPDATE-PROFILE", data} as const)
 
 //thunks
 export const updateProfileTC = (name: string, avatar: string): AppThunkType => dispatch => {
@@ -40,7 +48,7 @@ export const updateProfileTC = (name: string, avatar: string): AppThunkType => d
     authAPI.changeProfile(name, avatar)
         .then((response) => {
             dispatch(setAppStatusAC('succeeded'))
-            dispatch(updateProfileAC(response.name, response.avatar))
+            dispatch(updateProfileAC(response))
         })
         .catch(e => {
             const error = e.response ? e.response.data.error : (e.message + ', more details in the console')

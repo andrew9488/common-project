@@ -45,7 +45,6 @@ export const Pack: React.FC<PackPropsType> = (props) => {
                     <GreenModal onModalClose={() => setShowLearnModal(false)} childrenWidth={500} childrenHeight={500}>
                         <LearnPage cardsPack_id={props.pack._id}/>
                     </GreenModal>}
-
                 </td>
             </tr>
         </>

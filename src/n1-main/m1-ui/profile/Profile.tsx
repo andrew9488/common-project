@@ -1,18 +1,25 @@
-import React, {ChangeEvent, useState} from 'react';
+import React, {useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {AppRootStateType} from '../../m2-bll/store';
 import {Redirect} from 'react-router-dom';
 import {PATH} from '../routes/Routes';
 import {RequestStatusType} from '../app-reducer';
 import {logOutTC} from '../../../n2-features/f1-auth/a1-login/auth-reducer';
-import {updateProfileTC} from "./profile-reducer";
 import s from "./Profile.module.scss"
 import SuperDoubleRange from "../common/super-double-range/SuperDoubleRange";
 import Search from "../Search/Search";
 import {setMinMaxValuesAC, setSearchValueAC} from "../Search/filter-reducer";
+import {EditProfile} from "./EditProfile/EditProfile";
+import GreenModal from "../../../n2-features/f2-modals/modal/GreenModal";
 
 
 const Profile: React.FC = () => {
+
+    const dispatch = useDispatch();
+    const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn);
+    const appStatus = useSelector<AppRootStateType, RequestStatusType>(state => state.app.status);
+    const avatar = useSelector<AppRootStateType, string | null>(state => state.profile.userData.avatar)
+    const name = useSelector<AppRootStateType, string | null>(state => state.profile.userData.name)
 
     //double range
     const minRedux = useSelector<AppRootStateType, number>(state => state.filter.min);
@@ -25,26 +32,9 @@ const Profile: React.FC = () => {
         dispatch(setMinMaxValuesAC(values));
     }
 
+    //modal
+    const [showEditModal, setShowEditModal] = useState<boolean>(false)
 
-    const dispatch = useDispatch();
-    const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn);
-    const appStatus = useSelector<AppRootStateType, RequestStatusType>(state => state.app.status);
-    const avatar = useSelector<AppRootStateType, string | null>(state => state.profile.userData.avatar)
-    const name = useSelector<AppRootStateType, string | null>(state => state.profile.userData.name)
-
-    const [newName, setNewName] = useState("")
-    const [newPhoto, setNewPhoto] = useState("")
-
-    const onUploadPhoto = (e: ChangeEvent<HTMLInputElement>) => {
-        setNewPhoto(e.currentTarget.value)
-    }
-    const onChange = (e: ChangeEvent<HTMLInputElement>) => {
-        setNewName(e.currentTarget.value)
-    }
-
-    // const onClick = () => {
-    //     dispatch(updateProfileTC(newName, newPhoto))
-    // }
 
     const onLogOutHandler = () => {
         dispatch(logOutTC());
@@ -58,9 +48,10 @@ const Profile: React.FC = () => {
         <div className={s.profileContainer}>
             <div className={s.profileBlock}>
                 <div className={s.profileInfo}>
-                    <img src={avatar ? avatar : ""} alt="user_photo"/>
-                    <h3>{name}</h3>
-                    <button>EditMode</button>
+                    <img src={avatar && avatar ? avatar : ""} alt="user_photo"/>
+                    <h3>{name && name}</h3>
+                    <button onClick={() => setShowEditModal(true)}>EditMode</button>
+                    <button onClick={onLogOutHandler} disabled={appStatus === 'loading'}>Log out</button>
                 </div>
                 <div className={s.cardsFilter}>
                     <span>Number of cards</span>
@@ -69,13 +60,15 @@ const Profile: React.FC = () => {
             </div>
             <div className={s.packsBlock}>
                 <div className={s.packs}>
-                    <h2>Packs list {name + "'s"}</h2>
+                    <h2>Packs list {name && name + "'s"}</h2>
                     <Search setSearch={value => dispatch(setSearchValueAC(value))}/>
                 </div>
             </div>
-            {/*<button onClick={onLogOutHandler} disabled={appStatus === 'loading'}>Log out</button>*/}
-            {/*<input type="text" value={newName} onChange={onChange}/>*/}
-            {/*<input type="text" value={newPhoto} onChange={onUploadPhoto}/>*/}
+            {showEditModal &&
+            <GreenModal onModalClose={() => setShowEditModal(false)} childrenWidth={500} childrenHeight={500}>
+                <EditProfile/>
+            </GreenModal>}
+
         </div>
     )
 }

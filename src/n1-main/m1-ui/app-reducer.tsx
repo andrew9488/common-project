@@ -40,10 +40,11 @@ export const initializedAppTC = (): AppThunkType => dispatch => {
     dispatch(setAppStatusAC('loading'))
     authAPI.authMe()
         .then(response => {
+            const {_id, email, avatar, publicCardPacksCount, name} = response
             dispatch(setAppStatusAC('succeeded'))
             dispatch(setIsInitializedAC(true))
             dispatch(setIsLoggedIn(true));
-            dispatch(updateProfileAC(response.name, response.avatar))
+            dispatch(updateProfileAC({name, avatar, _id, email, publicCardPacksCount}))
         })
         .catch(e => {
             const error = e.response ? e.response.data.error : (e.message + ', more details in the console')
