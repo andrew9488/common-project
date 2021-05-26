@@ -11,21 +11,75 @@ import Search from "../Search/Search";
 import {setMinMaxValuesAC, setSearchValueAC} from "../Search/filter-reducer";
 import {EditProfile} from "./EditProfile/EditProfile";
 import GreenModal from "../../../n2-features/f2-modals/modal/GreenModal";
+import {PackType} from "../../m3-dal/packAPI";
+import {Table} from '../common/table/Table';
+import Modal from "../../../n2-features/f2-modals/modal/Modal";
+import {deleteCardsPackTC, updateCardsPackTC} from "../packs/packs-reducer";
+import LearnPage from '../learnPage/LearnPage';
 
 
 const Profile: React.FC = () => {
 
+    //redux
     const dispatch = useDispatch();
     const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn);
     const appStatus = useSelector<AppRootStateType, RequestStatusType>(state => state.app.status);
     const avatar = useSelector<AppRootStateType, string | null>(state => state.profile.userData.avatar)
     const name = useSelector<AppRootStateType, string | null>(state => state.profile.userData.name)
+    const myId = useSelector<AppRootStateType, string | null>(state => state.profile.userData._id)
+    const packs = useSelector<AppRootStateType, PackType[]>(state => state.packs.cardPacks)
+
+    // for table
+    const deleteCardsPack = (id: string) => {
+        dispatch(deleteCardsPackTC(id))
+    }
+    const updateCardsPackName = (_id: string) => {
+        const name = 'newNameCardsPacksVA'
+        dispatch(updateCardsPackTC(_id, name))
+    }
+    const [showDelModal, setShowDelModal] = useState<boolean>(false);
+    const [showLearnModal, setShowLearnModal] = useState<boolean>(false);
+    const titles = ["Name", "Cards", "LastUpdate", "Created By", "Actions"]
+    const myPacks = packs && packs.filter(p => p.user_id === myId)
+    const array = []
+    if (myPacks) {
+        for (let i = 0; i < myPacks.length; i++) {
+            let arr = []
+            arr.push(myPacks[i].name)
+            arr.push(myPacks[i].cardsCount)
+            arr.push(myPacks[i].updated)
+            arr.push(myPacks[i].user_name)
+            arr.push(<>
+                <button onClick={() => setShowDelModal(true)}>Delete</button>
+                {showDelModal && <Modal childrenHeight={220}
+                                        childrenWidth={400}
+                                        onDeleteClick={() => {
+                                            deleteCardsPack(myPacks[i]._id);
+                                            setShowDelModal(false)
+                                        }}
+                                        onModalClose={() => setShowDelModal(false)}
+                                        type={'info'}
+                                        header={'Delete pack'}
+                                        buttonTitle={'Delete'}
+                                        packName={'Pack name'}/>}
+                <button onClick={() => updateCardsPackName(myPacks[i]._id)}>Edit</button>
+                <button onClick={() => setShowLearnModal(true)}>Learn</button>
+                {showLearnModal &&
+                <GreenModal onModalClose={() => setShowLearnModal(false)} childrenWidth={500}
+                            childrenHeight={500}>
+                    <LearnPage cardsPack_id={myPacks[i]._id}/>
+                </GreenModal>}</>)
+            array.push(arr)
+        }
+    }
 
     //double range
     const minRedux = useSelector<AppRootStateType, number>(state => state.filter.min);
     const maxRedux = useSelector<AppRootStateType, number>(state => state.filter.max);
-    const [min, setMin] = useState<number>(minRedux);
-    const [max, setMax] = useState<number>(maxRedux);
+    const [min, setMin] = useState
+    < number > (minRedux);
+    const [max, setMax] = useState
+    < number > (maxRedux);
     const onChangeRangeHandler = (values: number[]) => {
         setMin(values[0]);
         setMax(values[1]);
@@ -62,15 +116,16 @@ const Profile: React.FC = () => {
                 <div className={s.packs}>
                     <h2>Packs list {name && name + "'s"}</h2>
                     <Search setSearch={value => dispatch(setSearchValueAC(value))}/>
+                    <Table titleColumns={titles} items={array}/>
                 </div>
             </div>
             {showEditModal &&
-            <GreenModal onModalClose={() => setShowEditModal(false)} childrenWidth={500} childrenHeight={500}>
+            <GreenModal onModalClose={() => setShowEditModal(false)} childrenWidth={500}
+                        childrenHeight={500}>
                 <EditProfile/>
             </GreenModal>}
 
         </div>
     )
 }
-
 export default Profile

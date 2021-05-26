@@ -22,6 +22,17 @@ import Modal from '../../../n2-features/f2-modals/modal/Modal';
 
 export const Packs: React.FC = () => {
 
+    useEffect(() => {
+        dispatch(fetchPacksTC({pageCount: 20}))
+    }, [])
+
+    //redux
+    const packs = useSelector<AppRootStateType, Array<PackType>>(state => state.packs.cardPacks)
+    const cardPacksTotalCount = useSelector<AppRootStateType, number>(state => state.packs.cardPacksTotalCount)
+    const page = useSelector<AppRootStateType, number>(state => state.packs.page)
+    const pageCount = useSelector<AppRootStateType, number>(state => state.packs.pageCount)
+    const dispatch = useDispatch()
+
     //double range
     const minRedux = useSelector<AppRootStateType, number>(state => state.filter.min);
     const maxRedux = useSelector<AppRootStateType, number>(state => state.filter.max);
@@ -33,21 +44,24 @@ export const Packs: React.FC = () => {
         dispatch(setMinMaxValuesAC(values));
     }
 
+    //table
+    const updateCardsPackName = (_id: string) => {
+        const name = 'newNameCardsPacksVA'
+        dispatch(updateCardsPackTC(_id, name))
+    }
+    const deleteCardsPack = (id: string) => {
+        dispatch(deleteCardsPackTC(id))
+    }
 
-    const packs = useSelector<AppRootStateType, Array<PackType>>(state => state.packs.cardPacks)
-    const cardPacksTotalCount = useSelector<AppRootStateType, number>(state => state.packs.cardPacksTotalCount)
-    const page = useSelector<AppRootStateType, number>(state => state.packs.page)
-    const pageCount = useSelector<AppRootStateType, number>(state => state.packs.pageCount)
-
-
-    const dispatch = useDispatch()
 
 
     const [pagesCount, setPagesCount] = useState<number>(pageCount);
 
+    const pagesOptions = [5, 10, 15, 20, 25]
+    const pagesOptionsTags = pagesOptions.map(item => <option value={item} key={item}>{item}</option>)
 
+    //modals
     const [showEditModal, setShowEditModal] = useState<boolean>(false);
-
 
     const onPageClickHandler = (newPage: number) => {
         dispatch(onPacksPageClickTC(newPage))
@@ -59,13 +73,6 @@ export const Packs: React.FC = () => {
 
     }
 
-    useEffect(() => {
-        dispatch(fetchPacksTC({}))
-    }, [])
-
-    const pagesOptions = [5, 10, 15, 20, 25]
-    const pagesOptionsTags = pagesOptions.map(item => <option value={item} key={item}>{item}</option>)
-
     const onAddCardsPackHandler = (name: string) => {
         let cardsPack: Partial<CardsPackCreateType> = {
             name
@@ -73,14 +80,6 @@ export const Packs: React.FC = () => {
         dispatch(createCardsPackTC(cardsPack))
     }
 
-    const onUpdateCardsPackNameHandler = (_id: string) => {
-        const name = 'newNameCardsPacksVA'
-        dispatch(updateCardsPackTC(_id, name))
-    }
-
-    const onDeleteCardsPackHandler = (id: string) => {
-        dispatch(deleteCardsPackTC(id))
-    }
 
     if (!packs) {
         return <Preloader/>
@@ -125,30 +124,35 @@ export const Packs: React.FC = () => {
                                      header={'Add new pack'}
                                      buttonTitle={'Save'}
                                      inputTitle={'Name pack'}/>}
-            <table>
-                <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Cards Count
-                        <button onClick={() => dispatch(sortPackTC('0cardsCount'))}>&#8593;</button>
-                        <button onClick={() => dispatch(sortPackTC('1cardsCount'))}>&#8595;</button>
-                    </th>
-                    <th>Update</th>
-                    <th>UserName</th>
-                    <th>
-                    </th>
-                </tr>
-                </thead>
-                <tbody>
-                {packs && packs.map(p => {
-                    return <Pack key={p._id}
-                                 pack={p}
-                                 deleteCardsPack={onDeleteCardsPackHandler}
-                                 updateCardsPackName={onUpdateCardsPackNameHandler}
-                    />
-                })}
-                </tbody>
-            </table>
-        </>);
+
+
+            <>{/*<table>*/}
+                {/*    <thead>*/}
+                {/*    <tr>*/}
+                {/*        <th>Name</th>*/}
+                {/*        <th>Cards Count*/}
+                {/*            <button onClick={() => dispatch(sortPackTC('0cardsCount'))}>&#8593;</button>*/}
+                {/*            <button onClick={() => dispatch(sortPackTC('1cardsCount'))}>&#8595;</button>*/}
+                {/*        </th>*/}
+                {/*        <th>Update</th>*/}
+                {/*        <th>UserName</th>*/}
+                {/*        <th>*/}
+                {/*        </th>*/}
+                {/*    </tr>*/}
+                {/*    </thead>*/}
+                {/*    <tbody>*/}
+                {/*    {packs && packs.map(p => {*/}
+                {/*        return <Pack key={p._id}*/}
+                {/*                     pack={p}*/}
+                {/*                     deleteCardsPack={onDeleteCardsPackHandler}*/}
+                {/*                     updateCardsPackName={onUpdateCardsPackNameHandler}*/}
+                {/*        />*/}
+                {/*    })}*/}
+                {/*    </tbody>*/}
+                {/* eslint-disable-next-line react/jsx-no-comment-textnodes */}
+                {/*</table>*/}</>
+
+        </>
+    );
 }
 
