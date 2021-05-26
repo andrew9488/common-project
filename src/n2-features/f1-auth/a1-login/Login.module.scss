@@ -1,0 +1,87 @@
+@import "src/n1-main/m1-ui/common/styles/_mixins";
+@import "src/n1-main/m1-ui/common/styles/_variables";
+
+.loginWrapper {
+  @include commonWindowStyles(413px, 600px, 60px, 60px);
+
+  div {
+    &:last-child {
+      a {
+        text-decoration: none;
+        color: $brightGreenColor;
+        font-style: normal;
+        font-weight: 500;
+        font-size: 16px;
+        line-height: 24px;
+        &:hover {
+          opacity: 0.8;
+        }
+      }
+    }
+
+    &:nth-child(6) {
+      align-self: flex-end;
+
+      &:hover {
+        opacity: 0.8;
+      }
+
+      a {
+        text-decoration: none;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 14px;
+        line-height: 17px;
+        color: $darkTextColor;
+      }
+    }
+
+    &:nth-child(8) {
+      font-style: normal;
+      font-weight: 500;
+      font-size: 14px;
+      line-height: 24px;
+      opacity: 0.5;
+      color: $darkTextColor;
+    }
+  }
+
+  h3 {
+    @include h3Style();
+  }
+
+  input[type="text"],
+  input[type="password"], {
+    @include commonInputStyles();
+  }
+
+  button {
+    @include darkBtnStyle(266px, 36px);
+  }
+
+  .inputWrapper {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+
+    label {
+      font-style: normal;
+      font-weight: normal;
+      font-size: 13px;
+      line-height: 20px;
+      opacity: 0.5;
+      color: $darkTextColor;
+    }
+
+  }
+
+  .remember {
+    display: flex;
+    flex-direction: row;
+    align-self: flex-start;
+  }
+
+  .loginError {
+    color: red;
+  }
+}
