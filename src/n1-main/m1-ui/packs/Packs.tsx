@@ -2,14 +2,12 @@ import React, {ChangeEvent, useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {AppRootStateType} from '../../m2-bll/store';
 import {createCardsPackTC, deleteCardsPackTC, fetchPacksTC, updateCardsPackTC} from './packs-reducer';
-import {Pack} from './Pack/Pack';
 import {
     getPacksWithFilters,
     onPacksPageClickTC,
     onPortionPacksChangeTC,
     setMinMaxValuesAC,
-    setSearchValueAC,
-    sortPackTC
+    setSearchValueAC
 } from '../Search/filter-reducer';
 import Search from '../Search/Search';
 import SuperButton from '../common/super-button/SuperButton';
@@ -19,11 +17,14 @@ import styles from './Packs.module.css';
 import {Preloader} from '../common/preloader/Preloader';
 import {CardsPackCreateType, PackType} from '../../m3-dal/packAPI';
 import Modal from '../../../n2-features/f2-modals/modal/Modal';
+import GreenModal from "../../../n2-features/f2-modals/modal/GreenModal";
+import LearnPage from "../learnPage/LearnPage";
+import {Table} from "../common/table/Table";
 
 export const Packs: React.FC = () => {
 
     useEffect(() => {
-        dispatch(fetchPacksTC({pageCount: 20}))
+        dispatch(fetchPacksTC({pageCount: 10}))
     }, [])
 
     //redux
@@ -31,6 +32,7 @@ export const Packs: React.FC = () => {
     const cardPacksTotalCount = useSelector<AppRootStateType, number>(state => state.packs.cardPacksTotalCount)
     const page = useSelector<AppRootStateType, number>(state => state.packs.page)
     const pageCount = useSelector<AppRootStateType, number>(state => state.packs.pageCount)
+    const myId = useSelector<AppRootStateType, string | null>(state => state.profile.userData._id)
     const dispatch = useDispatch()
 
     //double range
@@ -52,7 +54,47 @@ export const Packs: React.FC = () => {
     const deleteCardsPack = (id: string) => {
         dispatch(deleteCardsPackTC(id))
     }
-
+    const [showDelModal, setShowDelModal] = useState<boolean>(false);
+    const [showLearnModal, setShowLearnModal] = useState<boolean>(false);
+    const titles = ["Name", "Cards", "LastUpdate", "Created By", "Actions"]
+    const array = []
+    if (packs) {
+        for (let i = 0; i < packs.length; i++) {
+            let arr = []
+            arr.push(packs[i].name)
+            arr.push(packs[i].cardsCount)
+            arr.push(packs[i].updated)
+            arr.push(packs[i].user_name)
+            arr.push(
+                <>
+                    {myId === packs[i].user_id
+                        ? <>
+                            <button onClick={() => setShowDelModal(true)}>Delete</button>
+                            {showDelModal && <Modal childrenHeight={220}
+                                                    childrenWidth={400}
+                                                    onDeleteClick={() => {
+                                                        deleteCardsPack(packs[i]._id);
+                                                        setShowDelModal(false)
+                                                    }}
+                                                    onModalClose={() => setShowDelModal(false)}
+                                                    type={'info'}
+                                                    header={'Delete pack'}
+                                                    buttonTitle={'Delete'}
+                                                    packName={'Pack name'}/>}
+                            <button onClick={() => updateCardsPackName(packs[i]._id)}>Edit</button>
+                        </>
+                        : ""
+                    }
+                    <button onClick={() => setShowLearnModal(true)}>Learn</button>
+                    {showLearnModal &&
+                    <GreenModal onModalClose={() => setShowLearnModal(false)} childrenWidth={500}
+                                childrenHeight={500}>
+                        <LearnPage cardsPack_id={packs[i]._id}/>
+                    </GreenModal>}
+                </>)
+            array.push(arr)
+        }
+    }
 
 
     const [pagesCount, setPagesCount] = useState<number>(pageCount);
@@ -73,7 +115,7 @@ export const Packs: React.FC = () => {
 
     }
 
-    const onAddCardsPackHandler = (name: string) => {
+    const addCardsPack = (name: string) => {
         let cardsPack: Partial<CardsPackCreateType> = {
             name
         }
@@ -116,7 +158,7 @@ export const Packs: React.FC = () => {
             {showEditModal && <Modal childrenHeight={233}
                                      childrenWidth={400}
                                      onSaveClick={(value) => {
-                                         onAddCardsPackHandler(value);
+                                         addCardsPack(value);
                                          setShowEditModal(false);
                                      }}
                                      onModalClose={() => setShowEditModal(false)}
@@ -124,8 +166,7 @@ export const Packs: React.FC = () => {
                                      header={'Add new pack'}
                                      buttonTitle={'Save'}
                                      inputTitle={'Name pack'}/>}
-
-
+            <Table titleColumns={titles} items={array}/>
             <>{/*<table>*/}
                 {/*    <thead>*/}
                 {/*    <tr>*/}
@@ -151,7 +192,6 @@ export const Packs: React.FC = () => {
                 {/*    </tbody>*/}
                 {/* eslint-disable-next-line react/jsx-no-comment-textnodes */}
                 {/*</table>*/}</>
-
         </>
     );
 }

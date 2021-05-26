@@ -5,8 +5,6 @@ import {PackType} from '../../../m3-dal/packAPI';
 import Modal from '../../../../n2-features/f2-modals/modal/Modal';
 import LearnPage from '../../learnPage/LearnPage';
 import GreenModal from '../../../../n2-features/f2-modals/modal/GreenModal';
-import {useSelector} from "react-redux";
-import {AppRootStateType} from "../../../m2-bll/store";
 
 type PackPropsType = {
     pack: PackType
