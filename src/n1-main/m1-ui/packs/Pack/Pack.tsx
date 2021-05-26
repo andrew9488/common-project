@@ -5,6 +5,7 @@ import {PackType} from '../../../m3-dal/packAPI';
 import Modal from '../../../../n2-features/f2-modals/modal/Modal';
 import LearnPage from '../../learnPage/LearnPage';
 import GreenModal from '../../../../n2-features/f2-modals/modal/GreenModal';
+import styles from './Pack.module.css';
 
 type PackPropsType = {
     pack: PackType
@@ -25,7 +26,9 @@ export const Pack: React.FC<PackPropsType> = (props) => {
                 <td>{props.pack.updated}</td>
                 <td>{props.pack.user_name}</td>
                 <td>
-                    <button onClick={() => setShowDelModal(true)}>Delete</button>
+                    <button className={styles.deleteBtn}
+                            onClick={() => setShowDelModal(true)}>Delete
+                    </button>
                     {showDelModal && <Modal childrenHeight={220}
                                             childrenWidth={400}
                                             onDeleteClick={() => {
@@ -37,9 +40,13 @@ export const Pack: React.FC<PackPropsType> = (props) => {
                                             header={'Delete pack'}
                                             buttonTitle={'Delete'}
                                             packName={'Pack name'}/>}
-                    <button onClick={() => props.updateCardsPackName(props.pack._id)}>Edit</button>
+                    <button className={styles.primaryBtn}
+                            onClick={() => props.updateCardsPackName(props.pack._id)}>Edit
+                    </button>
                     <NavLink to={`${PATH.CARDS}/${props.pack._id}`}>cards</NavLink>
-                    <button onClick={() => setShowLearnModal(true)}>Learn</button>
+                    <button className={styles.primaryBtn}
+                            onClick={() => setShowLearnModal(true)}>Learn
+                    </button>
                     {showLearnModal &&
                     <GreenModal onModalClose={() => setShowLearnModal(false)} childrenWidth={500} childrenHeight={500}>
                         <LearnPage cardsPack_id={props.pack._id}/>
