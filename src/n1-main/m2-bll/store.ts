@@ -1,5 +1,5 @@
 import {applyMiddleware, combineReducers, createStore} from 'redux';
-import {profileReducer} from '../m1-ui/profile/profile-reducer';
+import {profileReducer, ProfileReducerActionType} from '../m1-ui/profile/profile-reducer';
 import {authReducer, AuthReducerActionType} from '../../n2-features/f1-auth/a1-login/auth-reducer';
 import {registerReducer, RegisterReducerActionType} from '../../n2-features/f1-auth/a2-registration/register-reducer';
 import thunk, {ThunkAction} from 'redux-thunk';
@@ -35,5 +35,5 @@ export type AppRootStateType = ReturnType<typeof reducer>
 
 type ActionsType = AppReducerActionType | AuthReducerActionType
     | RegisterReducerActionType | RecoveryReducerActionType | EnterNewPasswordReducerActionType
-    | PacksReducerActionType | CardsReducerActionType
+    | PacksReducerActionType | CardsReducerActionType | ProfileReducerActionType
 export type AppThunkType = ThunkAction<void, AppRootStateType, unknown, ActionsType>

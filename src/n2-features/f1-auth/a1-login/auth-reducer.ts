@@ -83,3 +83,4 @@ export const logOutTC = (): AppThunkType => dispatch => {
             dispatch(setAppStatusAC('failed'));
         })
 }
+

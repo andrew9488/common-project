@@ -65,9 +65,11 @@ export const authAPI = {
         return instance.post<LoginResponseType>('auth/me', {})
             .then(response => response.data)
     },
-    changeProfile(name?: string, avatar?: string) {
+    changeProfile(name: string, avatar: string) {
         return instance.put<ChangeProfileResponseType>('auth/me', {name, avatar})
-            .then(response => response.data.updatedUser)
+            .then(response => {
+                return response.data.updatedUser
+            })
     },
     logout() {
         return instance.delete<{ info: string, error?: string }>('auth/me')
