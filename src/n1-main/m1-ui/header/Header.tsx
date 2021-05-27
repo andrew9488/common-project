@@ -31,9 +31,6 @@ const Header: React.FC = () => {
                             <NavLink to={PATH.ENTER_NEW_PASSWORD} activeClassName={style.active}>Enter new
                                 password</NavLink>
                         </div>
-                        <div>
-                            <NavLink to={PATH.TEST_PAGE} activeClassName={style.active}>Test page</NavLink>
-                        </div>
                     </>
                     : <>
                         <div>
