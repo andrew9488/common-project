@@ -1,0 +1,52 @@
+@import "../../../n1-main/m1-ui/common/styles/_mixins"
+@import "../../../n1-main/m1-ui/common/styles/_variables"
+
+.registrationContainer
+  @include commonWindowStyles(413px, 540px, 84px, 96px)
+
+  h3
+    @include h3Style()
+    margin: 0
+
+
+  input[type="text"],
+  input[type="password"]
+    @include commonInputStyles()
+
+
+  .inputWrapper
+    display: flex
+    flex-direction: column
+    width: 100%
+    margin-bottom: -60px
+
+
+  div
+    &:nth-child(4)
+      margin-bottom: 20px
+
+
+    &:nth-child(2)
+      margin-top: -20px
+
+
+    label
+      @include labelStyle()
+
+  .btnWrap
+    display: flex
+    width: 100%
+    justify-content: space-between
+    flex-wrap: wrap
+    @media screen and (max-width: 407px)
+      min-height: 90px
+      flex-direction: column
+      align-items: center
+
+
+  button[type="submit"]
+    @include BtnStyle(187px, 36px, $mediumGreenColor, $lightTextColor)
+
+
+  .cancel
+    @include BtnStyle(124px, 36px, #EFF6D5, #9EBB2A)

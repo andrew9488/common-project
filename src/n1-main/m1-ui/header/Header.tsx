@@ -31,9 +31,6 @@ const Header: React.FC = () => {
                             <NavLink to={PATH.ENTER_NEW_PASSWORD} activeClassName={style.active}>Enter new
                                 password</NavLink>
                         </div>
-                        <div>
-                            <NavLink to={PATH.TEST_PAGE} activeClassName={style.active}>Test page</NavLink>
-                        </div>
                     </>
                     : <>
                         <div>
@@ -42,7 +39,7 @@ const Header: React.FC = () => {
                                 Packs list</NavLink>
                         </div>
                         <div>
-                            <NavLink to={PATH.PROFILE} activeClassName={style.active}>
+                            <NavLink exact to={PATH.PROFILE} activeClassName={style.active}>
                                 <img src={profileLogo} alt="profileLogo"/>
                                 Profile</NavLink>
                         </div>
