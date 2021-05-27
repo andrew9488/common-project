@@ -1,47 +1,116 @@
-.profileContainer{
-  margin: auto 0;
-  height: 100%;
+@import "src/n1-main/m1-ui/common/styles/variables";
+@import "src/n1-main/m1-ui/common/styles/mixins";
+
+.profileContainer {
+  margin: 0 auto;
+  width: 1008px;
+  height: 636px;
   display: flex;
   justify-content: center;
-  .profileBlock{
-    width: 300px;
-    height: 640px;
+  background-color: $GreyGreenBackground;
+  border-radius: 8px;
+
+  .profileBlock {
+    width: 243px;
+    height: 636px;
     display: flex;
     flex-direction: column;
     align-items: center;
     border: 1px solid;
-    .profileInfo{
+    background: #E7F1C1;
+
+    .profileInfo {
       width: 100%;
-      height: 250px;
+      height: 216px;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: space-evenly;
       border: 1px solid;
-      img{
-        height: 120px;
-        width: 120px;
+
+      img {
+        height: 96px;
+        width: 96px;
         border-radius: 50%;
       }
-      h3{
+
+      h3 {
+        @include h3Style();
         margin: 0;
       }
-      button{
-        background: none;
-        width: 100px;
-        height: 30px;
+
+      .buttonBlock {
+        display: flex;
+        width: 60%;
+        justify-content: space-between;
+
+        .editBtn {
+          color: #465511;
+          font-style: normal;
+          font-weight: 600;
+          font-size: 12px;
+          line-height: 14px;
+          padding: 5px 6px 4px;
+        }
+
+        .logoutBtn {
+          background: #e33e37;
+          border-radius: 2px;
+          border: none;
+          font-style: normal;
+          font-weight: 600;
+          font-size: 12px;
+          line-height: 14px;
+          color: #FFFFFF;
+          padding: 5px 6px 4px;
+        }
       }
     }
-    .cardsFilter{
-      width: 200px;
+
+    .cardsFilter {
+      height: 420px;
+      width: 100%;
+      background: #fbffe6;
+      border: 1px solid;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      h3 {
+        @include h3Style();
+        margin-bottom: 50px;
+      }
+
+      .range {
+        width: 200px;
+      }
     }
   }
-  .packsBlock{
-    width: 700px;
-    height: 640px;
+
+  .packsBlock {
+    width: 765px;
     display: flex;
     flex-direction: column;
     align-items: center;
     border: 1px solid;
+
+    h3 {
+      @include h3Style();
+    }
+
+    .searchBlock {
+      width: 669px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      .search {
+        width: 80%;
+      }
+
+      .button {
+
+      }
+    }
   }
 }
