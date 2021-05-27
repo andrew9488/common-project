@@ -39,7 +39,7 @@ const Header: React.FC = () => {
                                 Packs list</NavLink>
                         </div>
                         <div>
-                            <NavLink to={PATH.PROFILE} activeClassName={style.active}>
+                            <NavLink exact to={PATH.PROFILE} activeClassName={style.active}>
                                 <img src={profileLogo} alt="profileLogo"/>
                                 Profile</NavLink>
                         </div>
