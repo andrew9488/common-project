@@ -1,4 +1,4 @@
-@import "../../../n1-main/m1-ui/common/styles/mixins"
+@import "../../../n1-main/m1-ui/common/styles/_mixins"
 @import "../../../n1-main/m1-ui/common/styles/_variables"
 
 .loginWrapper
@@ -7,16 +7,7 @@
   div
     &:last-child
       a
-        text-decoration: none
-        color: $brightGreenColor
-        font-style: normal
-        font-weight: 500
-        font-size: 16px
-        line-height: 24px
-
-        &:hover
-          opacity: 0.8
-
+        @include greenLinkStyle()
 
     &:nth-child(6)
       align-self: flex-end
@@ -35,12 +26,7 @@
 
 
     &:nth-child(8)
-      font-style: normal
-      font-weight: 500
-      font-size: 14px
-      line-height: 24px
-      opacity: 0.5
-      color: $darkTextColor
+      @include lightTextStyle()
 
 
   h3
@@ -62,13 +48,7 @@
     width: 100%
 
     label
-      font-style: normal
-      font-weight: normal
-      font-size: 13px
-      line-height: 20px
-      opacity: 0.5
-      color: $darkTextColor
-
+      @include labelStyle()
 
   .remember
     display: flex
@@ -78,4 +58,3 @@
 
   .loginError
     color: red
-

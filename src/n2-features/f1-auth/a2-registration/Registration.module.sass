@@ -1,4 +1,4 @@
-@import "../../../n1-main/m1-ui/common/styles/mixins"
+@import "../../../n1-main/m1-ui/common/styles/_mixins"
 @import "../../../n1-main/m1-ui/common/styles/_variables"
 
 .registrationContainer
@@ -31,13 +31,7 @@
 
 
     label
-      font-style: normal
-      font-weight: normal
-      font-size: 13px
-      line-height: 20px
-      opacity: 0.5
-      color: $darkTextColor
-
+      @include labelStyle()
 
   .btnWrap
     display: flex
@@ -56,5 +50,3 @@
 
   .cancel
     @include BtnStyle(124px, 36px, #EFF6D5, #9EBB2A)
-
-
