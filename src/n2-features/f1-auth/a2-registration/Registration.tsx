@@ -4,7 +4,7 @@ import {registerTC} from './register-reducer';
 import {AppRootStateType} from '../../../n1-main/m2-bll/store';
 import {NavLink, Redirect} from 'react-router-dom';
 import {PATH} from '../../../n1-main/m1-ui/routes/Routes';
-import styles from './Registration.module.scss'
+import styles from './Registration.module.sass'
 import {RequestStatusType} from '../../../n1-main/m1-ui/app-reducer';
 
 const Registration: React.FC = () => {
