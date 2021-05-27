@@ -4,7 +4,7 @@ import {loginTC} from './auth-reducer';
 import {AppRootStateType} from '../../../n1-main/m2-bll/store';
 import {Redirect, NavLink} from 'react-router-dom';
 import {PATH} from '../../../n1-main/m1-ui/routes/Routes';
-import styles from './Login.module.scss';
+import styles from './Login.module.sass';
 import {RequestStatusType} from '../../../n1-main/m1-ui/app-reducer';
 
 const Login: React.FC = () => {
