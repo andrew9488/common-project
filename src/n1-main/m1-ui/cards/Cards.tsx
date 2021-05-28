@@ -34,7 +34,8 @@ const Cards: React.FC<PropsType> = (props) => {
     }
     const onUpdateCardHandler = (id: string) => {
         const newQuestion = "new question for card"
-        dispatch(updateCardTC(id, newQuestion))
+        const newAnswer = "new question for card"
+        dispatch(updateCardTC(id, newQuestion, newAnswer))
     }
 
     return (

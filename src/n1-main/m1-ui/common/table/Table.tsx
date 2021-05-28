@@ -1,4 +1,5 @@
 import React from "react";
+import s from "./Table.module.scss"
 
 type TablePropsType = {
     titleColumns: string[]
@@ -8,8 +9,8 @@ type TablePropsType = {
 export const Table: React.FC<TablePropsType> = props => {
 
     return (
-        <table>
-            <thead>
+        <table className={s.tableContainer}>
+            <thead className={s.tableHeader}>
             <tr>
                 {
                     props.titleColumns.map((t, index) => {
@@ -18,9 +19,9 @@ export const Table: React.FC<TablePropsType> = props => {
                 }
             </tr>
             </thead>
-            <tbody>
+            <tbody className={s.tableBody}>
             {props.items && props.items.map((it, index) => {
-                return <tr key={index}>
+                return <tr key={index} className={s.row}>
                     {it.map((i, index) => {
                         return <td key={index}>{i}</td>
                     })}

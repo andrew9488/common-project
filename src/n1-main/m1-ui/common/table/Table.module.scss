@@ -1,0 +1,20 @@
+@import "src/n1-main/m1-ui/common/styles/variables";
+
+.tableContainer {
+  width: 669px;
+  text-align: center;
+  border-radius: 4px;
+  margin-top: 10px;
+  border: 1px solid;
+
+  .tableHeader {
+    background-color: $mediumGreenColor;
+  }
+
+  .tableBody {
+    background-color: $GreyGreenBackground;
+    .row{
+      height: 30px;
+    }
+  }
+}

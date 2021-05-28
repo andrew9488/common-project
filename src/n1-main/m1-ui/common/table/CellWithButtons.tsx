@@ -16,7 +16,7 @@ const CellWithButtons: React.FC<CellWithButtonsPropsType> = (props) => {
 
     return (
         <div className={styles.wrapper}>
-            <button onClick={() => setShowDelModal(true)}>Delete</button>
+            <button className={styles.delBtn} onClick={() => setShowDelModal(true)}>Delete</button>
             {showDelModal && <Modal childrenHeight={220}
                                     childrenWidth={400}
                                     onDeleteClick={() => {
@@ -28,8 +28,8 @@ const CellWithButtons: React.FC<CellWithButtonsPropsType> = (props) => {
                                     header={'Delete pack'}
                                     buttonTitle={'Delete'}
                                     packName={'Pack name'}/>}
-            <button onClick={() => props.updateCardsPackName(props.packId)}>Edit</button>
-            <button onClick={() => setShowLearnModal(true)}>Learn</button>
+            <button className={styles.primBtn} onClick={() => props.updateCardsPackName(props.packId)}>Edit</button>
+            <button className={styles.primBtn} onClick={() => setShowLearnModal(true)}>Learn</button>
             {showLearnModal &&
             <GreenModal onModalClose={() => setShowLearnModal(false)} childrenWidth={500}
                         childrenHeight={500}>

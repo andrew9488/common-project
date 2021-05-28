@@ -6,11 +6,7 @@
   flex-direction: row
   align-items: center
   justify-content: space-between
-  button
-    &:first-child
+  .delBtn
       @include smallBtnStyle(#FFFFFF, #F1453D)
-      margin-right: 3px
-    &:nth-child(2), &:nth-child(3)
+  .primBtn
       @include smallBtnStyle($darkTextColor, $primaryBtnColor)
-    &:nth-child(2)
-      margin-right: 3px
