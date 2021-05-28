@@ -1,7 +1,8 @@
 import {AppThunkType} from '../m2-bll/store';
 import {setIsLoggedIn, setLoginError} from '../../n2-features/f1-auth/a1-login/auth-reducer';
 import {authAPI} from '../m3-dal/authAPI';
-import {updateProfileAC} from "./profile/profile-reducer";
+import {updateProfileAC} from './profile/profile-reducer';
+import {fetchPacksTC} from './packs/packs-reducer';
 
 export type RequestStatusType = 'idle' | 'loading' | 'succeeded' | 'failed'
 
@@ -45,6 +46,7 @@ export const initializedAppTC = (): AppThunkType => dispatch => {
             dispatch(setIsInitializedAC(true))
             dispatch(setIsLoggedIn(true));
             dispatch(updateProfileAC({name, avatar, _id, email, publicCardPacksCount}))
+            dispatch(fetchPacksTC({}));
         })
         .catch(e => {
             const error = e.response ? e.response.data.error : (e.message + ', more details in the console')

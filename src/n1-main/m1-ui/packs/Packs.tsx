@@ -23,11 +23,7 @@ import {Table} from "../common/table/Table";
 
 export const Packs: React.FC = () => {
 
-    useEffect(() => {
-        dispatch(fetchPacksTC({pageCount: 10}))
-    }, [])
-
-    //redux
+    //data from redux
     const packs = useSelector<AppRootStateType, Array<PackType>>(state => state.packs.cardPacks)
     const cardPacksTotalCount = useSelector<AppRootStateType, number>(state => state.packs.cardPacksTotalCount)
     const page = useSelector<AppRootStateType, number>(state => state.packs.page)

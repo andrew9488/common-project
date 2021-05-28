@@ -1,34 +1,35 @@
-import React, {ChangeEvent, useState} from 'react';
+import React, {useMemo, useState, ChangeEvent} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {AppRootStateType} from '../../m2-bll/store';
 import {Redirect} from 'react-router-dom';
 import {PATH} from '../routes/Routes';
 import {RequestStatusType} from '../app-reducer';
 import {logOutTC} from '../../../n2-features/f1-auth/a1-login/auth-reducer';
-import s from "./Profile.module.scss"
-import SuperDoubleRange from "../common/super-double-range/SuperDoubleRange";
-import Search from "../Search/Search";
+import s from './Profile.module.scss'
+import SuperDoubleRange from '../common/super-double-range/SuperDoubleRange';
+import Search from '../Search/Search';
 import {
     getPacksWithFilters,
     onPacksPageClickTC,
     onPortionPacksChangeTC,
     setMinMaxValuesAC,
     setSearchValueAC
-} from "../Search/filter-reducer";
-import {EditProfile} from "./EditProfile/EditProfile";
-import GreenModal from "../../../n2-features/f2-modals/modal/GreenModal";
-import {PackType} from "../../m3-dal/packAPI";
+} from '../Search/filter-reducer';
+import {EditProfile} from './EditProfile/EditProfile';
+import GreenModal from '../../../n2-features/f2-modals/modal/GreenModal';
+import {PackType} from '../../m3-dal/packAPI';
 import {Table} from '../common/table/Table';
-import Modal from "../../../n2-features/f2-modals/modal/Modal";
-import {deleteCardsPackTC, updateCardsPackTC} from "../packs/packs-reducer";
+import {deleteCardsPackTC, updateCardsPackTC} from '../packs/packs-reducer';
+import CellWithButtons from '../common/table/CellWithButtons';
+import Modal from '../../../n2-features/f2-modals/modal/Modal';
 import LearnPage from '../learnPage/LearnPage';
-import SuperButton from "../common/super-button/SuperButton";
-import Paginator from "../common/paginator/Paginator";
+import SuperButton from '../common/super-button/SuperButton';
+import Paginator from '../common/paginator/Paginator';
 
 
 const Profile: React.FC = () => {
 
-    //redux
+    //data from redux
     const dispatch = useDispatch();
     const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn);
     const appStatus = useSelector<AppRootStateType, RequestStatusType>(state => state.app.status);
@@ -83,7 +84,7 @@ const Profile: React.FC = () => {
         <div className={s.profileContainer}>
             <div className={s.profileBlock}>
                 <div className={s.profileInfo}>
-                    <img src={avatar && avatar ? avatar : ""} alt="user_photo"/>
+                    <img src={avatar && avatar ? avatar : ''} alt="user_photo"/>
                     <h3>{name && name}</h3>
                     <div className={s.buttonBlock}>
                         <button className={s.editBtn} onClick={() => setShowEditModal(true)}>Edit profile</button>
@@ -102,7 +103,7 @@ const Profile: React.FC = () => {
             </div>
             <div className={s.packsBlock}>
                 <div className={s.packs}>
-                    <h3>Packs list {name && name + "'s"}</h3>
+                    <h3>Packs list {name && name + '\'s'}</h3>
                     <div className={s.searchBlock}>
                         <div className={s.search}>
                             <Search setSearch={value => dispatch(setSearchValueAC(value))}/>
@@ -147,6 +148,7 @@ const TableContainer: React.FC<TableContainerPropsType> = ({id, items}) => {
 
     const dispatch = useDispatch();
 
+    // callbacks for actions with packs
     const deleteCardsPack = (id: string) => {
         dispatch(deleteCardsPackTC(id))
     }
@@ -155,11 +157,14 @@ const TableContainer: React.FC<TableContainerPropsType> = ({id, items}) => {
         dispatch(updateCardsPackTC(_id, name))
     }
 
-    const [showDelModal, setShowDelModal] = useState<boolean>(false);
-    const [showLearnModal, setShowLearnModal] = useState<boolean>(false);
-    const titles = ["Name", "Cards", "LastUpdate", "Created By", "Actions"]
-    const myPacks = items && items.filter(p => p.user_id === id)
-    const array = []
+    //data for table with packs
+    const titles = useMemo(() => ['Name', 'Cards', 'LastUpdate', 'Created By', 'Actions'], []);
+    const myPacks = useMemo(() => {
+        return items ? items.filter(p => p.user_id === id) : []
+    }, [items])
+
+    const array = [];
+
     if (myPacks) {
         for (let i = 0; i < myPacks.length; i++) {
             let arr = []
@@ -167,29 +172,11 @@ const TableContainer: React.FC<TableContainerPropsType> = ({id, items}) => {
             arr.push(myPacks[i].cardsCount)
             arr.push(myPacks[i].updated.slice(0, -14))
             arr.push(myPacks[i].user_name)
-            arr.push(<>
-                <button onClick={() => setShowDelModal(true)}>Delete</button>
-                {showDelModal && <Modal childrenHeight={220}
-                                        childrenWidth={400}
-                                        onDeleteClick={() => {
-                                            deleteCardsPack(myPacks[i]._id);
-                                            setShowDelModal(false)
-                                        }}
-                                        onModalClose={() => setShowDelModal(false)}
-                                        type={'info'}
-                                        header={'Delete pack'}
-                                        buttonTitle={'Delete'}
-                                        packName={'Pack name'}
-
-                    />
-                }
-                <button onClick={() => updateCardsPackName(myPacks[i]._id)}>Edit</button>
-                <button onClick={() => setShowLearnModal(true)}>Learn</button>
-                {showLearnModal &&
-                <GreenModal onModalClose={() => setShowLearnModal(false)} childrenWidth={500}
-                            childrenHeight={500}>
-                    <LearnPage cardsPack_id={myPacks[i]._id}/>
-                </GreenModal>}</>)
+            arr.push(
+                <CellWithButtons deleteCardsPack={deleteCardsPack}
+                                 updateCardsPackName={updateCardsPackName}
+                                 packId={myPacks[i]._id}/>
+            )
             array.push(arr)
         }
     }
