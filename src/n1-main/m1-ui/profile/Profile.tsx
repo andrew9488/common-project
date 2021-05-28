@@ -5,17 +5,16 @@ import {Redirect} from 'react-router-dom';
 import {PATH} from '../routes/Routes';
 import {RequestStatusType} from '../app-reducer';
 import {logOutTC} from '../../../n2-features/f1-auth/a1-login/auth-reducer';
-import s from "./Profile.module.scss"
-import SuperDoubleRange from "../common/super-double-range/SuperDoubleRange";
-import Search from "../Search/Search";
-import {setMinMaxValuesAC, setSearchValueAC} from "../Search/filter-reducer";
-import {EditProfile} from "./EditProfile/EditProfile";
-import GreenModal from "../../../n2-features/f2-modals/modal/GreenModal";
-import {PackType} from "../../m3-dal/packAPI";
+import s from './Profile.module.scss'
+import SuperDoubleRange from '../common/super-double-range/SuperDoubleRange';
+import Search from '../Search/Search';
+import {setMinMaxValuesAC, setSearchValueAC} from '../Search/filter-reducer';
+import {EditProfile} from './EditProfile/EditProfile';
+import GreenModal from '../../../n2-features/f2-modals/modal/GreenModal';
+import {PackType} from '../../m3-dal/packAPI';
 import {Table} from '../common/table/Table';
-import Modal from "../../../n2-features/f2-modals/modal/Modal";
-import {deleteCardsPackTC, updateCardsPackTC} from "../packs/packs-reducer";
-import LearnPage from '../learnPage/LearnPage';
+import {deleteCardsPackTC, updateCardsPackTC} from '../packs/packs-reducer';
+import CellWithButtons from '../common/table/CellWithButtons';
 
 
 const Profile: React.FC = () => {
@@ -37,9 +36,8 @@ const Profile: React.FC = () => {
         const name = 'newNameCardsPacksVA'
         dispatch(updateCardsPackTC(_id, name))
     }
-    const [showDelModal, setShowDelModal] = useState<boolean>(false);
-    const [showLearnModal, setShowLearnModal] = useState<boolean>(false);
-    const titles = ["Name", "Cards", "LastUpdate", "Created By", "Actions"]
+
+    const titles = ['Name', 'Cards', 'LastUpdate', 'Created By', 'Actions']
     const myPacks = packs && packs.filter(p => p.user_id === myId)
     const array = []
     if (myPacks) {
@@ -49,26 +47,11 @@ const Profile: React.FC = () => {
             arr.push(myPacks[i].cardsCount)
             arr.push(myPacks[i].updated)
             arr.push(myPacks[i].user_name)
-            arr.push(<>
-                <button onClick={() => setShowDelModal(true)}>Delete</button>
-                {showDelModal && <Modal childrenHeight={220}
-                                        childrenWidth={400}
-                                        onDeleteClick={() => {
-                                            deleteCardsPack(myPacks[i]._id);
-                                            setShowDelModal(false)
-                                        }}
-                                        onModalClose={() => setShowDelModal(false)}
-                                        type={'info'}
-                                        header={'Delete pack'}
-                                        buttonTitle={'Delete'}
-                                        packName={'Pack name'}/>}
-                <button onClick={() => updateCardsPackName(myPacks[i]._id)}>Edit</button>
-                <button onClick={() => setShowLearnModal(true)}>Learn</button>
-                {showLearnModal &&
-                <GreenModal onModalClose={() => setShowLearnModal(false)} childrenWidth={500}
-                            childrenHeight={500}>
-                    <LearnPage cardsPack_id={myPacks[i]._id}/>
-                </GreenModal>}</>)
+            arr.push(
+                <CellWithButtons deleteCardsPack={deleteCardsPack}
+                                 updateCardsPackName={updateCardsPackName}
+                                 packId={myPacks[i]._id}/>
+            )
             array.push(arr)
         }
     }
@@ -102,7 +85,7 @@ const Profile: React.FC = () => {
         <div className={s.profileContainer}>
             <div className={s.profileBlock}>
                 <div className={s.profileInfo}>
-                    <img src={avatar && avatar ? avatar : ""} alt="user_photo"/>
+                    <img src={avatar && avatar ? avatar : ''} alt="user_photo"/>
                     <h3>{name && name}</h3>
                     <button onClick={() => setShowEditModal(true)}>EditMode</button>
                     <button onClick={onLogOutHandler} disabled={appStatus === 'loading'}>Log out</button>
@@ -114,7 +97,7 @@ const Profile: React.FC = () => {
             </div>
             <div className={s.packsBlock}>
                 <div className={s.packs}>
-                    <h2>Packs list {name && name + "'s"}</h2>
+                    <h2>Packs list {name && name + '\'s'}</h2>
                     <Search setSearch={value => dispatch(setSearchValueAC(value))}/>
                     <Table titleColumns={titles} items={array}/>
                 </div>
