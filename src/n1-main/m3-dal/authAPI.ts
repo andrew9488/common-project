@@ -49,7 +49,7 @@ type AddedUserType = {
 }
 
 const forgotMessage = `<div style="font-size: 1.2em; font-family: Calibri,sans-serif">` +
-    `For password recovery click: <a href='http://localhost:3000/#/enter_new_password$token$'>here</a></div>`
+    `For password recovery click: <a href='https://neko-back.herokuapp.com/2.0/#/enter_new_password$token$'>here</a></div>`
 
 
 export const authAPI = {

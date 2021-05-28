@@ -1,4 +1,4 @@
-import React, {useMemo, useState, ChangeEvent} from 'react';
+import React, {ChangeEvent, useMemo, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {AppRootStateType} from '../../m2-bll/store';
 import {Redirect} from 'react-router-dom';
@@ -21,8 +21,6 @@ import {PackType} from '../../m3-dal/packAPI';
 import {Table} from '../common/table/Table';
 import {deleteCardsPackTC, updateCardsPackTC} from '../packs/packs-reducer';
 import CellWithButtons from '../common/table/CellWithButtons';
-import Modal from '../../../n2-features/f2-modals/modal/Modal';
-import LearnPage from '../learnPage/LearnPage';
 import SuperButton from '../common/super-button/SuperButton';
 import Paginator from '../common/paginator/Paginator';
 
@@ -152,9 +150,8 @@ const TableContainer: React.FC<TableContainerPropsType> = ({id, items}) => {
     const deleteCardsPack = (id: string) => {
         dispatch(deleteCardsPackTC(id))
     }
-    const updateCardsPackName = (_id: string) => {
-        const name = 'newNameCardsPacksVA'
-        dispatch(updateCardsPackTC(_id, name))
+    const updateCardsPackName = (_id: string, packName: string) => {
+        dispatch(updateCardsPackTC(_id, packName))
     }
 
     //data for table with packs

@@ -1,16 +1,13 @@
 import React, {ChangeEvent, useState} from "react";
-import {useDispatch} from "react-redux";
-import s from "../../profile/EditProfile/EditProfile.module.scss";
-import {updateCardsPackTC} from "../packs-reducer";
+import s from "./EditPack.module.scss";
 
 type EditPackPropsType = {
     packId: string
     closeEditModal: () => void
+    updatePack: (id: string, name: string) => void
 }
 
 export const EditPack: React.FC<EditPackPropsType> = props => {
-
-    const dispatch = useDispatch();
 
     const [newName, setNewName] = useState<string>("")
 
@@ -18,8 +15,10 @@ export const EditPack: React.FC<EditPackPropsType> = props => {
         setNewName(e.currentTarget.value)
     }
     const updateCard = () => {
-        dispatch(updateCardsPackTC(props.packId, newName))
+        props.updatePack(props.packId, newName)
+        props.closeEditModal()
     }
+
     const closeEditMode = () => {
         props.closeEditModal()
     }
@@ -29,7 +28,7 @@ export const EditPack: React.FC<EditPackPropsType> = props => {
             <h3>Pack info</h3>
             <div className={s.inputsBlock}>
                 <div className={s.editInput}>
-                    <label htmlFor="edit_pack">Question:</label>
+                    <label htmlFor="edit_pack">New name:</label>
                     <input type="text" value={newName} onChange={changePackNameHandler} id="edit_pack"/>
                 </div>
             </div>
