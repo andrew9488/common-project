@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import Modal from '../../../../n2-features/f2-modals/modal/Modal';
 import GreenModal from '../../../../n2-features/f2-modals/modal/GreenModal';
 import LearnPage from '../../learnPage/LearnPage';
+import styles from './CellWithButtons.module.sass';
 
 type CellWithButtonsPropsType = {
     deleteCardsPack: (packId: string) => void
@@ -14,7 +15,7 @@ const CellWithButtons: React.FC<CellWithButtonsPropsType> = (props) => {
     const [showLearnModal, setShowLearnModal] = useState<boolean>(false);
 
     return (
-        <div>
+        <div className={styles.wrapper}>
             <button onClick={() => setShowDelModal(true)}>Delete</button>
             {showDelModal && <Modal childrenHeight={220}
                                     childrenWidth={400}
