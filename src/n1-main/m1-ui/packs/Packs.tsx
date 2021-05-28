@@ -132,14 +132,15 @@ export const Packs: React.FC = () => {
             <h3 style={{paddingBottom: '20px'}}>Packs Page</h3>
             <div className={styles.filtersWrapper}>
                 <Search setSearch={value => dispatch(setSearchValueAC(value))}/>
+                <SuperButton text={'search'}
+                             onClick={() => dispatch(getPacksWithFilters())}/>
                 <div>
                     <SuperDoubleRange onChangeRange={onChangeRangeHandler}
                                       value={[min, max]}
                                       className={styles.range}/>
                     <p>Choose cards count in pack</p>
                 </div>
-                <SuperButton text={'search'}
-                             onClick={() => dispatch(getPacksWithFilters())}/>
+
             </div>
             <div>
                 <Paginator totalCount={cardPacksTotalCount}

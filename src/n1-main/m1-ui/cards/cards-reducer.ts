@@ -57,9 +57,9 @@ export const createCardTC = (card: Partial<CardCreateType>): AppThunkType => dis
         })
 }
 
-export const updateCardTC = (_id: string, question?: string): AppThunkType => dispatch => {
+export const updateCardTC = (_id: string, question: string, answer: string): AppThunkType => dispatch => {
     dispatch(setAppStatusAC('loading'))
-    cardsAPI.updateCard(_id, question)
+    cardsAPI.updateCard(_id, question, answer)
         .then(response => {
             dispatch(fetchCardsTC(response.updatedCard.cardsPack_id))
             dispatch(setAppStatusAC('succeeded'))
