@@ -19,7 +19,7 @@ import CellWithButtons from '../common/table/CellWithButtons';
 
 const Profile: React.FC = () => {
 
-    //redux
+    //data from redux
     const dispatch = useDispatch();
     const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn);
     const appStatus = useSelector<AppRootStateType, RequestStatusType>(state => state.app.status);
@@ -37,10 +37,13 @@ const Profile: React.FC = () => {
         dispatch(updateCardsPackTC(_id, name))
     }
 
+    //data for table with packs
     const titles = useMemo(() => ['Name', 'Cards', 'LastUpdate', 'Created By', 'Actions'], []);
+    const myPacks = useMemo(() => {
+        return packs ? packs.filter(p => p.user_id === myId) : []
+    }, [packs])
 
-    const myPacks = packs && packs.filter(p => p.user_id === myId)
-    const array = []
+    const array = [];
     if (myPacks) {
         for (let i = 0; i < myPacks.length; i++) {
             let arr = []
@@ -60,10 +63,8 @@ const Profile: React.FC = () => {
     //double range
     const minRedux = useSelector<AppRootStateType, number>(state => state.filter.min);
     const maxRedux = useSelector<AppRootStateType, number>(state => state.filter.max);
-    const [min, setMin] = useState
-    < number > (minRedux);
-    const [max, setMax] = useState
-    < number > (maxRedux);
+    const [min, setMin] = useState<number>(minRedux);
+    const [max, setMax] = useState<number>(maxRedux);
     const onChangeRangeHandler = (values: number[]) => {
         setMin(values[0]);
         setMax(values[1]);
@@ -86,14 +87,19 @@ const Profile: React.FC = () => {
         <div className={s.profileContainer}>
             <div className={s.profileBlock}>
                 <div className={s.profileInfo}>
-                    <img src={avatar && avatar ? avatar : ''} alt="user_photo"/>
-                    <h3>{name && name}</h3>
+                    <img src={avatar && avatar ? avatar : ''}
+                         alt="user_photo"/>
+                    <h3>{name}</h3>
                     <button onClick={() => setShowEditModal(true)}>EditMode</button>
-                    <button onClick={onLogOutHandler} disabled={appStatus === 'loading'}>Log out</button>
+                    <button onClick={onLogOutHandler}
+                            disabled={appStatus === 'loading'}>
+                        Log out
+                    </button>
                 </div>
                 <div className={s.cardsFilter}>
                     <span>Number of cards</span>
-                    <SuperDoubleRange onChangeRange={onChangeRangeHandler} value={[min, max]}/>
+                    <SuperDoubleRange onChangeRange={onChangeRangeHandler}
+                                      value={[min, max]}/>
                 </div>
             </div>
             <div className={s.packsBlock}>
@@ -104,11 +110,11 @@ const Profile: React.FC = () => {
                 </div>
             </div>
             {showEditModal &&
-            <GreenModal onModalClose={() => setShowEditModal(false)} childrenWidth={500}
+            <GreenModal onModalClose={() => setShowEditModal(false)}
+                        childrenWidth={500}
                         childrenHeight={500}>
                 <EditProfile/>
             </GreenModal>}
-
         </div>
     )
 }
