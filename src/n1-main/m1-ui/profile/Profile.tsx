@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useMemo, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {AppRootStateType} from '../../m2-bll/store';
 import {Redirect} from 'react-router-dom';
@@ -28,7 +28,7 @@ const Profile: React.FC = () => {
     const myId = useSelector<AppRootStateType, string | null>(state => state.profile.userData._id)
     const packs = useSelector<AppRootStateType, PackType[]>(state => state.packs.cardPacks)
 
-    // for table
+    // callbacks for actions with packs
     const deleteCardsPack = (id: string) => {
         dispatch(deleteCardsPackTC(id))
     }
@@ -37,7 +37,8 @@ const Profile: React.FC = () => {
         dispatch(updateCardsPackTC(_id, name))
     }
 
-    const titles = ['Name', 'Cards', 'LastUpdate', 'Created By', 'Actions']
+    const titles = useMemo(() => ['Name', 'Cards', 'LastUpdate', 'Created By', 'Actions'], []);
+
     const myPacks = packs && packs.filter(p => p.user_id === myId)
     const array = []
     if (myPacks) {
