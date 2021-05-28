@@ -61,7 +61,7 @@ export const createCardsPackTC = (cardsPack: Partial<CardsPackCreateType>): AppT
         })
 }
 
-export const updateCardsPackTC = (_id: string, name?: string): AppThunkType => dispatch => {
+export const updateCardsPackTC = (_id: string, name: string): AppThunkType => dispatch => {
     dispatch(setAppStatusAC('loading'))
     packsAPI.updatePack(_id, name)
         .then(() => {

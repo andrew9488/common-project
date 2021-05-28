@@ -24,7 +24,6 @@ import {deleteCardsPackTC, updateCardsPackTC} from "../packs/packs-reducer";
 import LearnPage from '../learnPage/LearnPage';
 import SuperButton from "../common/super-button/SuperButton";
 import Paginator from "../common/paginator/Paginator";
-import {CardType} from "../../m3-dal/cardsAPI";
 
 
 const Profile: React.FC = () => {
@@ -155,6 +154,7 @@ const TableContainer: React.FC<TableContainerPropsType> = ({id, items}) => {
         const name = 'newNameCardsPacksVA'
         dispatch(updateCardsPackTC(_id, name))
     }
+
     const [showDelModal, setShowDelModal] = useState<boolean>(false);
     const [showLearnModal, setShowLearnModal] = useState<boolean>(false);
     const titles = ["Name", "Cards", "LastUpdate", "Created By", "Actions"]
@@ -165,7 +165,7 @@ const TableContainer: React.FC<TableContainerPropsType> = ({id, items}) => {
             let arr = []
             arr.push(myPacks[i].name)
             arr.push(myPacks[i].cardsCount)
-            arr.push(myPacks[i].updated)
+            arr.push(myPacks[i].updated.slice(0, -14))
             arr.push(myPacks[i].user_name)
             arr.push(<>
                 <button onClick={() => setShowDelModal(true)}>Delete</button>
@@ -179,7 +179,10 @@ const TableContainer: React.FC<TableContainerPropsType> = ({id, items}) => {
                                         type={'info'}
                                         header={'Delete pack'}
                                         buttonTitle={'Delete'}
-                                        packName={'Pack name'}/>}
+                                        packName={'Pack name'}
+
+                    />
+                }
                 <button onClick={() => updateCardsPackName(myPacks[i]._id)}>Edit</button>
                 <button onClick={() => setShowLearnModal(true)}>Learn</button>
                 {showLearnModal &&
