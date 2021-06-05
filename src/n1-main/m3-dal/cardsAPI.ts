@@ -25,7 +25,7 @@ export type ResponseCardType = {
 }
 //type for get
 export type FetchCardsPayloadType = {
-    cardsPack_id?: string
+    cardsPack_id: string
     cardAnswer?: string
     cardQuestion?: string
     min?: number
@@ -60,10 +60,13 @@ type SetGradeResponseType = {
 }
 export const cardsAPI = {
     fetchCards(data: FetchCardsPayloadType) {
-        return instance.get<ResponseCardType>(`cards/card?`, {params: {...data}})
+        debugger
+        return instance.get<ResponseCardType>(`cards/card?`,
+            {params: {...data}})
             .then(response => response.data)
     },
     createCard(card: Partial<CardCreateType>) {
+        debugger
         return instance.post(`cards/card`, {card})
             .then(response => response.data)
     },

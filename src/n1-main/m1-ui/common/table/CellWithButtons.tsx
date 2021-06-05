@@ -45,7 +45,7 @@ const CellWithButtons: React.FC<CellWithButtonsPropsType> = (props) => {
             {showLearnModal &&
             <GreenModal onModalClose={() => setShowLearnModal(false)} childrenWidth={500}
                         childrenHeight={500}>
-                <LearnPage cardsPack_id={props.packId}/>
+                <LearnPage cardsPack_id={props.packId} onModalClose={() => setShowLearnModal(false)}/>
             </GreenModal>}
         </div>
     )
