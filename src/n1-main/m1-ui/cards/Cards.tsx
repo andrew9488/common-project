@@ -21,11 +21,11 @@ const Cards: React.FC<PropsType> = (props) => {
     }, [])
 
     const onAddCardHandler = () => {
-        const card = {
+        const card: Partial<CardCreateType> = {
             cardsPack_id: props.match.params.cardsPack_id,
             question: "What is CSS?",
             answer: "CascadingStyleSheet",
-        } as Partial<CardCreateType>
+        }
         dispatch(createCardTC(card))
     }
 

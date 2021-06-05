@@ -53,7 +53,7 @@ export const Pack: React.FC<PackPropsType> = (props) => {
                     <button onClick={() => setShowLearnModal(true)}>Learn</button>
                     {showLearnModal &&
                     <GreenModal onModalClose={() => setShowLearnModal(false)} childrenWidth={500} childrenHeight={500}>
-                        <LearnPage cardsPack_id={props.pack._id}/>
+                        <LearnPage cardsPack_id={props.pack._id} onModalClose={() => setShowLearnModal(false)}/>
                     </GreenModal>}
                 </td>
             </tr>
