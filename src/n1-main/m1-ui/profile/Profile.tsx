@@ -43,7 +43,7 @@ const Profile: React.FC = () => {
 
     useEffect(() => {
         dispatch(initializedAppTC())
-    }, [])
+    }, [dispatch])
 
     const onLogOutHandler = () => {
         dispatch(logOutTC());
@@ -91,7 +91,8 @@ const Profile: React.FC = () => {
                     </div>
                     <TableContainer id={myId} items={packs}/>
                     <div>
-                       <PaginatorContainer page={page} pageCount={pageCount} cardPacksTotalCount={cardPacksTotalCount}/>
+                        <PaginatorContainer page={page} pageCount={pageCount}
+                                            cardPacksTotalCount={cardPacksTotalCount}/>
                     </div>
                 </div>
             </div>
