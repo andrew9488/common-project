@@ -1,7 +1,7 @@
 import React, {ChangeEvent, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {AppRootStateType} from '../../../n1-main/m2-bll/store';
-import {NavLink, Redirect, RouteComponentProps, withRouter} from 'react-router-dom';
+import {Redirect, RouteComponentProps, withRouter} from 'react-router-dom';
 import {PATH} from '../../../n1-main/m1-ui/routes/Routes';
 import {setNewPasswordTC} from './enterNewPassword-reducer';
 import styles from './EnterNewPassword.module.sass';

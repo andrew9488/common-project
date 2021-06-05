@@ -2,7 +2,7 @@ import React, {ChangeEvent, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {registerTC} from './register-reducer';
 import {AppRootStateType} from '../../../n1-main/m2-bll/store';
-import {NavLink, Redirect} from 'react-router-dom';
+import {Redirect} from 'react-router-dom';
 import {PATH} from '../../../n1-main/m1-ui/routes/Routes';
 import styles from './Registration.module.sass'
 import {RequestStatusType} from '../../../n1-main/m1-ui/app-reducer';

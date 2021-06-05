@@ -3,8 +3,6 @@ import {CardType} from '../../m3-dal/cardsAPI';
 import {AppRootStateType} from '../../m2-bll/store';
 import {useDispatch, useSelector} from 'react-redux';
 import {fetchCardsTC, setCardGradeTC} from '../cards/cards-reducer';
-import {NavLink} from 'react-router-dom';
-import {PATH} from '../routes/Routes';
 import {getRandomCard} from '../../../n3-utils/u1-error/u2-getRandomCard/getRandomCard';
 import SuperRadio from '../common/super-radio/SuperRadio';
 import {PackType} from '../../m3-dal/packAPI';
@@ -12,6 +10,7 @@ import styles from './LearnPage.module.css';
 
 type LearnPagePropsType = {
     cardsPack_id: string
+    onModalClose: () => void
 }
 
 const grades = ['Did not know', 'Forgot', 'Confused', 'A lot of thought', 'Knew'];
@@ -74,7 +73,7 @@ const LearnPage: React.FC<LearnPagePropsType> = (props) => {
                 <h3>Learn "{packName?.name}"</h3>
                 <div>{card.question}</div>
                 <div>
-                    <NavLink to={PATH.PACKS}>cancel</NavLink>
+                    <button onClick={props.onModalClose}>cancel</button>
                     <button onClick={checkAnswer}>show answer</button>
                 </div>
             </div>}
@@ -87,7 +86,7 @@ const LearnPage: React.FC<LearnPagePropsType> = (props) => {
                                 options={grades}
                                 onChangeOption={setGrade}/>
                     <div>
-                        <NavLink to={PATH.PACKS}>cancel</NavLink>
+                        <button onClick={props.onModalClose}>cancel</button>
                         <button onClick={() => onNext(grade, card._id)}>next</button>
                     </div>
                 </>

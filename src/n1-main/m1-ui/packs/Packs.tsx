@@ -85,7 +85,7 @@ export const Packs: React.FC = () => {
                     {showLearnModal &&
                     <GreenModal onModalClose={() => setShowLearnModal(false)} childrenWidth={500}
                                 childrenHeight={500}>
-                        <LearnPage cardsPack_id={packs[i]._id}/>
+                        <LearnPage cardsPack_id={packs[i]._id} onModalClose={() => setShowLearnModal(false)}/>
                     </GreenModal>}
                 </>)
             array.push(arr)
