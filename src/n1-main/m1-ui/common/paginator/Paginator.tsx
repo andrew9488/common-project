@@ -1,7 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import {v1} from 'uuid';
-import styles from './Paginator.module.css';
-import SuperButton from '../super-button/SuperButton';
+import styles from './Paginator.module.scss';
+import next from '../../../../assets/icons-and-images/back.png'
+import back from '../../../../assets/icons-and-images/next.png'
 
 type PaginatorPropsType = {
     totalCount: number
@@ -51,9 +52,9 @@ const Paginator: React.FC<PaginatorPropsType> = (props) => {
     }
 
     return (
-        <div className={props.className}>
+        <div className={styles.wrapper}>
             {leftBorder !== 1
-                ? <SuperButton text={'back'} onClick={onBackButtonClick}/>
+                ? <button onClick={onBackButtonClick}><img src={next} alt="next"/></button>
                 : ''}
             {pages.map(page => <span key={v1()}
                                      className={`${styles.pageDigit} ${page === props.currentPage
@@ -61,10 +62,10 @@ const Paginator: React.FC<PaginatorPropsType> = (props) => {
                                          : ''}`}
                                      onClick={() => onPageClickHandler(page)}>{page}</span>)}
             {rightBorder !== pagesCount
-                ? <SuperButton text={'next'} onClick={onNextButtonClick}/>
+                ? <button onClick={onNextButtonClick}><img src={back} alt="back"/></button>
                 : ''}
         </div>
     )
-}
+};
 
 export default Paginator;

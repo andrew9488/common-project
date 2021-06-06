@@ -12,11 +12,11 @@ import {EditProfile} from './EditProfile/EditProfile';
 import GreenModal from '../../../n2-features/f2-modals/modal/GreenModal';
 import {PackType} from '../../m3-dal/packAPI';
 import SuperButton from '../common/super-button/SuperButton';
-import {Preloader} from "../common/preloader/Preloader";
-import {TableContainer} from "../common/table/TableContainer";
-import {SuperDoubleRangeContainer} from "../common/super-double-range/SuperDoubleRangeContainer";
-import {PaginatorContainer} from "../common/paginator/PaginatorContainer";
-import {deleteCardsPackTC, updateCardsPackTC} from "../packs/packs-reducer";
+import {Preloader} from '../common/preloader/Preloader';
+import {TableContainer} from '../common/table/TableContainer';
+import {SuperDoubleRangeContainer} from '../common/super-double-range/SuperDoubleRangeContainer';
+import {PaginatorContainer} from '../common/paginator/PaginatorContainer';
+import {deleteCardsPackTC, updateCardsPackTC} from '../packs/packs-reducer';
 
 
 const Profile: React.FC = () => {
@@ -70,7 +70,8 @@ const Profile: React.FC = () => {
             <div className={s.profileBlock}>
                 <div className={s.profileInfo}>
                     <img src={avatar && avatar ? avatar : ''} alt="user_photo"/>
-                    <h3>{name && name}</h3>
+                    <h4>{name && name}</h4>
+                    <div className={s.description}>Some description</div>
                     <div className={s.buttonBlock}>
                         <button className={s.editBtn} onClick={() => setShowEditModal(true)}>Edit profile</button>
                         <button className={s.logoutBtn}
@@ -94,7 +95,7 @@ const Profile: React.FC = () => {
                             <Search setSearch={value => dispatch(setSearchValueAC(value))}/>
                         </div>
                         <div className={s.button}>
-                            <SuperButton text={'search'} onClick={() => dispatch(getPacksWithFilters())}/>
+                            <button onClick={() => dispatch(getPacksWithFilters())}>search</button>
                         </div>
                     </div>
                     <TableContainer packs={filterPacks}
@@ -103,9 +104,7 @@ const Profile: React.FC = () => {
                                     updateCardsPackCallback={updateCardsPackName}
                                     type="pack"
                     />
-                    <div>
-                        <PaginatorContainer/>
-                    </div>
+                    <PaginatorContainer/>
                 </div>
             </div>
             {showEditModal &&

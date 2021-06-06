@@ -1,0 +1,31 @@
+@import "src/n1-main/m1-ui/common/styles/variables";
+@import "src/n1-main/m1-ui/common/styles/mixins";
+
+.wrapper {
+  display: flex;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 14px;
+  color: $darkTextColor;
+
+  .selectWrapper {
+    margin-left: 34px;
+    width: 27%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    min-width: 180px;
+  }
+
+  select {
+    background: #FFFFFF;
+    border: 1px solid $lightTextColor;
+    width: 39px;
+    height: 24px;
+
+    &:focus {
+      outline: none;
+    }
+  }
+}
