@@ -4,8 +4,8 @@ import {AppRootStateType} from "../../m2-bll/store";
 import {createCardTC, deleteCardTC, fetchCardsTC, updateCardTC} from "./cards-reducer";
 import {RouteComponentProps, withRouter} from "react-router-dom";
 import {CardCreateType, CardType} from '../../m3-dal/cardsAPI';
-import Search from "../Search/Search";
-import {getPacksWithFilters, setSearchValueAC} from "../Search/filter-reducer";
+import Search from "../search/Search";
+import {getPacksWithFilters, setSearchValueAC} from "../search/filter-reducer";
 import {TableContainer} from "../common/table/TableContainer";
 import SuperButton from "../common/super-button/SuperButton";
 import GreenModal from "../../../n2-features/f2-modals/modal/GreenModal";
@@ -20,6 +20,7 @@ type PropsType = RouteComponentProps<PathParamsType>
 
 const Cards: React.FC<PropsType> = (props) => {
 
+    const myId = useSelector<AppRootStateType, string | null>(state => state.profile.userData._id)
     const cards = useSelector<AppRootStateType, Array<CardType>>(state => state.cards.cards)
     const dispatch = useDispatch()
 
@@ -33,7 +34,13 @@ const Cards: React.FC<PropsType> = (props) => {
     }, [dispatch, props.match.params.cardsPack_id])
 
 
-    const titles = useMemo(() => ['Question', 'Answer', 'LastUpdate', 'Grade', 'Actions'], []);
+    const titles = useMemo(() => {
+        if (cards[0].user_id === myId) {
+            return ['Question', 'Answer', 'LastUpdate', 'Grade', 'Actions']
+        } else {
+            return ['Question', 'Answer', 'LastUpdate', 'Grade']
+        }
+    }, [cards, myId]);
 
     const addCard = (id: string, question: string, answer: string) => {
         const card: Partial<CardCreateType> = {

@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {setMinMaxValuesAC} from "../../Search/filter-reducer";
+import {setMinMaxValuesAC} from "../../search/filter-reducer";
 import SuperDoubleRange from "./SuperDoubleRange";
 import {AppRootStateType} from "../../../m2-bll/store";
 

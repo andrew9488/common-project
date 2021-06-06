@@ -6,8 +6,8 @@ import {PATH} from '../routes/Routes';
 import {initializedAppTC, RequestStatusType} from '../app-reducer';
 import {logOutTC} from '../../../n2-features/f1-auth/a1-login/auth-reducer';
 import s from './Profile.module.scss'
-import Search from '../Search/Search';
-import {getPacksWithFilters, setSearchValueAC} from '../Search/filter-reducer';
+import Search from '../search/Search';
+import {getPacksWithFilters, setSearchValueAC} from '../search/filter-reducer';
 import {EditProfile} from './EditProfile/EditProfile';
 import GreenModal from '../../../n2-features/f2-modals/modal/GreenModal';
 import {PackType} from '../../m3-dal/packAPI';

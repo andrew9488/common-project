@@ -1,6 +1,6 @@
 import React, {ChangeEvent, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {onPacksPageClickTC, onPortionPacksChangeTC} from "../../Search/filter-reducer";
+import {onPacksPageClickTC, onPortionPacksChangeTC} from "../../search/filter-reducer";
 import Paginator from "./Paginator";
 import {AppRootStateType} from "../../../m2-bll/store";
 

@@ -6,14 +6,15 @@ import {fetchCardsTC, setCardGradeTC} from '../cards/cards-reducer';
 import {getRandomCard} from '../../../n3-utils/u1-error/u2-getRandomCard/getRandomCard';
 import SuperRadio from '../common/super-radio/SuperRadio';
 import {PackType} from '../../m3-dal/packAPI';
-import styles from './LearnPage.module.css';
+import styles from './LearnPage.module.scss';
+import s from "../packs/EditPack/EditPack.module.scss";
 
 type LearnPagePropsType = {
     cardsPack_id: string
     onModalClose: () => void
 }
 
-const grades = ['Did not know', 'Forgot', 'Confused', 'A lot of thought', 'Knew'];
+const grades = ["Didn't know", 'Forgot', 'Confused', 'A lot of thought', 'Knew'];
 
 const LearnPage: React.FC<LearnPagePropsType> = (props) => {
     const {cardsPack_id} = props
@@ -66,30 +67,33 @@ const LearnPage: React.FC<LearnPagePropsType> = (props) => {
     console.log(grade)
 
     return (
-        <div className={styles.learnPage}>
-            LearnPage
+        <div className={styles.learnPageContainer}>
+            <h3>Learn "{packName?.name}"</h3>
             {!isChecked &&
-            <div>
-                <h3>Learn "{packName?.name}"</h3>
-                <div>{card.question}</div>
-                <div>
-                    <button onClick={props.onModalClose}>cancel</button>
-                    <button onClick={checkAnswer}>show answer</button>
+            <div className={styles.questionBlock}>
+                <h4>Question: "{card.question}"</h4>
+                <div className={styles.buttonsBlock}>
+                    <button className={styles.cancelBtn} onClick={props.onModalClose}>cancel</button>
+                    <button className={styles.saveBtn} onClick={checkAnswer}>show answer</button>
                 </div>
-            </div>}
+            </div>
+            }
             {isChecked && (
-                <>
-                    <div>{card.question}</div>
-                    <div>{card.answer}</div>
-                    <SuperRadio name={'radio'}
-                                value={grade}
-                                options={grades}
-                                onChangeOption={setGrade}/>
-                    <div>
-                        <button onClick={props.onModalClose}>cancel</button>
-                        <button onClick={() => onNext(grade, card._id)}>next</button>
+                <div className={styles.answerBlock}>
+                    <h4>Question: "{card.question}"</h4>
+                    <h4>Answer: "{card.answer}"</h4>
+                    <div className={styles.answer}>
+                        <h4>Rate yourself: </h4>
+                        <SuperRadio name={'radio'}
+                                    value={grade}
+                                    options={grades}
+                                    onChangeOption={setGrade}/>
                     </div>
-                </>
+                    <div className={styles.buttonsBlock}>
+                        <button className={styles.cancelBtn} onClick={props.onModalClose}>cancel</button>
+                        <button className={styles.saveBtn} onClick={() => onNext(grade, card._id)}>next</button>
+                    </div>
+                </div>
             )}
         </div>
     );

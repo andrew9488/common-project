@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import Modal from '../../../../n2-features/f2-modals/modal/Modal';
 import GreenModal from '../../../../n2-features/f2-modals/modal/GreenModal';
-import LearnPage from '../../learnPage/LearnPage';
+import LearnPage from '../../learn-page/LearnPage';
 import styles from './CellWithButtons.module.sass';
 import {EditPack} from "../../packs/EditPack/EditPack";
 import {EditCard} from "../../cards/EditCard/EditCard";
