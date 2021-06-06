@@ -70,7 +70,8 @@ const Profile: React.FC = () => {
             <div className={s.profileBlock}>
                 <div className={s.profileInfo}>
                     <img src={avatar && avatar ? avatar : ''} alt="user_photo"/>
-                    <h3>{name && name}</h3>
+                    <h4>{name && name}</h4>
+                    <div className={s.description}>Some description</div>
                     <div className={s.buttonBlock}>
                         <button className={s.editBtn} onClick={() => setShowEditModal(true)}>Edit profile</button>
                         <button className={s.logoutBtn}
