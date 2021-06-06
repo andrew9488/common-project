@@ -1,7 +1,7 @@
-import React, {useMemo, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {AppRootStateType} from '../../m2-bll/store';
-import {createCardsPackTC, deleteCardsPackTC, updateCardsPackTC} from './packs-reducer';
+import {createCardsPackTC, deleteCardsPackTC, fetchPacksTC, updateCardsPackTC} from './packs-reducer';
 import {getPacksWithFilters, setSearchValueAC} from '../search/filter-reducer';
 import Search from '../search/Search';
 import SuperButton from '../common/super-button/SuperButton';
@@ -14,6 +14,10 @@ import {PaginatorContainer} from '../common/paginator/PaginatorContainer';
 import {SuperDoubleRangeContainer} from '../common/super-double-range/SuperDoubleRangeContainer';
 
 export const Packs: React.FC = () => {
+
+    useEffect(() => {
+        dispatch(fetchPacksTC({}));
+    }, [])
 
     const [id, setId] = useState<null | string>(null)
     const [showEditModal, setShowEditModal] = useState<boolean>(false);
