@@ -1,56 +1,71 @@
-import React, {useMemo} from "react";
-import {useDispatch, useSelector} from "react-redux";
-import {deleteCardsPackTC, updateCardsPackTC} from "../../packs/packs-reducer";
+import React from "react";
+import {useSelector} from "react-redux";
 import {NavLink} from "react-router-dom";
 import {PATH} from "../../routes/Routes";
 import CellWithButtons from "./CellWithButtons";
 import {Table} from "./Table";
 import {AppRootStateType} from "../../../m2-bll/store";
+import {PackType} from "../../../m3-dal/packAPI";
+import {CardType} from "../../../m3-dal/cardsAPI";
 
 type TableContainerPropsType = {
-    id: string | null
-    items: any[]
+    type: "pack" | "card"
+    packs?: PackType[]
+    cards?: CardType[]
+    titles: string[]
+    deleteCallback: (id: string) => void
+    updateCardsPackCallback?: (id: string, packName: string) => void
+    updateCardCallback?: (id: string, question: string, answer: string) => void
 }
-export const TableContainer: React.FC<TableContainerPropsType> = ({id, items}) => {
+export const TableContainer: React.FC<TableContainerPropsType> = (props) => {
 
-    const dispatch = useDispatch();
     const myId = useSelector<AppRootStateType, string | null>(state => state.profile.userData._id)
 
-    // callbacks for actions with packs
-    const deleteCardsPack = (id: string) => {
-        dispatch(deleteCardsPackTC(id))
+    const updateCardsPackName = (id: string, packName: string) => {
+        props.updateCardsPackCallback && props.updateCardsPackCallback(id, packName)
     }
-    const updateCardsPackName = (_id: string, packName: string) => {
-        dispatch(updateCardsPackTC(_id, packName))
+    const updateCard = (id: string, question: string, answer: string) => {
+        props.updateCardCallback && props.updateCardCallback(id, question, answer)
     }
-
-    //data for table with packs
-    const titles = useMemo(() => ['Name', 'Cards', 'LastUpdate', 'Created By', 'Actions'], []);
-    const myPacks = useMemo(() => {
-        return items && id ? items.filter(p => p.user_id === id) : items
-    }, [items, id])
 
     const array = [];
 
-    if (myPacks) {
-        for (let i = 0; i < myPacks.length; i++) {
+    if (props.packs) {
+        for (let i = 0; i < props.packs.length; i++) {
             let arr = []
-            arr.push(<NavLink to={`${PATH.CARDS}/` + myPacks[i]._id}> {myPacks[i].name}</NavLink>)
-            arr.push(myPacks[i].cardsCount)
-            arr.push(myPacks[i].updated.slice(0, -14))
-            arr.push(myPacks[i].user_name)
+            arr.push(<NavLink to={`${PATH.CARDS}/` + props.packs[i]._id}> {props.packs[i].name}</NavLink>)
+            arr.push(props.packs[i].cardsCount)
+            arr.push(props.packs[i].updated.slice(0, -14))
+            arr.push(props.packs[i].user_name)
             arr.push(
-                <CellWithButtons deleteCardsPack={deleteCardsPack}
+                <CellWithButtons deleteCardsPack={props.deleteCallback}
                                  updateCardsPackName={updateCardsPackName}
-                                 packId={myPacks[i]._id}
-                                 isOwn={myPacks[i].user_id === myId}
-                />
+                                 id={props.packs[i]._id}
+                                 isOwn={props.packs[i].user_id === myId}
+                                 type="pack"/>
+            )
+            array.push(arr)
+        }
+    }
+    if (props.cards) {
+        for (let i = 0; i < props.cards.length; i++) {
+            let arr = []
+            arr.push(props.cards[i].question)
+            arr.push(props.cards[i].answer)
+            arr.push(props.cards[i].updated.slice(0, -14))
+            arr.push(props.cards[i].grade)
+            arr.push(
+                <CellWithButtons deleteCardsPack={props.deleteCallback}
+                                 updateCard={updateCard}
+                                 id={props.cards[i]._id}
+                                 isOwn={props.cards[i].user_id === myId}
+                                 type="card"/>
             )
             array.push(arr)
         }
     }
 
     return (
-        <Table titleColumns={titles} items={array}/>
+        <Table titleColumns={props.titles} items={array}/>
     )
 }
