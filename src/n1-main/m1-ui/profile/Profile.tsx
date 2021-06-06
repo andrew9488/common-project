@@ -12,11 +12,11 @@ import {EditProfile} from './EditProfile/EditProfile';
 import GreenModal from '../../../n2-features/f2-modals/modal/GreenModal';
 import {PackType} from '../../m3-dal/packAPI';
 import SuperButton from '../common/super-button/SuperButton';
-import {Preloader} from "../common/preloader/Preloader";
-import {TableContainer} from "../common/table/TableContainer";
-import {SuperDoubleRangeContainer} from "../common/super-double-range/SuperDoubleRangeContainer";
-import {PaginatorContainer} from "../common/paginator/PaginatorContainer";
-import {deleteCardsPackTC, updateCardsPackTC} from "../packs/packs-reducer";
+import {Preloader} from '../common/preloader/Preloader';
+import {TableContainer} from '../common/table/TableContainer';
+import {SuperDoubleRangeContainer} from '../common/super-double-range/SuperDoubleRangeContainer';
+import {PaginatorContainer} from '../common/paginator/PaginatorContainer';
+import {deleteCardsPackTC, updateCardsPackTC} from '../packs/packs-reducer';
 
 
 const Profile: React.FC = () => {
@@ -104,9 +104,7 @@ const Profile: React.FC = () => {
                                     updateCardsPackCallback={updateCardsPackName}
                                     type="pack"
                     />
-                    <div>
-                        <PaginatorContainer/>
-                    </div>
+                    <PaginatorContainer/>
                 </div>
             </div>
             {showEditModal &&

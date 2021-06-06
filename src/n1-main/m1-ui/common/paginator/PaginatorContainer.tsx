@@ -1,8 +1,9 @@
-import React, {ChangeEvent, useState} from "react";
-import {useDispatch, useSelector} from "react-redux";
-import {onPacksPageClickTC, onPortionPacksChangeTC} from "../../search/filter-reducer";
-import Paginator from "./Paginator";
-import {AppRootStateType} from "../../../m2-bll/store";
+import React, {ChangeEvent, useState} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+import {onPacksPageClickTC, onPortionPacksChangeTC} from '../../search/filter-reducer';
+import Paginator from './Paginator';
+import {AppRootStateType} from '../../../m2-bll/store';
+import styles from './PaginatorContainer.module.scss';
 
 type PaginatorContainerPropsType = {}
 
@@ -27,18 +28,22 @@ export const PaginatorContainer: React.FC<PaginatorContainerPropsType> = (props)
     }
 
     return (
-        <>
+        <div className={styles.wrapper}>
             <Paginator totalCount={cardPacksTotalCount}
                        currentPage={page}
                        portionSize={pageCount}
                        pagesPortionSize={10}
                        onPageClickHandler={onPageClickHandler}/>
-            <select name="pagesCountSelect"
-                    id="pagesCountSelect"
-                    value={pagesCount}
-                    onChange={onPagesCountChangeHandler}>
-                {pagesOptionsTags}
-            </select>
-        </>
+            <div className={styles.selectWrapper}>
+                Show
+                <select name="pagesCountSelect"
+                        id="pagesCountSelect"
+                        value={pagesCount}
+                        onChange={onPagesCountChangeHandler}>
+                    {pagesOptionsTags}
+                </select>
+                Cards per page
+            </div>
+        </div>
     )
 }
