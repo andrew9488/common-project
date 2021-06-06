@@ -95,7 +95,7 @@ const Profile: React.FC = () => {
                             <Search setSearch={value => dispatch(setSearchValueAC(value))}/>
                         </div>
                         <div className={s.button}>
-                            <SuperButton text={'search'} onClick={() => dispatch(getPacksWithFilters())}/>
+                            <button onClick={() => dispatch(getPacksWithFilters())}>search</button>
                         </div>
                     </div>
                     <TableContainer packs={filterPacks}

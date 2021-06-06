@@ -33,6 +33,7 @@
       .description {
         @include lightTextStyle()
       }
+
       img {
         height: 96px;
         width: 96px;
@@ -60,6 +61,7 @@
           border: 1px solid $mediumGreenColor;
           box-sizing: border-box;
           border-radius: 2px;
+
           &:hover {
             cursor: pointer;
             background-color: $lightTextColor;
@@ -76,6 +78,7 @@
           line-height: 14px;
           color: #FFFFFF;
           padding: 5px 6px 4px;
+
           &:hover {
             cursor: pointer;
             opacity: 0.8;
@@ -126,8 +129,8 @@
         width: 80%;
       }
 
-      .button {
-
+      button {
+        @include BtnStyle(90px, 36px, $mediumGreenColor, $lightTextColor);
       }
     }
   }

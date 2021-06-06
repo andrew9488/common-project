@@ -9,9 +9,9 @@ import styles from './Packs.module.scss';
 import {Preloader} from '../common/preloader/Preloader';
 import {CardsPackCreateType, PackType} from '../../m3-dal/packAPI';
 import Modal from '../../../n2-features/f2-modals/modal/Modal';
-import {TableContainer} from "../common/table/TableContainer";
-import {PaginatorContainer} from "../common/paginator/PaginatorContainer";
-import {SuperDoubleRangeContainer} from "../common/super-double-range/SuperDoubleRangeContainer";
+import {TableContainer} from '../common/table/TableContainer';
+import {PaginatorContainer} from '../common/paginator/PaginatorContainer';
+import {SuperDoubleRangeContainer} from '../common/super-double-range/SuperDoubleRangeContainer';
 
 export const Packs: React.FC = () => {
 
@@ -70,8 +70,8 @@ export const Packs: React.FC = () => {
                         <Search setSearch={value => dispatch(setSearchValueAC(value))}/>
                     </div>
                     <div className={styles.buttons}>
-                        <SuperButton text={'search'} onClick={() => dispatch(getPacksWithFilters())}/>
-                        <SuperButton text={'add'} onClick={() => setShowEditModal(true)}/>
+                        <button onClick={() => dispatch(getPacksWithFilters())}>search</button>
+                        <button onClick={() => setShowEditModal(true)}>add</button>
                     </div>
                 </div>
                 <TableContainer packs={filterPacks}
