@@ -48,7 +48,7 @@
   font-weight: 500
   font-size: 16px
   line-height: 19px
-  text-shadow: 0px 1px 1px rgba(0, 0, 0, 0.25)
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.25)
   &:hover
     cursor: pointer
     opacity: 0.9
@@ -79,6 +79,7 @@
 
   &:hover
     opacity: 0.8
+    cursor: pointer
 
 
 @mixin smallBtnStyle($color, $bgColor)
@@ -91,3 +92,7 @@
   padding: 5px 6px 4px
   background: $bgColor
   color: $color
+
+  &:hover
+    opacity: 0.8
+    cursor: pointer

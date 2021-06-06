@@ -3,8 +3,8 @@ import Modal from '../../../../n2-features/f2-modals/modal/Modal';
 import GreenModal from '../../../../n2-features/f2-modals/modal/GreenModal';
 import LearnPage from '../../learn-page/LearnPage';
 import styles from './CellWithButtons.module.sass';
-import {EditPack} from "../../packs/EditPack/EditPack";
-import {EditCard} from "../../cards/EditCard/EditCard";
+import {EditPack} from '../../packs/EditPack/EditPack';
+import {EditCard} from '../../cards/EditCard/EditCard';
 
 type CellWithButtonsPropsType = {
     deleteCardsPack: (packId: string) => void
@@ -12,7 +12,7 @@ type CellWithButtonsPropsType = {
     updateCard?: (cardId: string, question: string, answer: string) => void
     id: string
     isOwn: boolean
-    type: "pack" | "card"
+    type: 'pack' | 'card'
 }
 
 
@@ -30,14 +30,16 @@ const CellWithButtons: React.FC<CellWithButtonsPropsType> = (props) => {
 
     return (
         <div className={styles.wrapper}>
-            {props.type === "pack" &&
-            <>{
-                props.isOwn && <>
-                    <button className={styles.delBtn} onClick={() => setShowDelModal(true)}>Delete</button>
-                    <button className={styles.primBtn} onClick={() => setShowEditModal(true)}>Edit</button>
-                </>
-            }
-                <button className={styles.primBtn} onClick={() => setShowLearnModal(true)}>Learn</button>
+            {props.type === 'pack' &&
+
+            <>
+                <div className={styles.btnsWrapper}>
+                    {props.isOwn && <>
+                        <button className={styles.delBtn} onClick={() => setShowDelModal(true)}>Delete</button>
+                        <button className={styles.primBtn} onClick={() => setShowEditModal(true)}>Edit</button>
+                    </>}
+                    <button className={styles.primBtn} onClick={() => setShowLearnModal(true)}>Learn</button>
+                </div>
                 {
                     showDelModal && <Modal childrenHeight={220}
                                            childrenWidth={400}
@@ -66,13 +68,12 @@ const CellWithButtons: React.FC<CellWithButtonsPropsType> = (props) => {
                 </GreenModal>}
             </>
             }
-            {props.type === "card" &&
-            <>{
-                props.isOwn && <>
+            {props.type === 'card' &&
+            <>
+                {props.isOwn && <div className={styles.btnsWrapper}>
                     <button className={styles.delBtn} onClick={() => setShowDelModal(true)}>Delete</button>
                     <button className={styles.primBtn} onClick={() => setShowEditModal(true)}>Edit</button>
-                </>
-            }
+                </div>}
                 {
                     showDelModal && <Modal childrenHeight={220}
                                            childrenWidth={400}
