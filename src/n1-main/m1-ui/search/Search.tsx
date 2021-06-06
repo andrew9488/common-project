@@ -1,7 +1,7 @@
 import React, {ChangeEvent, useEffect, useState} from 'react';
 import {useSelector} from 'react-redux';
 import {AppRootStateType} from '../../m2-bll/store';
-import styles from './Search.module.css';
+import styles from './Search.module.scss';
 
 
 type SearchPropsType = {
@@ -36,7 +36,7 @@ const Search: React.FC<SearchPropsType> = (props) => {
     return (
         <div className={styles.searchDiv}>
             <input type="text"
-                   placeholder={'search...'}
+                   placeholder={'Search...'}
                    onChange={onSearchChange}
                    value={searchValue}
                    className={styles.searchInput}/>
