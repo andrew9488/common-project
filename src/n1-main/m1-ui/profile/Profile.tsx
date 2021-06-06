@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {AppRootStateType} from '../../m2-bll/store';
 import {Redirect} from 'react-router-dom';
@@ -6,8 +6,8 @@ import {PATH} from '../routes/Routes';
 import {initializedAppTC, RequestStatusType} from '../app-reducer';
 import {logOutTC} from '../../../n2-features/f1-auth/a1-login/auth-reducer';
 import s from './Profile.module.scss'
-import Search from '../Search/Search';
-import {getPacksWithFilters, setSearchValueAC} from '../Search/filter-reducer';
+import Search from '../search/Search';
+import {getPacksWithFilters, setSearchValueAC} from '../search/filter-reducer';
 import {EditProfile} from './EditProfile/EditProfile';
 import GreenModal from '../../../n2-features/f2-modals/modal/GreenModal';
 import {PackType} from '../../m3-dal/packAPI';
@@ -16,6 +16,7 @@ import {Preloader} from "../common/preloader/Preloader";
 import {TableContainer} from "../common/table/TableContainer";
 import {SuperDoubleRangeContainer} from "../common/super-double-range/SuperDoubleRangeContainer";
 import {PaginatorContainer} from "../common/paginator/PaginatorContainer";
+import {deleteCardsPackTC, updateCardsPackTC} from "../packs/packs-reducer";
 
 
 const Profile: React.FC = () => {
@@ -28,18 +29,19 @@ const Profile: React.FC = () => {
     const name = useSelector<AppRootStateType, string | null>(state => state.profile.userData.name)
     const myId = useSelector<AppRootStateType, string | null>(state => state.profile.userData._id)
     const packs = useSelector<AppRootStateType, PackType[]>(state => state.packs.cardPacks)
-    const cardPacksTotalCount = useSelector<AppRootStateType, number>(state => state.packs.cardPacksTotalCount)
-    const page = useSelector<AppRootStateType, number>(state => state.packs.page)
-    const pageCount = useSelector<AppRootStateType, number>(state => state.packs.pageCount)
     const isInitialized = useSelector<AppRootStateType, boolean>(state => state.app.isInitialized);
-    const minRedux = useSelector<AppRootStateType, number>(state => state.filter.min);
-    const maxRedux = useSelector<AppRootStateType, number>(state => state.filter.max);
+
 
     //modal
     const [showEditModal, setShowEditModal] = useState<boolean>(false)
     const closeEditModal = () => {
         setShowEditModal(false)
     }
+    const titles = useMemo(() => ['Name', 'Cards', 'LastUpdate', 'Created By', 'Actions'], []);
+    const filterPacks = useMemo(() => {
+        return packs && myId ? packs.filter(p => p.user_id === myId) : packs
+    }, [packs, myId])
+
 
     useEffect(() => {
         dispatch(initializedAppTC())
@@ -48,11 +50,17 @@ const Profile: React.FC = () => {
     const onLogOutHandler = () => {
         dispatch(logOutTC());
     }
+    const deleteCardsPack = (id: string) => {
+        dispatch(deleteCardsPackTC(id))
+    }
+    const updateCardsPackName = (id: string, packName: string) => {
+        dispatch(updateCardsPackTC(id, packName))
+    }
+
 
     if (!isLoggedIn) {
         return <Redirect to={PATH.LOGIN}/>
     }
-
     if (!isInitialized) {
         return <Preloader/>
     }
@@ -74,7 +82,7 @@ const Profile: React.FC = () => {
                 <div className={s.cardsFilter}>
                     <h3>Number of cards</h3>
                     <div className={s.range}>
-                        <SuperDoubleRangeContainer min={minRedux} max={maxRedux}/>
+                        <SuperDoubleRangeContainer/>
                     </div>
                 </div>
             </div>
@@ -89,10 +97,14 @@ const Profile: React.FC = () => {
                             <SuperButton text={'search'} onClick={() => dispatch(getPacksWithFilters())}/>
                         </div>
                     </div>
-                    <TableContainer id={myId} items={packs}/>
+                    <TableContainer packs={filterPacks}
+                                    deleteCallback={deleteCardsPack}
+                                    titles={titles}
+                                    updateCardsPackCallback={updateCardsPackName}
+                                    type="pack"
+                    />
                     <div>
-                        <PaginatorContainer page={page} pageCount={pageCount}
-                                            cardPacksTotalCount={cardPacksTotalCount}/>
+                        <PaginatorContainer/>
                     </div>
                 </div>
             </div>

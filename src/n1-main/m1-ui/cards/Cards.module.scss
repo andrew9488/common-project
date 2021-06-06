@@ -1,0 +1,27 @@
+@import "src/n1-main/m1-ui/common/styles/variables";
+
+.cardsContainer {
+  margin: 0 auto;
+  width: 1008px;
+  height: 636px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: $GreyGreenBackground;
+  border-radius: 8px;
+
+  .searchBlock {
+    width: 90%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+
+    .search {
+      width: 60%;
+    }
+    .buttonsBlock{
+      display: flex;
+      justify-content: space-between;
+    }
+  }
+}

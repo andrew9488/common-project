@@ -1,9 +1,9 @@
-import React, {useState} from 'react';
+import React, {useMemo, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {AppRootStateType} from '../../m2-bll/store';
-import {createCardsPackTC} from './packs-reducer';
-import {getPacksWithFilters, setSearchValueAC} from '../Search/filter-reducer';
-import Search from '../Search/Search';
+import {createCardsPackTC, deleteCardsPackTC, updateCardsPackTC} from './packs-reducer';
+import {getPacksWithFilters, setSearchValueAC} from '../search/filter-reducer';
+import Search from '../search/Search';
 import SuperButton from '../common/super-button/SuperButton';
 import styles from './Packs.module.scss';
 import {Preloader} from '../common/preloader/Preloader';
@@ -15,26 +15,31 @@ import {SuperDoubleRangeContainer} from "../common/super-double-range/SuperDoubl
 
 export const Packs: React.FC = () => {
 
+    const [id, setId] = useState<null | string>(null)
+    const [showEditModal, setShowEditModal] = useState<boolean>(false);
+
     //data from redux
     const packs = useSelector<AppRootStateType, Array<PackType>>(state => state.packs.cardPacks)
-    const cardPacksTotalCount = useSelector<AppRootStateType, number>(state => state.packs.cardPacksTotalCount)
-    const page = useSelector<AppRootStateType, number>(state => state.packs.page)
-    const pageCount = useSelector<AppRootStateType, number>(state => state.packs.pageCount)
     const myId = useSelector<AppRootStateType, string | null>(state => state.profile.userData._id)
-    const minRedux = useSelector<AppRootStateType, number>(state => state.filter.min);
-    const maxRedux = useSelector<AppRootStateType, number>(state => state.filter.max);
     const dispatch = useDispatch()
 
-    const [id, setId] = useState<null | string>(null)
+    const titles = useMemo(() => ['Name', 'Cards', 'LastUpdate', 'Created By', 'Actions'], []);
+    const filterPacks = useMemo(() => {
+        return packs && id ? packs.filter(p => p.user_id === id) : packs
+    }, [packs, id])
 
-    //modals
-    const [showEditModal, setShowEditModal] = useState<boolean>(false);
 
     const addCardsPack = (name: string) => {
         let cardsPack: Partial<CardsPackCreateType> = {
             name
         }
         dispatch(createCardsPackTC(cardsPack))
+    }
+    const deleteCardsPack = (id: string) => {
+        dispatch(deleteCardsPackTC(id))
+    }
+    const updateCardsPackName = (id: string, packName: string) => {
+        dispatch(updateCardsPackTC(id, packName))
     }
 
     if (!packs) {
@@ -54,7 +59,7 @@ export const Packs: React.FC = () => {
                 <div>
                     <h3>Number of cards</h3>
                     <div className={styles.range}>
-                        <SuperDoubleRangeContainer min={minRedux} max={maxRedux}/>
+                        <SuperDoubleRangeContainer/>
                     </div>
                 </div>
             </div>
@@ -64,14 +69,19 @@ export const Packs: React.FC = () => {
                     <div className={styles.search}>
                         <Search setSearch={value => dispatch(setSearchValueAC(value))}/>
                     </div>
-                    <div className={styles.button}>
+                    <div className={styles.buttons}>
                         <SuperButton text={'search'} onClick={() => dispatch(getPacksWithFilters())}/>
                         <SuperButton text={'add'} onClick={() => setShowEditModal(true)}/>
                     </div>
                 </div>
-                <TableContainer items={packs} id={id}/>
+                <TableContainer packs={filterPacks}
+                                deleteCallback={deleteCardsPack}
+                                updateCardsPackCallback={updateCardsPackName}
+                                titles={titles}
+                                type="pack"
+                />
                 <div>
-                    <PaginatorContainer page={page} pageCount={pageCount} cardPacksTotalCount={cardPacksTotalCount}/>
+                    <PaginatorContainer/>
                 </div>
             </div>
             {showEditModal && <Modal childrenHeight={233}

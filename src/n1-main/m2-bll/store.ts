@@ -8,7 +8,7 @@ import {
     RecoveryReducerActionType
 } from '../../n2-features/f1-auth/a3-recovery-password/recovery-reducer';
 import {appReducer, AppReducerActionType} from '../m1-ui/app-reducer';
-import {filterReducer} from '../m1-ui/Search/filter-reducer';
+import {filterReducer} from '../m1-ui/search/filter-reducer';
 import {
     enterNewPasswordReducer,
     EnterNewPasswordReducerActionType

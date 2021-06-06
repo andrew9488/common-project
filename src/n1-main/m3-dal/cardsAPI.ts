@@ -60,13 +60,11 @@ type SetGradeResponseType = {
 }
 export const cardsAPI = {
     fetchCards(data: FetchCardsPayloadType) {
-        debugger
         return instance.get<ResponseCardType>(`cards/card?`,
             {params: {...data}})
             .then(response => response.data)
     },
     createCard(card: Partial<CardCreateType>) {
-        debugger
         return instance.post(`cards/card`, {card})
             .then(response => response.data)
     },
