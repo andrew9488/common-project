@@ -45,7 +45,7 @@ export type CardsPackCreateType = {
 export const packsAPI = {
     fetchPacks(data: FetchPacksPayloadType) {
         return instance.get<ResponsePackType>(`cards/pack?`,
-            {params: {...data, pageCount: 8}})
+            {params: {...data}})
             .then(response => response.data)
     },
     createPack(cardsPack: Partial<CardsPackCreateType>) {
