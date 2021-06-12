@@ -3,16 +3,21 @@
 
 .profileContainer {
   margin: 24px auto 0;
-  width: 1008px;
-  height: 636px;
+  max-width: 1008px;
+  min-height: 636px;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   background-color: white;
   border-radius: 8px;
 
+  @media screen and (max-width: 1050px) {
+    margin: 24px 20px 0;
+  }
+
   .profileBlock {
-    width: 243px;
-    height: 636px;
+    max-width: 243px;
+    width: 100%;
+    min-height: 636px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -47,8 +52,15 @@
 
       .buttonBlock {
         display: flex;
-        width: 60%;
+        max-width: 60%;
         justify-content: space-between;
+        align-items: center;
+
+        @media screen and (max-width: 615px){
+          flex-direction: column;
+          min-height: 55px;
+          align-items: center;
+        }
 
         .editBtn {
           color: #465511;
@@ -61,6 +73,7 @@
           border: 1px solid $mediumGreenColor;
           box-sizing: border-box;
           border-radius: 2px;
+          margin-right: 10px;
 
           &:hover {
             cursor: pointer;
@@ -109,24 +122,35 @@
   }
 
   .packsBlock {
-    width: 765px;
+    max-width: 765px;
+    width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
-    //border: 1px solid;
 
     h3 {
       @include h3Style();
     }
 
     .searchBlock {
-      width: 669px;
+      max-width: 668px;
+      width: 96%;
       display: flex;
       justify-content: space-between;
       align-items: center;
 
+      @media screen and (max-width: 910px) {
+        flex-direction: column;
+      }
+
       .search {
-        width: 80%;
+        max-width: 461px;
+        width: 100%;
+
+        @media screen and (max-width: 910px) {
+          max-width: 90%;
+          margin-bottom: 15px;
+        }
       }
 
       button {

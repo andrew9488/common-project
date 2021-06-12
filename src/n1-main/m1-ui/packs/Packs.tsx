@@ -104,14 +104,12 @@ export const Packs: React.FC = () => {
                                 titles={titles}
                                 type="pack"
                 />
-                <div>
-                    <PaginatorContainer pagesCountChange={pagesCountPacksChange}
-                                        pageClickHandler={pageClickPacksHandler}
-                                        totalCount={cardPacksTotalCount}
-                                        page={page}
-                                        pageCount={pageCount}
-                    />
-                </div>
+                <PaginatorContainer pagesCountChange={pagesCountPacksChange}
+                                    pageClickHandler={pageClickPacksHandler}
+                                    totalCount={cardPacksTotalCount}
+                                    page={page}
+                                    pageCount={pageCount}
+                />
             </div>
             {showEditModal && <Modal childrenHeight={233}
                                      childrenWidth={400}

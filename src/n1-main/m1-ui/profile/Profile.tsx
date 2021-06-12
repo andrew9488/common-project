@@ -105,36 +105,33 @@ const Profile: React.FC = () => {
                 </div>
             </div>
             <div className={s.packsBlock}>
-                <div className={s.packs}>
-                    <h3>Packs list {name && name + '\'s'}</h3>
-                    <div className={s.searchBlock}>
-                        <div className={s.search}>
-                            <Search setSearch={value => dispatch(setSearchValueAC(value))}/>
-                        </div>
-                        <div className={s.button}>
-                            <button onClick={() => getPacksWithFilters()}>search</button>
-                        </div>
+                <h3>Packs list {name && name + '\'s'}</h3>
+                <div className={s.searchBlock}>
+                    <div className={s.search}>
+                        <Search setSearch={value => dispatch(setSearchValueAC(value))}/>
                     </div>
-                    <TableContainer packs={filterPacks}
-                                    deleteCallback={deleteCardsPack}
-                                    titles={titles}
-                                    updateCardsPackCallback={updateCardsPackName}
-                                    type="pack"
-                    />
-                    <PaginatorContainer pageClickHandler={pageClickPacksHandler}
-                                        pagesCountChange={pagesCountPacksChange}
-                                        totalCount={cardPacksTotalCount}
-                                        page={page}
-                                        pageCount={pageCount}
-                    />
+                    <div className={s.button}>
+                        <button onClick={() => getPacksWithFilters()}>search</button>
+                    </div>
                 </div>
+                <TableContainer packs={filterPacks}
+                                deleteCallback={deleteCardsPack}
+                                titles={titles}
+                                updateCardsPackCallback={updateCardsPackName}
+                                type="pack"
+                />
+                <PaginatorContainer pageClickHandler={pageClickPacksHandler}
+                                    pagesCountChange={pagesCountPacksChange}
+                                    totalCount={cardPacksTotalCount}
+                                    page={page}
+                                    pageCount={pageCount}
+                />
             </div>
             {showEditModal &&
             <GreenModal onModalClose={() => setShowEditModal(false)} childrenWidth={413}
                         childrenHeight={540}>
-                <EditProfile closeEditModal={closeEditModal}/>
+              <EditProfile closeEditModal={closeEditModal}/>
             </GreenModal>}
-
         </div>
     )
 }
