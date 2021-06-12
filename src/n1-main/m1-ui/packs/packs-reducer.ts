@@ -36,7 +36,6 @@ export const fetchPacksTC = (data: FetchPacksPayloadType): AppThunkType => dispa
     dispatch(setAppStatusAC('loading'))
     packsAPI.fetchPacks({...data})
         .then(response => {
-            console.log(response)
             dispatch(setPacksDataAC(response))
             dispatch(setAppStatusAC('succeeded'))
         })

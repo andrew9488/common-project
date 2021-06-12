@@ -7,16 +7,15 @@ import {initializedAppTC, RequestStatusType} from '../app-reducer';
 import {logOutTC} from '../../../n2-features/f1-auth/a1-login/auth-reducer';
 import s from './Profile.module.scss'
 import Search from '../search/Search';
-import {getPacksWithFilters, setSearchValueAC} from '../search/filter-reducer';
+import {setSearchValueAC} from '../search/filter-reducer';
 import {EditProfile} from './EditProfile/EditProfile';
 import GreenModal from '../../../n2-features/f2-modals/modal/GreenModal';
 import {PackType} from '../../m3-dal/packAPI';
-import SuperButton from '../common/super-button/SuperButton';
 import {Preloader} from '../common/preloader/Preloader';
 import {TableContainer} from '../common/table/TableContainer';
 import {SuperDoubleRangeContainer} from '../common/super-double-range/SuperDoubleRangeContainer';
 import {PaginatorContainer} from '../common/paginator/PaginatorContainer';
-import {deleteCardsPackTC, updateCardsPackTC} from '../packs/packs-reducer';
+import {deleteCardsPackTC, fetchPacksTC, updateCardsPackTC} from '../packs/packs-reducer';
 
 
 const Profile: React.FC = () => {
@@ -29,8 +28,18 @@ const Profile: React.FC = () => {
     const name = useSelector<AppRootStateType, string | null>(state => state.profile.userData.name)
     const myId = useSelector<AppRootStateType, string | null>(state => state.profile.userData._id)
     const packs = useSelector<AppRootStateType, PackType[]>(state => state.packs.cardPacks)
-    const isInitialized = useSelector<AppRootStateType, boolean>(state => state.app.isInitialized);
+    const isInitialized = useSelector<AppRootStateType, boolean>(state => state.app.isInitialized)
+    const count = useSelector<AppRootStateType, number>(state => state.packs.cardPacksTotalCount)
+    const cardPacksTotalCount = useSelector<AppRootStateType, number>(state => state.packs.cardPacksTotalCount)
+    const page = useSelector<AppRootStateType, number>(state => state.packs.page)
+    const pageCount = useSelector<AppRootStateType, number>(state => state.packs.pageCount)
+    const searchName = useSelector<AppRootStateType, string>(state => state.filter.search)
+    const minFilter = useSelector<AppRootStateType, number>(state => state.filter.min)
+    const maxFilter = useSelector<AppRootStateType, number>(state => state.filter.max)
 
+    useEffect(() => {
+        dispatch(initializedAppTC(count))
+    }, [dispatch, count])
 
     //modal
     const [showEditModal, setShowEditModal] = useState<boolean>(false)
@@ -43,18 +52,26 @@ const Profile: React.FC = () => {
     }, [packs, myId])
 
 
-    useEffect(() => {
-        dispatch(initializedAppTC())
-    }, [dispatch])
-
     const onLogOutHandler = () => {
         dispatch(logOutTC());
     }
+    const pageClickPacksHandler = (page: number) => {
+        dispatch(fetchPacksTC({page}))
+    }
+
+    const pagesCountPacksChange = (pageCount: number) => {
+        debugger
+        dispatch(fetchPacksTC({pageCount}))
+    }
+
     const deleteCardsPack = (id: string) => {
         dispatch(deleteCardsPackTC(id))
     }
     const updateCardsPackName = (id: string, packName: string) => {
         dispatch(updateCardsPackTC(id, packName))
+    }
+    const getPacksWithFilters = () => {
+        dispatch(fetchPacksTC({packName: searchName, min: minFilter, max: maxFilter}))
     }
 
 
@@ -95,7 +112,7 @@ const Profile: React.FC = () => {
                             <Search setSearch={value => dispatch(setSearchValueAC(value))}/>
                         </div>
                         <div className={s.button}>
-                            <button onClick={() => dispatch(getPacksWithFilters())}>search</button>
+                            <button onClick={() => getPacksWithFilters()}>search</button>
                         </div>
                     </div>
                     <TableContainer packs={filterPacks}
@@ -104,7 +121,12 @@ const Profile: React.FC = () => {
                                     updateCardsPackCallback={updateCardsPackName}
                                     type="pack"
                     />
-                    <PaginatorContainer/>
+                    <PaginatorContainer pageClickHandler={pageClickPacksHandler}
+                                        pagesCountChange={pagesCountPacksChange}
+                                        totalCount={cardPacksTotalCount}
+                                        page={page}
+                                        pageCount={pageCount}
+                    />
                 </div>
             </div>
             {showEditModal &&

@@ -42,7 +42,7 @@ const LearnPage: React.FC<LearnPagePropsType> = (props) => {
     useEffect(() => {
         console.log('LearnContainer useEffect');
         if (first) {
-            dispatch(fetchCardsTC(cardsPack_id));
+            dispatch(fetchCardsTC({cardsPack_id}));
             setFirst(false);
         }
         console.log('cards', cards)

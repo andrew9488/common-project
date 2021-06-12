@@ -15,7 +15,7 @@ const App: React.FC = () => {
 
     useEffect(() => {
         dispatch(initializedAppTC())
-    }, [])
+    }, [dispatch])
 
     if (!isInitialized) {
         return <Preloader/>

@@ -25,7 +25,7 @@ export type ResponseCardType = {
 }
 //type for get
 export type FetchCardsPayloadType = {
-    cardsPack_id: string
+    cardsPack_id?: string
     cardAnswer?: string
     cardQuestion?: string
     min?: number
