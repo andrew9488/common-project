@@ -1,7 +1,3 @@
-import {AppThunkType} from '../../m2-bll/store';
-import {fetchPacksTC, setPagesCountAC, setPageValueAC} from '../packs/packs-reducer';
-
-
 type ActionsType = ReturnType<typeof setSearchValueAC> | ReturnType<typeof setMinMaxValuesAC>
 
 const initialState = {
@@ -33,23 +29,23 @@ export const setMinMaxValuesAC = (values: number[]) => ({type: 'SET-MIN-MAX-VALU
 
 //thunks
 
-export const getPacksWithFilters = (): AppThunkType => (dispatch, getState) => {
-    let packName = getState().filter.search;
-    let min = getState().filter.min;
-    let max = getState().filter.max;
-    dispatch(fetchPacksTC({packName, min, max}))
-}
-
-export const onPacksPageClickTC = (page: number): AppThunkType => (dispatch) => {
-    dispatch(setPageValueAC(page));
-    dispatch(fetchPacksTC({page}))
-}
-
-export const onPortionPacksChangeTC = (pageCount: number): AppThunkType => (dispatch) => {
-    dispatch(setPagesCountAC(pageCount))
-    dispatch(fetchPacksTC({pageCount}))
-}
-
-export const sortPackTC = (sortPacks: string): AppThunkType => (dispatch) => {
-    dispatch(fetchPacksTC({sortPacks}))
-}
+// export const getPacksWithFilters = (): AppThunkType => (dispatch, getState) => {
+//     let value = getState().filter.search;
+//     let min = getState().filter.min;
+//     let max = getState().filter.max;
+//     dispatch(fetchPacksTC({packName:value, min, max}))
+// }
+//
+// export const onPacksPageClickTC = (page: number): AppThunkType => (dispatch) => {
+//     dispatch(setPageValueAC(page));
+//     dispatch(fetchPacksTC({page}))
+// }
+//
+// export const onPortionPacksChangeTC = (pageCount: number): AppThunkType => (dispatch) => {
+//     dispatch(setPagesCountAC(pageCount))
+//     dispatch(fetchPacksTC({pageCount}))
+// }
+//
+// export const sortPackTC = (sortPacks: string): AppThunkType => (dispatch) => {
+//     dispatch(fetchPacksTC({sortPacks}))
+// }

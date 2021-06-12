@@ -1,10 +1,9 @@
-import React, {useEffect, useMemo, useState} from 'react';
+import React, {useMemo, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {AppRootStateType} from '../../m2-bll/store';
 import {createCardsPackTC, deleteCardsPackTC, fetchPacksTC, updateCardsPackTC} from './packs-reducer';
-import {getPacksWithFilters, setSearchValueAC} from '../search/filter-reducer';
+import {setSearchValueAC} from '../search/filter-reducer';
 import Search from '../search/Search';
-import SuperButton from '../common/super-button/SuperButton';
 import styles from './Packs.module.scss';
 import {Preloader} from '../common/preloader/Preloader';
 import {CardsPackCreateType, PackType} from '../../m3-dal/packAPI';
@@ -13,19 +12,23 @@ import {TableContainer} from '../common/table/TableContainer';
 import {PaginatorContainer} from '../common/paginator/PaginatorContainer';
 import {SuperDoubleRangeContainer} from '../common/super-double-range/SuperDoubleRangeContainer';
 
+
 export const Packs: React.FC = () => {
 
-    useEffect(() => {
-        dispatch(fetchPacksTC({}));
-    }, [])
+    //data from redux
+    const cardPacksTotalCount = useSelector<AppRootStateType, number>(state => state.packs.cardPacksTotalCount)
+    const page = useSelector<AppRootStateType, number>(state => state.packs.page)
+    const pageCount = useSelector<AppRootStateType, number>(state => state.packs.pageCount)
+    const packs = useSelector<AppRootStateType, Array<PackType>>(state => state.packs.cardPacks)
+    const myId = useSelector<AppRootStateType, string | null>(state => state.profile.userData._id)
+    const searchName = useSelector<AppRootStateType, string>(state => state.filter.search)
+    const minFilter = useSelector<AppRootStateType, number>(state => state.filter.min)
+    const maxFilter = useSelector<AppRootStateType, number>(state => state.filter.max)
+    const dispatch = useDispatch()
 
     const [id, setId] = useState<null | string>(null)
     const [showEditModal, setShowEditModal] = useState<boolean>(false);
 
-    //data from redux
-    const packs = useSelector<AppRootStateType, Array<PackType>>(state => state.packs.cardPacks)
-    const myId = useSelector<AppRootStateType, string | null>(state => state.profile.userData._id)
-    const dispatch = useDispatch()
 
     const titles = useMemo(() => ['Name', 'Cards', 'LastUpdate', 'Created By', 'Actions'], []);
     const filterPacks = useMemo(() => {
@@ -45,6 +48,17 @@ export const Packs: React.FC = () => {
     const updateCardsPackName = (id: string, packName: string) => {
         dispatch(updateCardsPackTC(id, packName))
     }
+    const pageClickPacksHandler = (page: number) => {
+        dispatch(fetchPacksTC({page}))
+    }
+
+    const pagesCountPacksChange = (pageCount: number) => {
+        dispatch(fetchPacksTC({pageCount}))
+    }
+    const getPacksWithFilters = () => {
+        dispatch(fetchPacksTC({packName: searchName, min: minFilter, max: maxFilter}))
+    }
+
 
     if (!packs) {
         return <Preloader/>
@@ -74,7 +88,7 @@ export const Packs: React.FC = () => {
                         <Search setSearch={value => dispatch(setSearchValueAC(value))}/>
                     </div>
                     <div className={styles.buttons}>
-                        <button onClick={() => dispatch(getPacksWithFilters())}>search</button>
+                        <button onClick={() => getPacksWithFilters()}>search</button>
                         <button onClick={() => setShowEditModal(true)}>add</button>
                     </div>
                 </div>
@@ -85,7 +99,12 @@ export const Packs: React.FC = () => {
                                 type="pack"
                 />
                 <div>
-                    <PaginatorContainer/>
+                    <PaginatorContainer pagesCountChange={pagesCountPacksChange}
+                                        pageClickHandler={pageClickPacksHandler}
+                                        totalCount={cardPacksTotalCount}
+                                        page={page}
+                                        pageCount={pageCount}
+                    />
                 </div>
             </div>
             {showEditModal && <Modal childrenHeight={233}

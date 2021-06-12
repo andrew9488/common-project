@@ -1,6 +1,6 @@
 import {AppThunkType} from '../../m2-bll/store';
 import {setAppStatusAC, setIsInitializedAC} from '../app-reducer';
-import {CardCreateType, cardsAPI, ResponseCardType} from '../../m3-dal/cardsAPI';
+import {CardCreateType, cardsAPI, FetchCardsPayloadType, ResponseCardType} from '../../m3-dal/cardsAPI';
 
 export type CardsReducerActionType = ReturnType<typeof setCardsDataAC> | ReturnType<typeof setCardGradeAC>
 
@@ -29,9 +29,9 @@ const setCardsDataAC = (cardsData: ResponseCardType) =>
 const setCardGradeAC = (grade: number, id: string) =>
     ({type: 'CARDS/SET_CARD_GRADE', grade, id} as const)
 
-export const fetchCardsTC = (cardsPack_id: string): AppThunkType => dispatch => {
+export const fetchCardsTC = (data: FetchCardsPayloadType): AppThunkType => dispatch => {
     dispatch(setAppStatusAC('loading'))
-    cardsAPI.fetchCards({cardsPack_id})
+    cardsAPI.fetchCards({...data})
         .then(response => {
             dispatch(setCardsDataAC(response))
             dispatch(setAppStatusAC('succeeded'))
