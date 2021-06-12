@@ -58,11 +58,23 @@ const SuperDoubleRange: React.FC<SuperDoubleRangePropsType> = (props) => {
             marginLeft: "-6px",
             borderRadius: "50%",
             justifyContent: "center",
-            backgroundColor: "currentColor"
+            backgroundColor: "currentColor",
+            valueLabel: {
+                left: "calc(-50% - 0px)",
+            }
         },
         valueLabel: {
-            left: "calc(-50% - 0px)"
-        }
+            left: "calc(-50% - 0px)",
+        },
+        // circle10: {
+        //     width: "32px",
+        //     height: "24px",
+        //     display: "flex",
+        //     alignItems: "center",
+        //     borderRadius: "3px",
+        //     justifyContent: "center",
+        //     backgroundColor: "currentColor"
+        // }
     })(Slider);
 
     return (
