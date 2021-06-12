@@ -1,6 +1,39 @@
-# Getting Started with Create React App
+# Study on cards app
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+
+## Description
+
+This project is a single page application created to help people remember information in a game form using cards.
+
+## Deploy
+
+[Study on cards app](https://andrew9488.github.io/common-project/#/)
+
+## Application features
+
+As authorized user you can:
+* create/delete/update card packs;
+* create/delete/update cards in packs;
+* learn on your own packs or on other users' packs;
+* edit your profile;
+* customize display of packs to see only your pack or all packs on "packs page";
+* search packs/cards by name, by number of cards in pack;
+* sort packs by cards count, by name, by last update;
+* customize display of cards/packs per page and use pagination to navigate through it;
+* recovery your password in case you don't remember it.
+
+As new user you can fill the registration form and log in app.
+
+## Technologies
+* React
+* Redux
+* TypeScript
+* SCSS/SASS
+
+## Authors
+* Veronika Gorelova - [anksuunamun](https://github.com/anksuunamun)
+* Andrew Pashkevich - [andrew9488](https://github.com/andrew9488)
 
 ## Available Scripts
 
