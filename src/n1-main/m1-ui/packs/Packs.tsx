@@ -70,8 +70,14 @@ export const Packs: React.FC = () => {
                 <div>
                     <h3>Show packs cards</h3>
                     <div className={styles.buttonsBlock}>
-                        <button onClick={() => setId(myId)}>My</button>
-                        <button onClick={() => setId(null)}>All</button>
+                        <button onClick={() => setId(myId)}
+                                className={id ? `${styles.activeButton}` : `${styles.inactiveButton}`}>
+                            My
+                        </button>
+                        <button onClick={() => setId(null)}
+                                className={id ? `${styles.inactiveButton}` : `${styles.activeButton}`}>
+                            All
+                        </button>
                     </div>
                 </div>
                 <div>
@@ -98,14 +104,12 @@ export const Packs: React.FC = () => {
                                 titles={titles}
                                 type="pack"
                 />
-                <div>
-                    <PaginatorContainer pagesCountChange={pagesCountPacksChange}
-                                        pageClickHandler={pageClickPacksHandler}
-                                        totalCount={cardPacksTotalCount}
-                                        page={page}
-                                        pageCount={pageCount}
-                    />
-                </div>
+                <PaginatorContainer pagesCountChange={pagesCountPacksChange}
+                                    pageClickHandler={pageClickPacksHandler}
+                                    totalCount={cardPacksTotalCount}
+                                    page={page}
+                                    pageCount={pageCount}
+                />
             </div>
             {showEditModal && <Modal childrenHeight={233}
                                      childrenWidth={400}
