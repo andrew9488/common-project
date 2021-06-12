@@ -3,7 +3,7 @@ type ActionsType = ReturnType<typeof setSearchValueAC> | ReturnType<typeof setMi
 const initialState = {
     search: '',
     min: 0,
-    max: 5
+    max: 10
 }
 
 type InitialStateType = typeof initialState

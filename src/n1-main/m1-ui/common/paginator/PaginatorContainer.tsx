@@ -14,7 +14,7 @@ export const PaginatorContainer: React.FC<PaginatorContainerPropsType> = (props)
 
     const [pagesCount, setPagesCount] = useState<number>(props.pageCount);
 
-    const pagesOptions = [5, 10, 15, 20, 25]
+    const pagesOptions = [4, 8, 10]
     const pagesOptionsTags = pagesOptions.map(item => <option value={item} key={item}>{item}</option>)
 
     const onPageClickHandler = (newPage: number) => {
@@ -23,7 +23,7 @@ export const PaginatorContainer: React.FC<PaginatorContainerPropsType> = (props)
 
     const onPagesCountChangeHandler = (event: ChangeEvent<HTMLSelectElement>) => {
         setPagesCount(+event.currentTarget.value)
-        props.pageClickHandler(+event.currentTarget.value)
+        props.pagesCountChange(+event.currentTarget.value)
     }
 
     return (
