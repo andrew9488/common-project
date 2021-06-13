@@ -50,8 +50,8 @@ export const TableContainer: React.FC<TableContainerPropsType> = (props) => {
     if (props.cards) {
         for (let i = 0; i < props.cards.length; i++) {
             let arr = []
-            arr.push(props.cards[i].question)
-            arr.push(props.cards[i].answer)
+            arr.push(props.cards[i].question.length > 30 ? props.cards[i].question.slice(0, 30) + "..." : props.cards[i].question)
+            arr.push(props.cards[i].answer.length > 68 ? props.cards[i].answer.slice(0, 68) + "..." : props.cards[i].answer)
             arr.push(props.cards[i].updated.slice(0, -14))
             arr.push(props.cards[i].grade)
             arr.push(
