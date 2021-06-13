@@ -1,4 +1,4 @@
-import React, {useMemo, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {AppRootStateType} from '../../m2-bll/store';
 import {createCardsPackTC, deleteCardsPackTC, fetchPacksTC, updateCardsPackTC} from './packs-reducer';
@@ -24,16 +24,21 @@ export const Packs: React.FC = () => {
     const searchName = useSelector<AppRootStateType, string>(state => state.filter.search)
     const minFilter = useSelector<AppRootStateType, number>(state => state.filter.min)
     const maxFilter = useSelector<AppRootStateType, number>(state => state.filter.max)
+    const isInitialized = useSelector<AppRootStateType, boolean>(state => state.app.isInitialized);
     const dispatch = useDispatch()
 
     const [id, setId] = useState<null | string>(null)
     const [showEditModal, setShowEditModal] = useState<boolean>(false);
+    const count = id === myId ? cardPacksTotalCount : 8
 
+    useEffect(() => {
+        dispatch(fetchPacksTC({pageCount: count, user_id: id}))
+    }, [dispatch, count, id])
 
     const titles = useMemo(() => ['Name', 'Cards', 'LastUpdate', 'Created By', 'Actions'], []);
-    const filterPacks = useMemo(() => {
-        return packs && id ? packs.filter(p => p.user_id === id) : packs
-    }, [packs, id])
+    // const filterPacks = useMemo(() => {
+    //     return packs && id ? packs.filter(p => p.user_id === id) : packs
+    // }, [packs, id])
 
 
     const addCardsPack = (name: string) => {
@@ -61,6 +66,9 @@ export const Packs: React.FC = () => {
 
 
     if (!packs) {
+        return <Preloader/>
+    }
+    if (!isInitialized) {
         return <Preloader/>
     }
 
@@ -98,7 +106,7 @@ export const Packs: React.FC = () => {
                         <button onClick={() => setShowEditModal(true)}>add</button>
                     </div>
                 </div>
-                <TableContainer packs={filterPacks}
+                <TableContainer packs={packs}
                                 deleteCallback={deleteCardsPack}
                                 updateCardsPackCallback={updateCardsPackName}
                                 titles={titles}

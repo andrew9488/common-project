@@ -10,7 +10,7 @@ import {Preloader} from "./common/preloader/Preloader";
 const App: React.FC = () => {
 
     const isInitialized = useSelector<AppRootStateType, boolean>(state => state.app.isInitialized);
-    const appStatus = useSelector<AppRootStateType, RequestStatusType>(state => state.app.status)
+    const appStatus = useSelector<AppRootStateType, RequestStatusType>(state => state.app.status);
     const dispatch = useDispatch();
 
     useEffect(() => {

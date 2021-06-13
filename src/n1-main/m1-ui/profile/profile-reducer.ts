@@ -56,5 +56,4 @@ export const updateProfileTC = (name: string, avatar: string): AppThunkType => d
             dispatch(setAppStatusAC('failed'))
             dispatch(setIsInitializedAC(true))
         })
-
 }

@@ -37,7 +37,7 @@ export const setAppStatusAC = (status: RequestStatusType) =>
 export const setIsInitializedAC = (isInitialized: boolean) =>
     ({type: 'APP/SET-IS-INITIALIZED', isInitialized} as const)
 
-export const initializedAppTC = (count?: number): AppThunkType => dispatch => {
+export const initializedAppTC = (count?: number, id?: string | null): AppThunkType => dispatch => {
     dispatch(setAppStatusAC('loading'))
     authAPI.authMe()
         .then(response => {
@@ -46,7 +46,7 @@ export const initializedAppTC = (count?: number): AppThunkType => dispatch => {
             dispatch(setIsInitializedAC(true))
             dispatch(setIsLoggedIn(true))
             dispatch(updateProfileAC({name, avatar, _id, email, publicCardPacksCount}))
-            dispatch(fetchPacksTC({pageCount: count}))
+            dispatch(fetchPacksTC({pageCount:count, user_id: id}))
         })
         .catch(e => {
             const error = e.response ? e.response.data.error : (e.message + ', more details in the console')

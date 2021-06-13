@@ -26,10 +26,9 @@ const Profile: React.FC = () => {
     const appStatus = useSelector<AppRootStateType, RequestStatusType>(state => state.app.status);
     const avatar = useSelector<AppRootStateType, string | null>(state => state.profile.userData.avatar)
     const name = useSelector<AppRootStateType, string | null>(state => state.profile.userData.name)
-    const myId = useSelector<AppRootStateType, string | null>(state => state.profile.userData._id)
     const packs = useSelector<AppRootStateType, PackType[]>(state => state.packs.cardPacks)
     const isInitialized = useSelector<AppRootStateType, boolean>(state => state.app.isInitialized)
-    const count = useSelector<AppRootStateType, number>(state => state.packs.cardPacksTotalCount)
+    const myId = useSelector<AppRootStateType, string | null>(state => state.profile.userData._id)
     const cardPacksTotalCount = useSelector<AppRootStateType, number>(state => state.packs.cardPacksTotalCount)
     const page = useSelector<AppRootStateType, number>(state => state.packs.page)
     const pageCount = useSelector<AppRootStateType, number>(state => state.packs.pageCount)
@@ -38,8 +37,8 @@ const Profile: React.FC = () => {
     const maxFilter = useSelector<AppRootStateType, number>(state => state.filter.max)
 
     useEffect(() => {
-        dispatch(initializedAppTC(count))
-    }, [dispatch, count])
+        dispatch(initializedAppTC(cardPacksTotalCount, myId))
+    }, [dispatch, cardPacksTotalCount, myId])
 
     //modal
     const [showEditModal, setShowEditModal] = useState<boolean>(false)
@@ -47,9 +46,9 @@ const Profile: React.FC = () => {
         setShowEditModal(false)
     }
     const titles = useMemo(() => ['Name', 'Cards', 'LastUpdate', 'Created By', 'Actions'], []);
-    const filterPacks = useMemo(() => {
-        return packs && myId ? packs.filter(p => p.user_id === myId) : packs
-    }, [packs, myId])
+    // const filterPacks = useMemo(() => {
+    //     return packs && myId ? packs.filter(p => p.user_id === myId) : packs
+    // }, [packs, myId])
 
 
     const onLogOutHandler = () => {
@@ -114,7 +113,7 @@ const Profile: React.FC = () => {
                         <button onClick={() => getPacksWithFilters()}>search</button>
                     </div>
                 </div>
-                <TableContainer packs={filterPacks}
+                <TableContainer packs={packs}
                                 deleteCallback={deleteCardsPack}
                                 titles={titles}
                                 updateCardsPackCallback={updateCardsPackName}
@@ -130,7 +129,7 @@ const Profile: React.FC = () => {
             {showEditModal &&
             <GreenModal onModalClose={() => setShowEditModal(false)} childrenWidth={413}
                         childrenHeight={540}>
-              <EditProfile closeEditModal={closeEditModal}/>
+                <EditProfile closeEditModal={closeEditModal}/>
             </GreenModal>}
         </div>
     )

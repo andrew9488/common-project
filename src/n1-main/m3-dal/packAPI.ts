@@ -26,7 +26,7 @@ export type FetchPacksPayloadType = {
     sortPacks?: string
     page?: number
     pageCount?: number
-    user_id?: string
+    user_id?: string | null
 }
 
 //type for post
