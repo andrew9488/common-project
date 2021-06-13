@@ -46,10 +46,6 @@ const Profile: React.FC = () => {
         setShowEditModal(false)
     }
     const titles = useMemo(() => ['Name', 'Cards', 'LastUpdate', 'Created By', 'Actions'], []);
-    // const filterPacks = useMemo(() => {
-    //     return packs && myId ? packs.filter(p => p.user_id === myId) : packs
-    // }, [packs, myId])
-
 
     const onLogOutHandler = () => {
         dispatch(logOutTC());
@@ -59,7 +55,6 @@ const Profile: React.FC = () => {
     }
 
     const pagesCountPacksChange = (pageCount: number) => {
-        debugger
         dispatch(fetchPacksTC({pageCount}))
     }
 
