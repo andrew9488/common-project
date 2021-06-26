@@ -42,6 +42,7 @@ export const TableContainer: React.FC<TableContainerPropsType> = (props) => {
                                  updateCardsPackName={updateCardsPackName}
                                  id={props.packs[i]._id}
                                  isOwn={props.packs[i].user_id === myId}
+                                 name={props.packs[i].name}
                                  type="pack"/>
             )
             array.push(arr)
@@ -59,6 +60,8 @@ export const TableContainer: React.FC<TableContainerPropsType> = (props) => {
                                  updateCard={updateCard}
                                  id={props.cards[i]._id}
                                  isOwn={props.cards[i].user_id === myId}
+                                 answer={props.cards[i].answer}
+                                 question={props.cards[i].question}
                                  type="card"/>
             )
             array.push(arr)

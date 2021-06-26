@@ -3,7 +3,9 @@ import {setAppStatusAC, setIsInitializedAC} from "../app-reducer";
 import {authAPI} from '../../m3-dal/authAPI';
 import {AppThunkType} from "../../m2-bll/store";
 
-export type ProfileReducerActionType = ReturnType<typeof updateProfileAC>
+export type ProfileReducerActionType =
+    ReturnType<typeof setUserProfileDataAC>
+    | ReturnType<typeof updateUserProfileDataAC>
 
 type UserDataType = {
     email: string
@@ -15,10 +17,10 @@ type UserDataType = {
 
 const initialState = {
     userData: {
-        email: null as string | null,
-        _id: null as string | null,
-        avatar: null as string | null,
-        name: null as string | null,
+        email: "",
+        _id: "",
+        avatar: "",
+        name: "",
         publicCardPacksCount: 0,
     },
     isLoggedIn: false,
@@ -29,26 +31,33 @@ type InitialStateType = typeof initialState
 
 export const profileReducer = (state: InitialStateType = initialState, action: ProfileReducerActionType): InitialStateType => {
     switch (action.type) {
-        case "PROFILE/UPDATE-PROFILE":
+        case "PROFILE/SET-PROFILE":
             return {
                 ...state,
                 userData: action.data
+            }
+        case "PROFILE/UPDATE-PROFILE":
+            return {
+                ...state,
+                userData: {...state.userData, avatar: action.avatar, name: action.name}
             }
         default:
             return state
     }
 }
 
-export const updateProfileAC = (data: UserDataType) =>
-    ({type: "PROFILE/UPDATE-PROFILE", data} as const)
+export const setUserProfileDataAC = (data: UserDataType) =>
+    ({type: "PROFILE/SET-PROFILE", data} as const)
+const updateUserProfileDataAC = (name: string, avatar: string) =>
+    ({type: "PROFILE/UPDATE-PROFILE", name, avatar} as const)
 
 //thunks
 export const updateProfileTC = (name: string, avatar: string): AppThunkType => dispatch => {
     dispatch(setAppStatusAC('loading'))
     authAPI.changeProfile(name, avatar)
-        .then((response) => {
+        .then(() => {
             dispatch(setAppStatusAC('succeeded'))
-            dispatch(updateProfileAC(response))
+            dispatch(updateUserProfileDataAC(name, avatar))
         })
         .catch(e => {
             const error = e.response ? e.response.data.error : (e.message + ', more details in the console')
