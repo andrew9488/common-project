@@ -5,10 +5,12 @@ type EditCardPropsType = {
     cardId: string
     closeEditModal: () => void
     updatePack: (cardId: string, question: string, answer: string) => void
+    answer?: string
+    question?: string
 }
 
 export const EditCard: React.FC<EditCardPropsType> = (props) => {
-
+    // const {myQuestion="question", myAnswer="answer"}=props
 
     const [question, setQuestion] = useState<string>("")
     const [answer, setAnswer] = useState<string>("")

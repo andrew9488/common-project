@@ -5,14 +5,16 @@ import s from "./EditProfile.module.scss"
 
 type EditProfilePropsType = {
     closeEditModal: () => void
+    name: string
+    photo: string
 }
 
 export const EditProfile: React.FC<EditProfilePropsType> = (props) => {
 
     const dispatch = useDispatch();
 
-    const [newName, setNewName] = useState<string>("")
-    const [newPhoto, setNewPhoto] = useState<string>("")
+    const [newName, setNewName] = useState<string >(props.name)
+    const [newPhoto, setNewPhoto] = useState<string >(props.photo)
 
     const changePhotoHandler = (e: ChangeEvent<HTMLInputElement>) => {
         setNewPhoto(e.currentTarget.value)
@@ -22,6 +24,7 @@ export const EditProfile: React.FC<EditProfilePropsType> = (props) => {
     }
     const updateProfile = () => {
         dispatch(updateProfileTC(newName, newPhoto))
+        props.closeEditModal()
     }
     const closeEditMode = () => {
         props.closeEditModal()
