@@ -33,9 +33,9 @@ export const Packs: React.FC = () => {
     const count = id === myId ? cardPacksTotalCount : pageCount
 
     useEffect(() => {
-        dispatch(fetchPacksTC({pageCount: count, user_id: id, min: minFilter, max: maxFilter,packName: searchName}))
+        dispatch(fetchPacksTC({pageCount, user_id: id, min: minFilter, max: maxFilter, packName: searchName}))
         console.log("useEffect packs")
-    }, [dispatch, count, id, minFilter, maxFilter,searchName])
+    }, [dispatch, id, minFilter, maxFilter, searchName])
 
     const titles = useMemo(() => ['Name', 'Cards', 'LastUpdate', 'Created By', 'Actions'], []);
 
@@ -43,20 +43,27 @@ export const Packs: React.FC = () => {
         let cardsPack: Partial<CardsPackCreateType> = {
             name
         }
-        dispatch(createCardsPackTC(cardsPack, pageCount))
+        dispatch(createCardsPackTC(cardsPack, pageCount, id))
     }
-    const deleteCardsPack = (id: string) => {
-        dispatch(deleteCardsPackTC(id, pageCount))
+    const deleteCardsPack = (packId: string) => {
+        dispatch(deleteCardsPackTC(packId, pageCount, id))
     }
-    const updateCardsPackName = (id: string, packName: string) => {
-        dispatch(updateCardsPackTC(id, packName, pageCount))
+    const updateCardsPackName = (packId: string, packName: string) => {
+        dispatch(updateCardsPackTC(packId, packName, pageCount, id))
     }
     const pageClickPacksHandler = (page: number, count: number) => {
-        dispatch(fetchPacksTC({page, user_id: id, pageCount: count, min: minFilter, max: maxFilter,packName: searchName}))
+        dispatch(fetchPacksTC({
+            page,
+            user_id: id,
+            pageCount: count,
+            min: minFilter,
+            max: maxFilter,
+            packName: searchName
+        }))
     }
 
     const pagesCountPacksChange = (pageCount: number) => {
-        dispatch(fetchPacksTC({pageCount, user_id: id, min: minFilter, max: maxFilter,packName: searchName}))
+        dispatch(fetchPacksTC({pageCount, user_id: id, min: minFilter, max: maxFilter, packName: searchName}))
     }
     const getPacksWithFilters = () => {
         dispatch(fetchPacksTC({packName: searchName, user_id: id, min: minFilter, max: maxFilter, pageCount: count}))
