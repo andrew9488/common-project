@@ -1,8 +1,8 @@
 import {AppThunkType} from '../m2-bll/store';
 import {setIsLoggedIn, setLoginError} from '../../n2-features/f1-auth/a1-login/auth-reducer';
 import {authAPI} from '../m3-dal/authAPI';
-import {updateProfileAC} from './profile/profile-reducer';
 import {fetchPacksTC} from "./packs/packs-reducer";
+import {setUserProfileDataAC} from "./profile/profile-reducer";
 
 export type RequestStatusType = 'idle' | 'loading' | 'succeeded' | 'failed'
 
@@ -37,7 +37,7 @@ export const setAppStatusAC = (status: RequestStatusType) =>
 export const setIsInitializedAC = (isInitialized: boolean) =>
     ({type: 'APP/SET-IS-INITIALIZED', isInitialized} as const)
 
-export const initializedAppTC = (count?: number, id?: string | null): AppThunkType => dispatch => {
+export const initializedAppTC = (): AppThunkType => dispatch => {
     dispatch(setAppStatusAC('loading'))
     authAPI.authMe()
         .then(response => {
@@ -45,8 +45,7 @@ export const initializedAppTC = (count?: number, id?: string | null): AppThunkTy
             dispatch(setAppStatusAC('succeeded'))
             dispatch(setIsInitializedAC(true))
             dispatch(setIsLoggedIn(true))
-            dispatch(updateProfileAC({name, avatar, _id, email, publicCardPacksCount}))
-            dispatch(fetchPacksTC({pageCount:count, user_id: id}))
+            dispatch(setUserProfileDataAC({_id, email, avatar, publicCardPacksCount, name}))
         })
         .catch(e => {
             const error = e.response ? e.response.data.error : (e.message + ', more details in the console')
@@ -54,5 +53,4 @@ export const initializedAppTC = (count?: number, id?: string | null): AppThunkTy
             dispatch(setAppStatusAC('failed'))
             dispatch(setIsInitializedAC(true))
         })
-
 }
