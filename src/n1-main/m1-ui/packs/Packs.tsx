@@ -16,6 +16,7 @@ import {SuperDoubleRangeContainer} from '../common/super-double-range/SuperDoubl
 export const Packs: React.FC = () => {
 
     //data from redux
+    const isInitialized = useSelector<AppRootStateType, boolean>(state => state.app.isInitialized);
     const cardPacksTotalCount = useSelector<AppRootStateType, number>(state => state.packs.cardPacksTotalCount)
     const page = useSelector<AppRootStateType, number>(state => state.packs.page)
     const pageCount = useSelector<AppRootStateType, number>(state => state.packs.pageCount)
@@ -24,44 +25,41 @@ export const Packs: React.FC = () => {
     const searchName = useSelector<AppRootStateType, string>(state => state.filter.search)
     const minFilter = useSelector<AppRootStateType, number>(state => state.filter.min)
     const maxFilter = useSelector<AppRootStateType, number>(state => state.filter.max)
-    const isInitialized = useSelector<AppRootStateType, boolean>(state => state.app.isInitialized);
+
     const dispatch = useDispatch()
 
     const [id, setId] = useState<null | string>(null)
     const [showEditModal, setShowEditModal] = useState<boolean>(false);
-    const count = id === myId ? cardPacksTotalCount : 8
+    const count = id === myId ? cardPacksTotalCount : pageCount
 
     useEffect(() => {
-        dispatch(fetchPacksTC({pageCount: count, user_id: id}))
-    }, [dispatch, count, id])
+        dispatch(fetchPacksTC({pageCount: count, user_id: id, min: minFilter, max: maxFilter,packName: searchName}))
+        console.log("useEffect packs")
+    }, [dispatch, count, id, minFilter, maxFilter,searchName])
 
     const titles = useMemo(() => ['Name', 'Cards', 'LastUpdate', 'Created By', 'Actions'], []);
-    // const filterPacks = useMemo(() => {
-    //     return packs && id ? packs.filter(p => p.user_id === id) : packs
-    // }, [packs, id])
-
 
     const addCardsPack = (name: string) => {
         let cardsPack: Partial<CardsPackCreateType> = {
             name
         }
-        dispatch(createCardsPackTC(cardsPack))
+        dispatch(createCardsPackTC(cardsPack, pageCount))
     }
     const deleteCardsPack = (id: string) => {
-        dispatch(deleteCardsPackTC(id))
+        dispatch(deleteCardsPackTC(id, pageCount))
     }
     const updateCardsPackName = (id: string, packName: string) => {
-        dispatch(updateCardsPackTC(id, packName))
+        dispatch(updateCardsPackTC(id, packName, pageCount))
     }
-    const pageClickPacksHandler = (page: number) => {
-        dispatch(fetchPacksTC({page}))
+    const pageClickPacksHandler = (page: number, count: number) => {
+        dispatch(fetchPacksTC({page, user_id: id, pageCount: count, min: minFilter, max: maxFilter,packName: searchName}))
     }
 
     const pagesCountPacksChange = (pageCount: number) => {
-        dispatch(fetchPacksTC({pageCount}))
+        dispatch(fetchPacksTC({pageCount, user_id: id, min: minFilter, max: maxFilter,packName: searchName}))
     }
     const getPacksWithFilters = () => {
-        dispatch(fetchPacksTC({packName: searchName, min: minFilter, max: maxFilter}))
+        dispatch(fetchPacksTC({packName: searchName, user_id: id, min: minFilter, max: maxFilter, pageCount: count}))
     }
 
 

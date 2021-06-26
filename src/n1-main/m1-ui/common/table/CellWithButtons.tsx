@@ -13,6 +13,9 @@ type CellWithButtonsPropsType = {
     id: string
     isOwn: boolean
     type: 'pack' | 'card'
+    name?: string
+    answer?: string
+    question?: string
 }
 
 
@@ -58,7 +61,7 @@ const CellWithButtons: React.FC<CellWithButtonsPropsType> = (props) => {
                     <GreenModal onModalClose={() => setShowEditModal(false)} childrenWidth={413}
                                 childrenHeight={540}>
                         <EditPack packId={props.id} updatePack={updatePack}
-                                  closeEditModal={() => setShowEditModal(false)}/>
+                                  closeEditModal={() => setShowEditModal(false)} packName={props.name}/>
                     </GreenModal>
                 }
                 {showLearnModal &&
@@ -92,7 +95,10 @@ const CellWithButtons: React.FC<CellWithButtonsPropsType> = (props) => {
                     <GreenModal onModalClose={() => setShowEditModal(false)} childrenWidth={413}
                                 childrenHeight={540}>
                         <EditCard cardId={props.id} updatePack={updateCard}
-                                  closeEditModal={() => setShowEditModal(false)}/>
+                                  closeEditModal={() => setShowEditModal(false)}
+                                  answer={props.answer}
+                                  question={props.question}
+                        />
                     </GreenModal>
                 }
             </>

@@ -3,7 +3,7 @@ import Paginator from './Paginator';
 import styles from './PaginatorContainer.module.scss';
 
 type PaginatorContainerPropsType = {
-    pageClickHandler: (page: number) => void
+    pageClickHandler: (page: number, count: number) => void
     pagesCountChange: (page: number) => void
     page: number
     pageCount: number
@@ -18,7 +18,7 @@ export const PaginatorContainer: React.FC<PaginatorContainerPropsType> = (props)
     const pagesOptionsTags = pagesOptions.map(item => <option value={item} key={item}>{item}</option>)
 
     const onPageClickHandler = (newPage: number) => {
-        props.pageClickHandler(newPage)
+        props.pageClickHandler(newPage, pagesCount)
     }
 
     const onPagesCountChangeHandler = (event: ChangeEvent<HTMLSelectElement>) => {
@@ -30,7 +30,7 @@ export const PaginatorContainer: React.FC<PaginatorContainerPropsType> = (props)
         <div className={styles.wrapper}>
             <Paginator totalCount={props.totalCount}
                        currentPage={props.page}
-                       portionSize={props.pageCount}
+                       portionSize={pagesCount}
                        pagesPortionSize={10}
                        onPageClickHandler={onPageClickHandler}/>
             <div className={styles.selectWrapper}>

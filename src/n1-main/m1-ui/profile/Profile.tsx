@@ -3,7 +3,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {AppRootStateType} from '../../m2-bll/store';
 import {Redirect} from 'react-router-dom';
 import {PATH} from '../routes/Routes';
-import {initializedAppTC, RequestStatusType} from '../app-reducer';
+import {RequestStatusType} from '../app-reducer';
 import {logOutTC} from '../../../n2-features/f1-auth/a1-login/auth-reducer';
 import s from './Profile.module.scss'
 import Search from '../search/Search';
@@ -24,21 +24,25 @@ const Profile: React.FC = () => {
     const dispatch = useDispatch();
     const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn);
     const appStatus = useSelector<AppRootStateType, RequestStatusType>(state => state.app.status);
-    const avatar = useSelector<AppRootStateType, string | null>(state => state.profile.userData.avatar)
-    const name = useSelector<AppRootStateType, string | null>(state => state.profile.userData.name)
-    const packs = useSelector<AppRootStateType, PackType[]>(state => state.packs.cardPacks)
-    const isInitialized = useSelector<AppRootStateType, boolean>(state => state.app.isInitialized)
-    const myId = useSelector<AppRootStateType, string | null>(state => state.profile.userData._id)
     const cardPacksTotalCount = useSelector<AppRootStateType, number>(state => state.packs.cardPacksTotalCount)
+    const isInitialized = useSelector<AppRootStateType, boolean>(state => state.app.isInitialized)
+    const avatar = useSelector<AppRootStateType, string>(state => state.profile.userData.avatar)
+    const name = useSelector<AppRootStateType, string>(state => state.profile.userData.name)
+    const myId = useSelector<AppRootStateType, string | null>(state => state.profile.userData._id)
+    const packs = useSelector<AppRootStateType, PackType[]>(state => state.packs.cardPacks)
     const page = useSelector<AppRootStateType, number>(state => state.packs.page)
     const pageCount = useSelector<AppRootStateType, number>(state => state.packs.pageCount)
     const searchName = useSelector<AppRootStateType, string>(state => state.filter.search)
     const minFilter = useSelector<AppRootStateType, number>(state => state.filter.min)
     const maxFilter = useSelector<AppRootStateType, number>(state => state.filter.max)
 
+
     useEffect(() => {
-        dispatch(initializedAppTC(cardPacksTotalCount, myId))
-    }, [dispatch, cardPacksTotalCount, myId])
+        if (myId) {
+            console.log("useEffect")
+            dispatch(fetchPacksTC({pageCount:cardPacksTotalCount, user_id: myId, min: minFilter, max: maxFilter, packName: searchName}))
+        }
+    }, [dispatch, cardPacksTotalCount, myId, minFilter, maxFilter,searchName])
 
     //modal
     const [showEditModal, setShowEditModal] = useState<boolean>(false)
@@ -46,31 +50,28 @@ const Profile: React.FC = () => {
         setShowEditModal(false)
     }
     const titles = useMemo(() => ['Name', 'Cards', 'LastUpdate', 'Created By', 'Actions'], []);
-    // const filterPacks = useMemo(() => {
-    //     return packs && myId ? packs.filter(p => p.user_id === myId) : packs
-    // }, [packs, myId])
-
 
     const onLogOutHandler = () => {
         dispatch(logOutTC());
     }
+
+    //корень проблем из-за вероники, надо будет пофиксить связано с профайлом
     const pageClickPacksHandler = (page: number) => {
-        dispatch(fetchPacksTC({page}))
+        dispatch(fetchPacksTC({page, user_id: myId, pageCount:cardPacksTotalCount, min: minFilter, max: maxFilter, packName: searchName}))
     }
 
     const pagesCountPacksChange = (pageCount: number) => {
-        debugger
-        dispatch(fetchPacksTC({pageCount}))
+        dispatch(fetchPacksTC({pageCount, user_id: myId, min: minFilter, max: maxFilter,packName: searchName}))
     }
 
     const deleteCardsPack = (id: string) => {
-        dispatch(deleteCardsPackTC(id))
+        dispatch(deleteCardsPackTC(id, pageCount))
     }
     const updateCardsPackName = (id: string, packName: string) => {
-        dispatch(updateCardsPackTC(id, packName))
+        dispatch(updateCardsPackTC(id, packName, pageCount))
     }
     const getPacksWithFilters = () => {
-        dispatch(fetchPacksTC({packName: searchName, min: minFilter, max: maxFilter}))
+        dispatch(fetchPacksTC({packName: searchName, user_id: myId, min: minFilter, max: maxFilter, pageCount: cardPacksTotalCount}))
     }
 
 
@@ -129,7 +130,7 @@ const Profile: React.FC = () => {
             {showEditModal &&
             <GreenModal onModalClose={() => setShowEditModal(false)} childrenWidth={413}
                         childrenHeight={540}>
-                <EditProfile closeEditModal={closeEditModal}/>
+                <EditProfile closeEditModal={closeEditModal} name={name} photo={avatar}/>
             </GreenModal>}
         </div>
     )

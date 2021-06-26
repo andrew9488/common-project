@@ -30,13 +30,21 @@ export const setPacksDataAC = (packsData: ResponsePackType) =>
     ({type: 'PACKS/SET-PACKS', packsData} as const)
 
 export const setPageValueAC = (value: number) => ({type: 'SET-CURRENT-PAGE-VALUE', value} as const)
-export const setPagesCountAC = (value: number) => ({type: 'SET-CURRENT-PAGES-COUNT', value} as const)
+export const setPagesCountAC = (value: number ) => ({type: 'SET-CURRENT-PAGES-COUNT', value} as const)
 
 export const fetchPacksTC = (data: FetchPacksPayloadType): AppThunkType => dispatch => {
     dispatch(setAppStatusAC('loading'))
     packsAPI.fetchPacks({...data})
         .then(response => {
-            dispatch(setPacksDataAC(response))
+            const {
+                cardPacks, page, cardPacksTotalCount, minCardsCount,
+                maxCardsCount, token, tokenDeathTime, pageCount = 8
+            } = response
+            dispatch(setPacksDataAC({
+                cardPacks, page, cardPacksTotalCount,
+                minCardsCount, maxCardsCount, token, tokenDeathTime, pageCount
+            }))
+            dispatch(setPagesCountAC(pageCount))
             dispatch(setAppStatusAC('succeeded'))
         })
         .catch(error => {
@@ -46,11 +54,11 @@ export const fetchPacksTC = (data: FetchPacksPayloadType): AppThunkType => dispa
         })
 }
 
-export const createCardsPackTC = (cardsPack: Partial<CardsPackCreateType>): AppThunkType => dispatch => {
+export const createCardsPackTC = (cardsPack: Partial<CardsPackCreateType>, count: number): AppThunkType => dispatch => {
     dispatch(setAppStatusAC('loading'))
     packsAPI.createPack(cardsPack)
         .then(() => {
-            dispatch(fetchPacksTC({}))
+            dispatch(fetchPacksTC({pageCount: count}))
             dispatch(setAppStatusAC('succeeded'))
         })
         .catch(error => {
@@ -60,11 +68,11 @@ export const createCardsPackTC = (cardsPack: Partial<CardsPackCreateType>): AppT
         })
 }
 
-export const updateCardsPackTC = (_id: string, name: string): AppThunkType => dispatch => {
+export const updateCardsPackTC = (_id: string, name: string, count: number): AppThunkType => dispatch => {
     dispatch(setAppStatusAC('loading'))
     packsAPI.updatePack(_id, name)
         .then(() => {
-            dispatch(fetchPacksTC({}))
+            dispatch(fetchPacksTC({pageCount: count}))
             dispatch(setAppStatusAC('succeeded'))
         })
         .catch(error => {
@@ -74,11 +82,11 @@ export const updateCardsPackTC = (_id: string, name: string): AppThunkType => di
         })
 }
 
-export const deleteCardsPackTC = (id: string): AppThunkType => dispatch => {
+export const deleteCardsPackTC = (id: string, count: number): AppThunkType => dispatch => {
     dispatch(setAppStatusAC('loading'))
     packsAPI.deletePack(id)
         .then(() => {
-            dispatch(fetchPacksTC({}))
+            dispatch(fetchPacksTC({pageCount: count}))
             dispatch(setAppStatusAC('succeeded'))
         })
         .catch(error => {
