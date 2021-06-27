@@ -39,7 +39,6 @@ const Profile: React.FC = () => {
 
     useEffect(() => {
         if (myId) {
-            console.log("useEffect")
             dispatch(fetchPacksTC({pageCount, user_id: myId, min: minFilter, max: maxFilter, packName: searchName}))
         }
     }, [dispatch, myId, minFilter, maxFilter, searchName])
@@ -55,7 +54,6 @@ const Profile: React.FC = () => {
         dispatch(logOutTC());
     }
 
-    //корень проблем из-за вероники, надо будет пофиксить связано с профайлом
     const pageClickPacksHandler = (page: number, count: number) => {
         dispatch(fetchPacksTC({
             page,

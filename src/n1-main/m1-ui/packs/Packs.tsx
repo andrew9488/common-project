@@ -34,7 +34,6 @@ export const Packs: React.FC = () => {
 
     useEffect(() => {
         dispatch(fetchPacksTC({pageCount, user_id: id, min: minFilter, max: maxFilter, packName: searchName}))
-        console.log("useEffect packs")
     }, [dispatch, id, minFilter, maxFilter, searchName])
 
     const titles = useMemo(() => ['Name', 'Cards', 'LastUpdate', 'Created By', 'Actions'], []);

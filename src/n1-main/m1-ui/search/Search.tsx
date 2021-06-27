@@ -9,28 +9,19 @@ type SearchPropsType = {
 }
 
 const Search: React.FC<SearchPropsType> = (props) => {
-    // useEffect(() => {
-    //     packsAPI.fetchPack().then(response => console.log(response))
-    // }, [])
-
 
     const search = useSelector<AppRootStateType, string>(state => state.filter.search)
-
     const [searchValue, setSearchValue] = useState(search);
-    const [timeoutId, setTimeoutId] = useState<number>();
+
+    useEffect(() => {
+        const timeoutId = setTimeout(() => props.setSearch(searchValue), 500)
+        return () => clearTimeout(timeoutId)
+    }, [props.setSearch, searchValue])
+
 
     const onSearchChange = (event: ChangeEvent<HTMLInputElement>) => {
         let value = event.currentTarget.value;
         setSearchValue(value);
-        props.setSearch(value)
-        //
-        // clearTimeout(timeoutId);
-        //
-        // let id = window.setTimeout(() => {
-        //     props.setSearch(value)
-        // }, 1000)
-        //
-        // setTimeoutId(id);
     }
 
     return (
