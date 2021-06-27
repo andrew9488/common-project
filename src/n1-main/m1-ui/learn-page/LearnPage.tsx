@@ -7,7 +7,6 @@ import {getRandomCard} from '../../../n3-utils/u1-error/u2-getRandomCard/getRand
 import SuperRadio from '../common/super-radio/SuperRadio';
 import {PackType} from '../../m3-dal/packAPI';
 import styles from './LearnPage.module.scss';
-import s from "../packs/EditPack/EditPack.module.scss";
 
 type LearnPagePropsType = {
     cardsPack_id: string
@@ -40,15 +39,12 @@ const LearnPage: React.FC<LearnPagePropsType> = (props) => {
 
     const dispatch = useDispatch();
     useEffect(() => {
-        console.log('LearnContainer useEffect');
         if (first) {
             dispatch(fetchCardsTC({cardsPack_id}));
             setFirst(false);
         }
-        console.log('cards', cards)
         if (cards && cards.length > 0) setCard(getRandomCard(cards));
         return () => {
-            console.log('LearnContainer useEffect off');
         }
     }, [dispatch, cardsPack_id, cards, first]);
 
@@ -63,8 +59,6 @@ const LearnPage: React.FC<LearnPagePropsType> = (props) => {
     const checkAnswer = () => {
         setIsChecked(true)
     }
-
-    console.log(grade)
 
     return (
         <div className={styles.learnPageContainer}>

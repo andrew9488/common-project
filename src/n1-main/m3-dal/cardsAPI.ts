@@ -70,7 +70,9 @@ export const cardsAPI = {
     },
     deleteCard(id: string) {
         return instance.delete(`cards/card?id=${id}`)
-            .then(response => response.data)
+            .then(response => {
+                return response.data
+            })
     },
     updateCard(_id: string, question?: string, answer?: string) {
         return instance.put(`cards/card`, {card: {_id, question, answer}})

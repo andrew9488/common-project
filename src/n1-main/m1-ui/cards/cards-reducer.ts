@@ -47,7 +47,8 @@ export const createCardTC = (card: Partial<CardCreateType>): AppThunkType => dis
     dispatch(setAppStatusAC('loading'))
     cardsAPI.createCard(card)
         .then(response => {
-            dispatch(fetchCardsTC(response.newCard.cardsPack_id))
+            const {cardsPack_id} = response.newCard
+            dispatch(fetchCardsTC({cardsPack_id}))
             dispatch(setAppStatusAC('succeeded'))
         })
         .catch(error => {
@@ -61,7 +62,8 @@ export const updateCardTC = (_id: string, question: string, answer: string): App
     dispatch(setAppStatusAC('loading'))
     cardsAPI.updateCard(_id, question, answer)
         .then(response => {
-            dispatch(fetchCardsTC(response.updatedCard.cardsPack_id))
+            const {cardsPack_id} = response.updatedCard
+            dispatch(fetchCardsTC({cardsPack_id}))
             dispatch(setAppStatusAC('succeeded'))
         })
         .catch(error => {
@@ -75,7 +77,8 @@ export const deleteCardTC = (id: string): AppThunkType => dispatch => {
     dispatch(setAppStatusAC('loading'))
     cardsAPI.deleteCard(id)
         .then(response => {
-            dispatch(fetchCardsTC(response.deletedCard.cardsPack_id))
+            const {cardsPack_id} = response.deletedCard
+            dispatch(fetchCardsTC({cardsPack_id}))
             dispatch(setAppStatusAC('succeeded'))
         })
         .catch(error => {
