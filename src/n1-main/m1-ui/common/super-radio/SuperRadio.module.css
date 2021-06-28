@@ -1,7 +1,7 @@
 .inputRadio input {
     z-index: -1;
     opacity: 0;
-    margin: 10px 0 0 7px;
+    margin: 12px -20px 0 7px;
 }
 .inputText {
     position: relative;
@@ -23,7 +23,7 @@
     content: '';
     position: absolute;
     top: 0.1em;
-    left: 5px;
+    left: 0.32em;
     width: 15px;
     height: 15px;
     border-radius: 50%;

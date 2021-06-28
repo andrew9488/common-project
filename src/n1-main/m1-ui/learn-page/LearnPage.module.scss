@@ -6,16 +6,20 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
   border-radius: 8px;
-  height: 100%;
-  width: 100%;
+  justify-content: space-evenly;
 
   .questionBlock {
     width: 100%;
+    height: 300px;
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
+    justify-content: space-evenly;
+    h4{
+      @include h4Style();
+      margin-top: 0px;
+      text-align: center;
+    }
 
     .buttonsBlock {
       display: flex;
@@ -31,19 +35,25 @@
     }
   }
   .answerBlock{
-    width: 100%;
+    width: 80%;
+    height: 390px;
+    h4{
+      @include h4Style();
+
+    }
     .answer{
       display: flex;
       flex-direction: column;
       align-items: flex-start;
       margin-bottom: 15px;
       h4{
-        margin-left: 25px;
+        @include h4Style();
+        margin-bottom: 0;
       }
     }
     .buttonsBlock{
       display: flex;
-      justify-content: space-around;
+      justify-content: space-between;
 
       .cancelBtn {
         @include BtnStyle(124px, 36px, $lightTextColor, $brightGreenColor);
