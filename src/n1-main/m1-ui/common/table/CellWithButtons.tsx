@@ -65,8 +65,8 @@ const CellWithButtons: React.FC<CellWithButtonsPropsType> = (props) => {
                     </GreenModal>
                 }
                 {showLearnModal &&
-                <GreenModal onModalClose={() => setShowLearnModal(false)} childrenWidth={500}
-                            childrenHeight={500}>
+                <GreenModal onModalClose={() => setShowLearnModal(false)} childrenWidth={413}
+                            childrenHeight={575}>
                     <LearnPage cardsPack_id={props.id} onModalClose={() => setShowLearnModal(false)}/>
                 </GreenModal>}
             </>
@@ -93,7 +93,7 @@ const CellWithButtons: React.FC<CellWithButtonsPropsType> = (props) => {
                 {
                     showEditModal &&
                     <GreenModal onModalClose={() => setShowEditModal(false)} childrenWidth={413}
-                                childrenHeight={540}>
+                                childrenHeight={444}>
                         <EditCard cardId={props.id} updatePack={updateCard}
                                   closeEditModal={() => setShowEditModal(false)}
                                   answer={props.answer}

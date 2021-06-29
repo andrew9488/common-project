@@ -37,7 +37,6 @@ const Cards: React.FC<PropsType> = (props) => {
         dispatch(fetchCardsTC({cardsPack_id: props.match.params.cardsPack_id}))
     }, [dispatch, props.match.params.cardsPack_id])
 
-
     const titles = useMemo(() => {
         if (cards && cards[0]?.user_id === myId) {
             return ['Question', 'Answer', 'LastUpdate', 'Grade', 'Actions']

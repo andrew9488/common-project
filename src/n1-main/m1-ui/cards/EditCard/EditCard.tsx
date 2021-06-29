@@ -10,19 +10,22 @@ type EditCardPropsType = {
 }
 
 export const EditCard: React.FC<EditCardPropsType> = (props) => {
-    // const {myQuestion="question", myAnswer="answer"}=props
+    console.log(props.cardId)
 
-    const [question, setQuestion] = useState<string>("")
-    const [answer, setAnswer] = useState<string>("")
+    const question = props.question ? props.question : ""
+    const answer = props.answer ? props.answer : ""
+
+    const [newQuestion, setNewQuestion] = useState<string>(question)
+    const [newAnswer, setNewAnswer] = useState<string>(answer)
 
     const questionHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        setQuestion(e.currentTarget.value)
+        setNewQuestion(e.currentTarget.value)
     }
     const answerHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        setAnswer(e.currentTarget.value)
+        setNewAnswer(e.currentTarget.value)
     }
     const updateCard = () => {
-        props.updatePack(props.cardId, question, answer)
+        props.updatePack(props.cardId, newQuestion, newAnswer)
         props.closeEditModal()
     }
     const closeEditMode = () => {
@@ -35,11 +38,11 @@ export const EditCard: React.FC<EditCardPropsType> = (props) => {
             <div className={s.inputsBlock}>
                 <div className={s.editInput}>
                     <label htmlFor="edit_question">Question:</label>
-                    <input type="text" value={question} onChange={questionHandler} id="edit_question"/>
+                    <input type="text" value={newQuestion} onChange={questionHandler} id="edit_question"/>
                 </div>
                 <div className={s.editInput}>
                     <label htmlFor="edit_answer">Answer:</label>
-                    <input type="text" value={answer} onChange={answerHandler} id="edit_answer"/>
+                    <input type="text" value={newAnswer} onChange={answerHandler} id="edit_answer"/>
                 </div>
             </div>
             <div className={s.buttonsBlock}>

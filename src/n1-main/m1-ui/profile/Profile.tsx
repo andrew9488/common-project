@@ -39,10 +39,9 @@ const Profile: React.FC = () => {
 
     useEffect(() => {
         if (myId) {
-            console.log("useEffect")
-            dispatch(fetchPacksTC({pageCount:cardPacksTotalCount, user_id: myId, min: minFilter, max: maxFilter, packName: searchName}))
+            dispatch(fetchPacksTC({pageCount, user_id: myId, min: minFilter, max: maxFilter, packName: searchName}))
         }
-    }, [dispatch, cardPacksTotalCount, myId, minFilter, maxFilter,searchName])
+    }, [dispatch, myId, minFilter, maxFilter, searchName])
 
     //modal
     const [showEditModal, setShowEditModal] = useState<boolean>(false)
@@ -55,23 +54,35 @@ const Profile: React.FC = () => {
         dispatch(logOutTC());
     }
 
-    //корень проблем из-за вероники, надо будет пофиксить связано с профайлом
-    const pageClickPacksHandler = (page: number) => {
-        dispatch(fetchPacksTC({page, user_id: myId, pageCount:cardPacksTotalCount, min: minFilter, max: maxFilter, packName: searchName}))
+    const pageClickPacksHandler = (page: number, count: number) => {
+        dispatch(fetchPacksTC({
+            page,
+            user_id: myId,
+            pageCount: count,
+            min: minFilter,
+            max: maxFilter,
+            packName: searchName
+        }))
     }
 
     const pagesCountPacksChange = (pageCount: number) => {
-        dispatch(fetchPacksTC({pageCount, user_id: myId, min: minFilter, max: maxFilter,packName: searchName}))
+        dispatch(fetchPacksTC({pageCount, user_id: myId, min: minFilter, max: maxFilter, packName: searchName}))
     }
 
-    const deleteCardsPack = (id: string) => {
-        dispatch(deleteCardsPackTC(id, pageCount))
+    const deleteCardsPack = (packId: string) => {
+        dispatch(deleteCardsPackTC(packId, pageCount, myId))
     }
-    const updateCardsPackName = (id: string, packName: string) => {
-        dispatch(updateCardsPackTC(id, packName, pageCount))
+    const updateCardsPackName = (packId: string, packName: string) => {
+        dispatch(updateCardsPackTC(packId, packName, pageCount, myId))
     }
     const getPacksWithFilters = () => {
-        dispatch(fetchPacksTC({packName: searchName, user_id: myId, min: minFilter, max: maxFilter, pageCount: cardPacksTotalCount}))
+        dispatch(fetchPacksTC({
+            packName: searchName,
+            user_id: myId,
+            min: minFilter,
+            max: maxFilter,
+            pageCount: cardPacksTotalCount
+        }))
     }
 
 
