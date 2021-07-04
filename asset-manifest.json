@@ -1,23 +1,23 @@
 {
   "files": {
-    "main.css": "/common-project/static/css/main.adc308fe.chunk.css",
-    "main.js": "/common-project/static/js/main.f30bf5b3.chunk.js",
-    "main.js.map": "/common-project/static/js/main.f30bf5b3.chunk.js.map",
-    "runtime-main.js": "/common-project/static/js/runtime-main.7b6a876d.js",
-    "runtime-main.js.map": "/common-project/static/js/runtime-main.7b6a876d.js.map",
-    "static/js/2.1ae408e5.chunk.js": "/common-project/static/js/2.1ae408e5.chunk.js",
-    "static/js/2.1ae408e5.chunk.js.map": "/common-project/static/js/2.1ae408e5.chunk.js.map",
-    "static/js/3.e34b6ace.chunk.js": "/common-project/static/js/3.e34b6ace.chunk.js",
-    "static/js/3.e34b6ace.chunk.js.map": "/common-project/static/js/3.e34b6ace.chunk.js.map",
-    "index.html": "/common-project/index.html",
-    "static/css/main.adc308fe.chunk.css.map": "/common-project/static/css/main.adc308fe.chunk.css.map",
-    "static/js/2.1ae408e5.chunk.js.LICENSE.txt": "/common-project/static/js/2.1ae408e5.chunk.js.LICENSE.txt",
-    "static/media/482.397e5395.svg": "/common-project/static/media/482.397e5395.svg"
+    "main.css": "/training-cards/static/css/main.b6e94e1c.chunk.css",
+    "main.js": "/training-cards/static/js/main.ce60f6e3.chunk.js",
+    "main.js.map": "/training-cards/static/js/main.ce60f6e3.chunk.js.map",
+    "runtime-main.js": "/training-cards/static/js/runtime-main.b62166f1.js",
+    "runtime-main.js.map": "/training-cards/static/js/runtime-main.b62166f1.js.map",
+    "static/js/2.1ae408e5.chunk.js": "/training-cards/static/js/2.1ae408e5.chunk.js",
+    "static/js/2.1ae408e5.chunk.js.map": "/training-cards/static/js/2.1ae408e5.chunk.js.map",
+    "static/js/3.e34b6ace.chunk.js": "/training-cards/static/js/3.e34b6ace.chunk.js",
+    "static/js/3.e34b6ace.chunk.js.map": "/training-cards/static/js/3.e34b6ace.chunk.js.map",
+    "index.html": "/training-cards/index.html",
+    "static/css/main.b6e94e1c.chunk.css.map": "/training-cards/static/css/main.b6e94e1c.chunk.css.map",
+    "static/js/2.1ae408e5.chunk.js.LICENSE.txt": "/training-cards/static/js/2.1ae408e5.chunk.js.LICENSE.txt",
+    "static/media/482.397e5395.svg": "/training-cards/static/media/482.397e5395.svg"
   },
   "entrypoints": [
-    "static/js/runtime-main.7b6a876d.js",
+    "static/js/runtime-main.b62166f1.js",
     "static/js/2.1ae408e5.chunk.js",
-    "static/css/main.adc308fe.chunk.css",
-    "static/js/main.f30bf5b3.chunk.js"
+    "static/css/main.b6e94e1c.chunk.css",
+    "static/js/main.ce60f6e3.chunk.js"
   ]
 }
